@@ -8,9 +8,13 @@ const clientLinks = [
   { to: '/app/schedule', label: ui.nav.schedule },
   { to: '/app/flights', label: ui.nav.flights },
   { to: '/app/devices', label: ui.nav.devices },
+  { to: '/app/simulator', label: ui.nav.simulator },
 ];
 
-const adminLinks = [{ to: '/app/admin/clients', label: ui.nav.admin, end: true }];
+const adminLinks = [
+  { to: '/app/admin/clients', label: ui.nav.admin, end: true },
+  { to: '/app/admin/clients/mqtt', label: ui.nav.mqttDiagnostics },
+];
 
 export default function Layout() {
   const { profile, logout, isAdmin } = useAuth();

@@ -58,7 +58,7 @@ export default function ParcelMapEditor({ center, points, setPoints }) {
       points.map((_, index) =>
         createPointIcon(index, selectedIndex === index, isMoving && selectedIndex === index),
       ),
-    [points.length, selectedIndex, isMoving],
+    [points, selectedIndex, isMoving],
   );
 
   const selectPoint = (index) => {

@@ -43,6 +43,7 @@ export const api = {
 
   getMe: () => request('/users/me'),
   getHealth: () => fetch(`${API_URL.replace('/api', '')}/api/health`).then((r) => r.json()),
+  getCrops: () => fetch(`${API_URL}/crops`).then((r) => r.json()),
   updateMe: (payload) =>
     request('/users/me', { method: 'PUT', body: JSON.stringify(payload) }),
 
@@ -63,6 +64,10 @@ export const api = {
   getDevices: () => request('/devices'),
   createDevice: (payload) =>
     request('/devices', { method: 'POST', body: JSON.stringify(payload) }),
+  updateDevice: (deviceId, payload) =>
+    request(`/devices/${deviceId}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  simulateTelemetry: (payload) =>
+    request('/simulator/telemetry', { method: 'POST', body: JSON.stringify(payload) }),
   getReports: () => request('/reports'),
   downloadReport: async (reportId) => {
     const response = await fetch(`${API_URL}/reports/${reportId}/download`, {
@@ -82,9 +87,22 @@ export const api = {
   },
 
   getClients: () => request('/admin/clients'),
+  getClientDevices: (userId) => request(`/admin/clients/${userId}/devices`),
+  getClientParcels: (userId) => request(`/admin/clients/${userId}/parcels`),
+  getClientTelemetryLogs: (userId) => request(`/admin/clients/${userId}/telemetry-logs`),
+  getClientActionLogs: (userId) => request(`/admin/clients/${userId}/action-logs`),
   updateClientStatus: (userId, accountStatus) =>
     request(`/admin/clients/${userId}/account-status`, {
       method: 'PATCH',
       body: JSON.stringify({ accountStatus }),
     }),
+  getMqttStatus: () => request('/admin/mqtt/status'),
+  sendMqttDiagnostic: (payload) =>
+    request('/admin/mqtt/diagnostic', { method: 'POST', body: JSON.stringify(payload) }),
+  sendAdminTelemetry: (payload) =>
+    request('/admin/mqtt/telemetry', { method: 'POST', body: JSON.stringify(payload) }),
+  createAdminTestFlight: (payload) =>
+    request('/admin/mqtt/test-flight', { method: 'POST', body: JSON.stringify(payload) }),
+  runAdminTestDroneFlow: (payload) =>
+    request('/admin/mqtt/test-drone-flow', { method: 'POST', body: JSON.stringify(payload) }),
 };

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
 
 const ParcelContext = createContext(null);
@@ -8,24 +8,24 @@ export function ParcelProvider({ children }) {
   const [selectedParcelId, setSelectedParcelId] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshParcels = async () => {
+  const refreshParcels = useCallback(async () => {
     const response = await api.getParcels();
     const nextParcels = response.parcels ?? [];
     setParcels(nextParcels);
-    if (!selectedParcelId && nextParcels.length > 0) {
-      setSelectedParcelId(nextParcels[0].parcelId);
-    }
-    if (selectedParcelId && !nextParcels.some((p) => p.parcelId === selectedParcelId)) {
-      setSelectedParcelId(nextParcels[0]?.parcelId ?? null);
-    }
+    setSelectedParcelId((currentId) => {
+      if (!currentId) return nextParcels[0]?.parcelId ?? null;
+      return nextParcels.some((p) => p.parcelId === currentId)
+        ? currentId
+        : nextParcels[0]?.parcelId ?? null;
+    });
     return nextParcels;
-  };
+  }, []);
 
   useEffect(() => {
     refreshParcels()
       .catch(() => setParcels([]))
       .finally(() => setLoading(false));
-  }, []);
+  }, [refreshParcels]);
 
   const selectedParcel = parcels.find((p) => p.parcelId === selectedParcelId) ?? null;
 
@@ -38,7 +38,7 @@ export function ParcelProvider({ children }) {
       refreshParcels,
       loading,
     }),
-    [parcels, selectedParcel, selectedParcelId, loading],
+    [parcels, selectedParcel, selectedParcelId, refreshParcels, loading],
   );
 
   return <ParcelContext.Provider value={value}>{children}</ParcelContext.Provider>;

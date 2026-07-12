@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { api } from '../api/client';
 import StatusBadge from '../components/StatusBadge';
-import { formatDate, getAccountStatusLabel, ui } from '../i18n/es';
+import { getAccountStatusLabel, ui } from '../i18n/es';
 
 export default function AdminClients() {
   const [clients, setClients] = useState([]);
@@ -9,16 +9,16 @@ export default function AdminClients() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const loadClients = async () => {
+  const loadClients = useCallback(async () => {
     const response = await api.getClients();
     setClients(response.clients ?? []);
-  };
+  }, []);
 
   useEffect(() => {
     loadClients()
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [loadClients]);
 
   const updateStatus = async (userId, accountStatus) => {
     setError('');

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
+import { auth, signInWithEmailAndPassword } from '../config/firebase';
 
 const TOKEN_KEY = 'qhiro_auth_token';
 
@@ -35,38 +36,36 @@ export function AuthProvider({ children }) {
     }).finally(() => setLoading(false));
   }, [loadProfile]);
 
-  const login = async ({ email, password }) => {
+  const login = useCallback(async ({ email, password }) => {
     setError(null);
     const session = await api.login({ email, password });
+    if (auth) {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
     await loadProfile(session.token);
-  };
+  }, [loadProfile]);
 
-  const registerClient = async (payload) => {
+  const registerClient = useCallback(async (payload) => {
     setError(null);
     const response = await api.register(payload);
+    if (auth) {
+      await signInWithEmailAndPassword(auth, payload.email, payload.password);
+    }
     await loadProfile(response.token);
-  };
+  }, [loadProfile]);
 
-  const loginDemo = async () => {
-    setError(null);
-    await login({
-      email: 'qhiro-symbiotic@qhiro-symbiotic.com',
-      password: '123456789',
-    });
-  };
-
-  const logout = async () => {
+  const logout = useCallback(async () => {
     setError(null);
     setProfile(null);
     setToken(null);
     api.setToken(null);
     localStorage.removeItem(TOKEN_KEY);
-  };
+  }, []);
 
-  const refreshProfile = async () => {
+  const refreshProfile = useCallback(async () => {
     if (!token) return;
     await loadProfile(token);
-  };
+  }, [loadProfile, token]);
 
   const value = useMemo(
     () => ({
@@ -78,13 +77,12 @@ export function AuthProvider({ children }) {
       isAdmin: profile?.role === 'admin',
       isClient: profile?.role === 'client',
       login,
-      loginDemo,
       registerClient,
       logout,
       refreshProfile,
       setError,
     }),
-    [profile, token, loading, error, loadProfile],
+    [profile, token, loading, error, login, registerClient, logout, refreshProfile],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

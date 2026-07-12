@@ -1,20 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../api/client';
 import QhiroPublicShell from '../components/QhiroPublicShell';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
 
 export default function Login() {
-  const { login, loginDemo, error, setError } = useAuth();
+  const { login, error, setError } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
   const [submitting, setSubmitting] = useState(false);
-  const [authMode, setAuthMode] = useState('demo');
-
-  useEffect(() => {
-    api.getHealth().then((health) => setAuthMode(health.authMode ?? 'demo'));
-  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,19 +17,6 @@ export default function Login() {
     try {
       await login(form);
       navigate('/app');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleDemo = async () => {
-    setSubmitting(true);
-    setError(null);
-    try {
-      await loginDemo();
-      navigate('/app/admin/clients');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -70,19 +51,6 @@ export default function Login() {
             {ui.auth.loginButton}
           </button>
         </form>
-
-        {authMode === 'demo' && (
-          <div className="demo-box qhiro-demo-box">
-            <p>{ui.auth.demoTitle}</p>
-            <button type="button" className="qhiro-btn qhiro-btn-outline" onClick={handleDemo}>
-              {ui.auth.demoAdmin}
-            </button>
-          </div>
-        )}
-
-        {authMode === 'firebase-missing-api-key' && (
-          <p className="form-error">{ui.auth.missingApiKey}</p>
-        )}
 
         {error && <p className="form-error">{error}</p>}
 

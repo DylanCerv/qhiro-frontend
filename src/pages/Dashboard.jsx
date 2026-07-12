@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
+import { auth, collection, db, limit, onSnapshot, orderBy, query, where } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { useParcels } from '../context/ParcelContext';
 import AlertList from '../components/AlertList';
@@ -17,8 +18,9 @@ import {
 
 export default function Dashboard() {
   const { profile, isAdmin } = useAuth();
-  const { parcels, selectedParcel, selectedParcelId, setSelectedParcelId } = useParcels();
+  const { selectedParcel, selectedParcelId, setSelectedParcelId } = useParcels();
   const [data, setData] = useState(null);
+  const [liveAlerts, setLiveAlerts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +35,49 @@ export default function Dashboard() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [isAdmin]);
+
+  useEffect(() => {
+    if (!profile?.userId || !db || !auth?.currentUser) return undefined;
+
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission().catch(() => {});
+    }
+
+    const alertsQuery = query(
+      collection(db, 'alerts'),
+      where('userId', '==', profile.userId),
+      orderBy('createdAt', 'desc'),
+      limit(20),
+    );
+
+    let isFirstSnapshot = true;
+    const unsubscribe = onSnapshot(alertsQuery, (snapshot) => {
+      const alerts = snapshot.docs.map((doc) => doc.data());
+      setLiveAlerts(alerts);
+
+      if (isFirstSnapshot) {
+        isFirstSnapshot = false;
+        return;
+      }
+
+      if (Notification.permission === 'granted') {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type !== 'added') return;
+          const alert = change.doc.data();
+          new Notification('Qhiro Symbiotic', {
+            body: alert.message ?? 'Nueva alerta detectada',
+          });
+        });
+      }
+    });
+
+    return () => unsubscribe();
+  }, [profile?.userId]);
+
+  const alertsToShow = useMemo(() => {
+    if (liveAlerts.length > 0) return liveAlerts;
+    return data?.alerts ?? [];
+  }, [data?.alerts, liveAlerts]);
 
   if (isAdmin) {
     return (
@@ -119,7 +164,7 @@ export default function Dashboard() {
 
       <section className="card">
         <h2>{ui.dashboard.recentAlerts}</h2>
-        <AlertList alerts={data.alerts} />
+        <AlertList alerts={alertsToShow} />
       </section>
     </div>
   );
