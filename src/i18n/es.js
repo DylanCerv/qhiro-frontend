@@ -4,9 +4,8 @@ export const ui = {
     dashboard: 'Panel',
     parcels: 'Parcelas',
     schedule: 'Programación',
-    flights: 'Vuelos',
+    activity: 'Actividad',
     devices: 'Dispositivos',
-    simulator: 'Simulador',
     admin: 'Clientes',
     mqttDiagnostics: 'MQTT',
   },
@@ -166,7 +165,7 @@ export const ui = {
     createTitle: 'Nueva parcela',
     name: 'Nombre de la parcela',
     cropType: 'Tipo de cultivo',
-    zoneId: 'ID de zona',
+    zoneId: 'Zona',
     drawHint: 'Haz clic en el mapa para añadir vértices (mínimo 3 puntos).',
     selectPointHint: 'Selecciona un punto numerado para moverlo o eliminarlo.',
     selectPoint: 'Seleccionar punto',
@@ -282,7 +281,7 @@ export const ui = {
   },
   devices: {
     title: 'Dispositivos',
-    subtitle: 'Estado del dron, sensores y nido.',
+    subtitle: 'Estado del dron, sensores, nido y centinelas.',
     addTitle: 'Agregar dispositivo',
     editTitle: 'Editar dispositivo',
     name: 'Nombre del dispositivo',
@@ -345,6 +344,7 @@ const deviceType = {
   drone: 'Dron',
   sensor: 'Sensor',
   nest: 'Nido',
+  sentinel: 'Centinela',
 };
 
 const notificationEvent = {

@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#005228",
+                        "secondary-container": "#3398db",
+                        "surface-container-high": "#282a2c",
+                        "surface-variant": "#333537",
+                        "on-tertiary-fixed": "#00210c",
+                        "secondary-fixed-dim": "#92ccff",
+                        "on-tertiary": "#00391a",
+                        "surface-container": "#1e2022",
+                        "primary-fixed": "#6bfe9c",
+                        "tertiary-container": "#4bca78",
+                        "on-secondary": "#003351",
+                        "on-primary": "#003919",
+                        "on-secondary-container": "#002c47",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393b",
+                        "on-background": "#e2e2e5",
+                        "surface": "#121416",
+                        "primary-fixed-dim": "#4ae183",
+                        "on-tertiary-container": "#005127",
+                        "outline-variant": "#3d4a3e",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#00210c",
+                        "surface-tint": "#4ae183",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#005027",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#cce5ff",
+                        "on-secondary-fixed": "#001d31",
+                        "background": "#121416",
+                        "tertiary-fixed-dim": "#61de8a",
+                        "primary": "#54e98a",
+                        "surface-container-low": "#1a1c1e",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-surface-variant": "#bbcbbb",
+                        "tertiary": "#69e792",
+                        "secondary": "#92ccff",
+                        "inverse-surface": "#e2e2e5",
+                        "tertiary-fixed": "#7efba4",
+                        "inverse-primary": "#006d37",
+                        "outline": "#869486",
+                        "primary-container": "#2ecc71",
+                        "surface-container-highest": "#333537",
+                        "surface-container-lowest": "#0c0e10",
+                        "on-surface": "#e2e2e5",
+                        "surface-dim": "#121416",
+                        "inverse-on-surface": "#2f3133"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1600px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "title-md": ["Geist"],
+                        "label-caps": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="font-body-md text-on-surface flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface-container dark:bg-surface-container border-b border-outline-variant docked full-width top-0 z-50">
+<div class="flex justify-between items-center px-margin-desktop w-full h-14">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" class="w-8 h-8 object-contain" alt="qhiro symbiotic logo">
+<span class="font-title-md text-title-md font-black text-primary">qhiro</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 py-1 transition-all">Panel</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 py-1 transition-all">Parcelas</a>
+<a href="#" class="font-body-sm text-body-sm text-primary font-bold border-b-2 border-primary px-2 py-1">Programación</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 py-1 transition-all">Actividad</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 py-1 transition-all">Dispositivos</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded transition-all" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded transition-all" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a technical agronomist wearing a dark uniform with a small digital badge, soft studio lighting, sharp focus on facial features, professional and industrial tone, dark background consistent with a high-tech agricultural operations center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG_tIXuaKk27uxn4nOlH_9s4fRuV1uH7apPy1yr_ydrxGZqVB9TtvICOz34c4T5FVqiZlA6kkUv59LRc0zMaSvkqrD6ApjIiZ_tLP9JK-LPZ6vW8JFjJtY9OZabvTJyitwX0SiGGQC9iWoGMt9jbrxg43qlCie2FYS0Bo-rCKOJ0kefVyG9poiHycnR5MClak4o3xpvNeufLQw0Eg98PhLb7DzWSRF4K7SO9Ne0ecorI4Yz1_TO8rG-Wz5YDdEPe4YHYZTqKCfkiVd">
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-14 px-margin-desktop max-w-max-width mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-gutter py-8">
+<!-- Header / Status Bar -->
+<div class="col-span-12 flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Programación de Vuelos</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gestión de misiones autónomas y telemetría de flota.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-high p-4 rounded border border-outline-variant">
+<!-- Battery Status -->
+<div class="flex items-center gap-3 pr-4 border-r border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">battery_charging_80</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Drone Alpha-1</span>
+<span class="font-data-mono text-data-mono text-primary">84% • CARGANDO</span>
+</div>
+</div>
+<!-- Connectivity Check -->
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">nest_eco_leaf</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">EL NIDO HUB</span>
+<span class="font-data-mono text-data-mono text-tertiary">EN LÍNEA • 12ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Left: Form Section -->
+<section class="col-span-12 lg:col-span-4 space-y-6">
+<div class="glass-panel p-6 rounded shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">add_task</span>
+<h2 class="font-title-md text-title-md">Programar Misión</h2>
+</div>
+<form class="space-y-4">
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase">Seleccionar Parcela</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded p-3 text-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none">
+<option>Sector Norte - Maíz A1</option>
+<option>Sector Sur - Soja B4</option>
+<option>Invernadero Hidropónico 2</option>
+<option>Límite Perimetral</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase">Tipo de Misión</label>
+<div class="grid grid-cols-1 gap-2">
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-variant/30 transition-all">
+<input checked="" class="text-primary focus:ring-primary bg-surface" name="mission_type" type="radio">
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface">Rutina</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Mapeo NDVI &amp; Humedad</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-variant/30 transition-all">
+<input class="text-primary focus:ring-primary bg-surface" name="mission_type" type="radio">
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface">Inspección</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Anomalía Térmica detected</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 border border-outline-variant rounded cursor-pointer hover:bg-surface-variant/30 transition-all">
+<input class="text-primary focus:ring-primary bg-surface" name="mission_type" type="radio">
+<div class="flex flex-col">
+<span class="font-body-md text-error">Emergencia</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Riesgo Biológico / Plaga</span>
+</div>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase">Frecuencia</label>
+<select class="w-full bg-surface-container border border-outline-variant rounded p-3 text-body-sm focus:border-primary outline-none">
+<option>Diaria</option>
+<option>Semanal</option>
+<option>Quincenal</option>
+<option>Única vez</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase">Hora Inicio</label>
+<input class="w-full bg-surface-container border border-outline-variant rounded p-3 text-body-sm focus:border-primary outline-none" type="time" value="06:30">
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-bold py-3 rounded mt-4 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-body-md">flight_takeoff</span>
+                        Confirmar Programación
+                    </button>
+</form>
+</div>
+<!-- Mini-->
+<div class="glass-panel overflow-hidden rounded relative h-48 border border-outline-variant group">
+<div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Satellite thermal imagery of a large circular agricultural field. The colors transition from deep cool blues to vibrant heat-map oranges, indicating moisture levels. A digital grid overlay and a small green drone icon are visible on the map, conveying a technical monitoring environment." data-location="Agricultural Field" style="background-image: url('https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 z-10">
+<span class="font-label-caps text-label-caps text-primary bg-surface/80 px-2 py-1 rounded">VISTA PREVIA SECTOR NORTE</span>
+</div>
+</div>
+</section>
+<!-- Right: Table Section -->
+<section class="col-span-12 lg:col-span-8 space-y-6">
+<div class="glass-panel rounded border border-outline-variant overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">calendar_clock</span>
+<h2 class="font-title-md text-title-md">Próximas Misiones</h2>
+</div>
+<div class="flex gap-2">
+<span class="font-data-mono text-data-mono px-3 py-1 bg-surface rounded border border-outline-variant text-on-surface-variant">3 ACTIVAS</span>
+<span class="font-data-mono text-data-mono px-3 py-1 bg-surface rounded border border-outline-variant text-outline">2 PAUSADAS</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-outline border-b border-outline-variant">
+<th class="px-6 py-3 font-label-caps text-label-caps uppercase">Estado</th>
+<th class="px-6 py-3 font-label-caps text-label-caps uppercase">Parcela / Misión</th>
+<th class="px-6 py-3 font-label-caps text-label-caps uppercase">Cronograma</th>
+<th class="px-6 py-3 font-label-caps text-label-caps uppercase">Automatización</th>
+<th class="px-6 py-3 font-label-caps text-label-caps uppercase"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="mission-row transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-primary">LISTO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-md font-semibold">Sector Norte - Maíz</span>
+<span class="text-body-sm text-on-surface-variant italic">Escaneo Multiespectral</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono">Hoy, 14:00</span>
+<span class="font-label-caps text-label-caps text-outline">DIARIO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 font-label-caps text-label-caps text-on-surface">ON</span>
+</label>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="mission-row transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="font-label-caps text-label-caps text-outline">PAUSADO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-md font-semibold">Sector Sur - Soja</span>
+<span class="text-body-sm text-on-surface-variant italic">Control de Plagas (Spot Spray)</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono">Mañana, 07:30</span>
+<span class="font-label-caps text-label-caps text-outline">SEMANAL</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 font-label-caps text-label-caps text-outline">OFF</span>
+</label>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="mission-row transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-label-caps text-label-caps text-tertiary">PROGRAMADO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-md font-semibold">Invernadero 2</span>
+<span class="text-body-sm text-on-surface-variant italic">Riego de Precisión Automático</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono">Mié 15, 10:00</span>
+<span class="font-label-caps text-label-caps text-outline">QUINCENAL</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 font-label-caps text-label-caps text-on-surface">ON</span>
+</label>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="mission-row transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-primary">LISTO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-md font-semibold">Límite Perimetral</span>
+<span class="text-body-sm text-on-surface-variant italic">Vigilancia &amp; Seguridad</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono">Hoy, 22:00</span>
+<span class="font-label-caps text-label-caps text-outline">DIARIO</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 font-label-caps text-label-caps text-on-surface">ON</span>
+</label>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 4 de 12 misiones programadas</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-surface-variant text-body-sm">Anterior</button>
+<button class="px-3 py-1 border border-outline-variant rounded bg-primary text-on-primary font-bold text-body-sm">Siguiente</button>
+</div>
+</div>
+</div>
+<!-- Dashboard Analytics Placeholder -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-panel p-4 rounded flex items-center gap-4">
+<div class="p-3 bg-secondary-container/20 rounded">
+<span class="material-symbols-outlined text-secondary">bar_chart</span>
+</div>
+<div>
+<span class="block font-label-caps text-label-caps text-outline">TIEMPO DE VUELO (MES)</span>
+<span class="block font-headline-lg-mobile text-headline-lg-mobile">142.5 h</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded flex items-center gap-4">
+<div class="p-3 bg-tertiary-container/20 rounded">
+<span class="material-symbols-outlined text-tertiary">eco</span>
+</div>
+<div>
+<span class="block font-label-caps text-label-caps text-outline">CO2 COMPENSADO</span>
+<span class="block font-headline-lg-mobile text-headline-lg-mobile">1.2 Tons</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant w-full py-8 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-max-width mx-auto gap-4">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-title-md text-title-md text-outline">qhiro symbiotic</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">
+                    © 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.
+                </p>
+</div>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacidad</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Términos</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Soporte</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple form interaction simulation
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Procesando...';
+            btn.classList.add('brightness-90');
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Misión Programada';
+                btn.classList.replace('bg-primary', 'bg-tertiary');
+                btn.classList.replace('text-on-primary', 'text-on-tertiary');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-tertiary', 'bg-primary');
+                    btn.classList.replace('text-on-tertiary', 'text-on-primary');
+                    btn.classList.remove('brightness-90');
+                }, 2000);
+            }, 1500);
+        });
+
+        // Toggle Switch interaction
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const label = e.target.nextElementSibling.nextElementSibling;
+                if(e.target.checked) {
+                    label.textContent = "ON";
+                    label.classList.replace('text-outline', 'text-on-surface');
+                } else {
+                    label.textContent = "OFF";
+                    label.classList.replace('text-on-surface', 'text-outline');
+                }
+            });
+        });
+    </script>
+</body></html>

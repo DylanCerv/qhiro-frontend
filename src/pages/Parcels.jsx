@@ -23,6 +23,12 @@ export default function Parcels() {
   const [cropSavingId, setCropSavingId] = useState(null);
 
   const mapCenter = profile?.location ?? { lat: -0.1807, lng: -78.4678 };
+  const formatZoneLabel = (zoneId) => {
+    if (!zoneId) return 'Sin zona';
+    return zoneId
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (match) => match.toUpperCase());
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -176,7 +182,7 @@ export default function Parcels() {
                 <li key={parcel.parcelId} className="parcel-list-item">
                   <div className="parcel-list-main">
                     <strong>{parcel.name}</strong>
-                    <span className="parcel-zone">{parcel.zoneId}</span>
+                    <span className="parcel-zone">{formatZoneLabel(parcel.zoneId)}</span>
                   </div>
                   <CropTypeSelect
                     id={`crop-${parcel.parcelId}`}

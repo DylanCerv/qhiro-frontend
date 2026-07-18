@@ -21,17 +21,21 @@ export default function Dashboard() {
   const { selectedParcel, selectedParcelId, setSelectedParcelId } = useParcels();
   const [data, setData] = useState(null);
   const [liveAlerts, setLiveAlerts] = useState([]);
+  const [actionLogs, setActionLogs] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [retryingActionId, setRetryingActionId] = useState('');
 
   useEffect(() => {
     if (isAdmin) {
       setLoading(false);
       return;
     }
-    api
-      .getDashboard()
-      .then(setData)
+    Promise.all([api.getDashboard(), api.getActionLogs()])
+      .then(([dashboardData, actionData]) => {
+        setData(dashboardData);
+        setActionLogs(actionData.logs ?? []);
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [isAdmin]);
@@ -98,6 +102,31 @@ export default function Dashboard() {
 
   const activeParcel = selectedParcel ?? data.parcels?.[0] ?? null;
   const mapCenter = profile?.location ?? data.user?.location;
+  const parcelNameById = new Map((data.parcels ?? []).map((parcel) => [parcel.parcelId, parcel.name]));
+  const deviceNameById = new Map((data.devices ?? []).map((device) => [device.deviceId, device.name]));
+  const visibleActions = activeParcel
+    ? actionLogs.filter((action) => action.parcelId === activeParcel.parcelId)
+    : actionLogs;
+  const getActionStatusLabel = (status) => {
+    if (status === 'completed') return 'Solventado';
+    if (status === 'failed') return 'Requiere atención';
+    return 'Pendiente del centinela';
+  };
+
+  const handleRetryAction = async (actionId) => {
+    setRetryingActionId(actionId);
+    setError(null);
+    try {
+      await api.retryAction(actionId);
+      const [dashboardData, actionData] = await Promise.all([api.getDashboard(), api.getActionLogs()]);
+      setData(dashboardData);
+      setActionLogs(actionData.logs ?? []);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setRetryingActionId('');
+    }
+  };
 
   return (
     <div className="page">
@@ -138,11 +167,14 @@ export default function Dashboard() {
             <div className="stat-block">
               <p className="stat-value">{formatDate(data.nextScheduledFlight.nextRunAt)}</p>
               <p className="stat-label">
-                {ui.dashboard.parcelLabel}: {data.nextScheduledFlight.parcelId}
+                {ui.dashboard.parcelLabel}: {parcelNameById.get(data.nextScheduledFlight.parcelId) ?? 'Parcela'}
               </p>
               <p className="stat-label">
                 {formatFrequency(data.nextScheduledFlight.frequencyDays)}
               </p>
+              <Link to="/app/schedule" className="btn-secondary inline-link">
+                Ver programación
+              </Link>
             </div>
           ) : (
             <p className="empty-state">{ui.dashboard.noFlightsScheduled}</p>
@@ -165,6 +197,38 @@ export default function Dashboard() {
       <section className="card">
         <h2>{ui.dashboard.recentAlerts}</h2>
         <AlertList alerts={alertsToShow} />
+      </section>
+
+      <section className="card">
+        <h2>Estado de intervenciones</h2>
+        {visibleActions.length === 0 ? (
+          <p className="empty-state">Aún no hay intervenciones registradas para esta parcela.</p>
+        ) : (
+          <ul className="simple-list">
+            {visibleActions.slice(0, 5).map((action) => (
+              <li key={action.actionId}>
+                <strong>{action.action} · {parcelNameById.get(action.parcelId) ?? 'Parcela'}</strong>
+                <StatusBadge status={action.status} label={getActionStatusLabel(action.status)} />
+                <span>Dispositivo: {deviceNameById.get(action.deviceId) ?? 'Centinela'}</span>
+                <span>
+                  Finalización: {action.completedAt ? formatDate(action.completedAt) : 'Pendiente de confirmación'}
+                </span>
+                {action.status === 'pending' && (
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => handleRetryAction(action.actionId)}
+                    disabled={retryingActionId === action.actionId}
+                  >
+                    {retryingActionId === action.actionId ? 'Reintentando...' : 'Ejecutar acción'}
+                  </button>
+                )}
+                {action.error && <span>Error: {action.error}</span>}
+                {action.queueReason && <span>Motivo: {action.queueReason}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );

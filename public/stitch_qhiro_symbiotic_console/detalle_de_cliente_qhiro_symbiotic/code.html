@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#005228",
+                        "secondary-container": "#3398db",
+                        "surface-container-high": "#282a2c",
+                        "surface-variant": "#333537",
+                        "on-tertiary-fixed": "#00210c",
+                        "secondary-fixed-dim": "#92ccff",
+                        "on-tertiary": "#00391a",
+                        "surface-container": "#1e2022",
+                        "primary-fixed": "#6bfe9c",
+                        "tertiary-container": "#4bca78",
+                        "on-secondary": "#003351",
+                        "on-primary": "#003919",
+                        "on-secondary-container": "#002c47",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393b",
+                        "on-background": "#e2e2e5",
+                        "surface": "#121416",
+                        "primary-fixed-dim": "#4ae183",
+                        "on-tertiary-container": "#005127",
+                        "outline-variant": "#3d4a3e",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#00210c",
+                        "surface-tint": "#4ae183",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#005027",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#cce5ff",
+                        "on-secondary-fixed": "#001d31",
+                        "background": "#121416",
+                        "tertiary-fixed-dim": "#61de8a",
+                        "primary": "#54e98a",
+                        "surface-container-low": "#1a1c1e",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-surface-variant": "#bbcbbb",
+                        "tertiary": "#69e792",
+                        "secondary": "#92ccff",
+                        "inverse-surface": "#e2e2e5",
+                        "tertiary-fixed": "#7efba4",
+                        "inverse-primary": "#006d37",
+                        "outline": "#869486",
+                        "primary-container": "#2ecc71",
+                        "surface-container-highest": "#333537",
+                        "surface-container-lowest": "#0c0e10",
+                        "on-surface": "#e2e2e5",
+                        "surface-dim": "#121416",
+                        "inverse-on-surface": "#2f3133"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1600px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "title-md": ["Geist"],
+                        "label-caps": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script></head><body class="bg-background text-on-background min-h-screen flex">
+<!-- SideNavBar (Admin Shell) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-high border-r border-outline-variant flex flex-col p-unit z-50">
+<!-- Logo Section -->
+<div class="px-gutter py-8 flex items-center gap-4">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" alt="Qhiro Logo" class="w-10 h-10 object-contain">
+<span class="font-headline-lg text-tertiary tracking-tighter">qhiro</span>
+</div>
+<!-- Admin Header -->
+<div class="px-gutter mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">shield_person</span>
+</div>
+<div>
+<h2 class="font-label-caps text-on-surface">Admin Console</h2>
+<p class="text-xs text-on-surface-variant font-body-sm">Technical Operations</p>
+</div>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="flex-1 space-y-2 px-unit">
+<a href="#" class="flex items-center gap-4 px-4 py-3 bg-tertiary-container text-on-tertiary-container rounded-lg transition-all duration-200">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-caps">Clientes</span>
+</a>
+<a href="#" class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-caps">MQTT</span>
+</a>
+<a href="#" class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps">Simulador</span>
+</a>
+</nav>
+<!-- Footer CTA -->
+<div class="mt-auto p-gutter border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-error/10 hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-caps">Cerrar Sesión</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] flex-1 min-h-screen flex flex-col p-8 overflow-y-auto">
+<!-- Header / Breadcrumbs -->
+<header class="flex justify-between items-end mb-8">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="font-label-caps hover:text-tertiary cursor-pointer">Panel de Control</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label-caps hover:text-tertiary cursor-pointer">Clientes</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</div>
+<h1 class="font-headline-lg text-on-surface flex items-center gap-4">
+                    Finca Los Arroyos
+                    <span class="px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-label-caps">Suscripción Premium</span>
+</h1>
+<p class="text-on-surface-variant font-body-md mt-1">ID: #ARROYOS-2024-001 • Miembro desde Enero 2024</p>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-variant transition-all font-label-caps">
+<span class="material-symbols-outlined">visibility</span>
+                    Ver como Cliente
+                </button>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-error-container text-on-error-container hover:brightness-110 transition-all font-label-caps border border-error/20">
+<span class="material-symbols-outlined">block</span>
+                    Suspender Cuenta
+                </button>
+</div>
+</header>
+<!-- Bento Grid Summary -->
+<div class="grid grid-cols-12 gap-6 mb-8">
+<!-- Total Parcelas -->
+<div class="col-span-12 md:col-span-4 glass-card p-6 rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">potted_plant</span>
+</div>
+<span class="text-primary font-data-mono">+2 este mes</span>
+</div>
+<div>
+<span class="font-display-lg text-on-surface">24</span>
+<p class="font-label-caps text-on-surface-variant mt-1">Total Parcelas</p>
+</div>
+</div>
+<!-- Active Devices -->
+<div class="col-span-12 md:col-span-4 glass-card p-6 rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">sensors</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-on-surface-variant font-data-mono">112 Online</span>
+</div>
+</div>
+<div>
+<span class="font-display-lg text-on-surface">115</span>
+<p class="font-label-caps text-on-surface-variant mt-1">Dispositivos Activos</p>
+</div>
+</div>
+<!-- Total Activity -->
+<div class="col-span-12 md:col-span-4 glass-card p-6 rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary">query_stats</span>
+</div>
+<span class="text-on-surface-variant font-data-mono">4.2 TB Transferidos</span>
+</div>
+<div>
+<span class="font-display-lg text-on-surface">8.4k</span>
+<p class="font-label-caps text-on-surface-variant mt-1">Actividades / Sem</p>
+</div>
+</div>
+</div>
+<!-- Detailed Content Section -->
+<div class="grid grid-cols-12 gap-6 flex-1">
+<!-- Client Details & Stats -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- Activity Chart Placeholder -->
+<div class="glass-card rounded-xl p-6 flex-1 min-h-[400px] relative overflow-hidden group">
+<div class="flex justify-between items-center mb-8 relative z-10">
+<div>
+<h3 class="font-title-md text-on-surface">Historial de Telemetría</h3>
+<p class="text-body-sm text-on-surface-variant">Frecuencia de datos enviados (últimos 30 días)</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded bg-surface-variant text-on-surface text-xs font-label-caps">Día</span>
+<span class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant text-xs font-label-caps">Semana</span>
+</div>
+</div>
+<!-- Atmospheric Simulation for background -->
+<div class="absolute bottom-0 left-0 w-full h-1/2 opacity-20 pointer-events-none transition-opacity group-hover:opacity-40">
+<div class="w-full h-full" style="background-image: linear-gradient(0deg, rgba(84, 233, 138, 0.1) 0%, transparent 100%);"></div>
+</div>
+<div class="flex items-end justify-between h-48 gap-1 mt-12">
+<!-- Pseudo-chart bars -->
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[40%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[55%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[30%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[70%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[85%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[60%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[45%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-primary/60 rounded-t h-[95%]"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[50%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[65%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[40%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[30%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[80%] hover:bg-primary/40 transition-all"></div>
+<div class="flex-1 bg-outline-variant/30 rounded-t h-[75%] hover:bg-primary/40 transition-all"></div>
+</div>
+</div>
+<!-- Recent Logs Table -->
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-md text-on-surface">Logs del Sistema</h3>
+<button class="text-primary font-label-caps text-xs hover:underline">Exportar CSV</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-mono text-sm">
+<thead class="bg-surface-container-low text-on-surface-variant">
+<tr>
+<th class="px-6 py-4 font-label-caps">Evento</th>
+<th class="px-6 py-4 font-label-caps">Dispositivo</th>
+<th class="px-6 py-4 font-label-caps">Timestamp</th>
+<th class="px-6 py-4 font-label-caps">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 text-on-surface">Firmware Update Success</td>
+<td class="px-6 py-4 text-secondary">DRONE-AG-44</td>
+<td class="px-6 py-4 text-on-surface-variant">2024-05-24 14:02:11</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                            OK
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 text-on-surface">Manual Override Triggered</td>
+<td class="px-6 py-4 text-secondary">IRRIG-09</td>
+<td class="px-6 py-4 text-on-surface-variant">2024-05-24 13:45:04</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                            INFO
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 text-on-surface">Connection Timeout</td>
+<td class="px-6 py-4 text-secondary">SOIL-S-122</td>
+<td class="px-6 py-4 text-on-surface-variant">2024-05-24 12:10:55</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                            CRIT
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="px-6 py-4 text-on-surface">Login - Web Dashboard</td>
+<td class="px-6 py-4 text-secondary">User Interface</td>
+<td class="px-6 py-4 text-on-surface-variant">2024-05-24 09:12:33</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                            AUTH
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sidebar Info Panel -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Client Contact Info -->
+<div class="glass-card rounded-xl p-6">
+<h3 class="font-title-md text-on-surface mb-6">Información de Contacto</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-outline">account_circle</span>
+<div>
+<p class="text-xs font-label-caps text-on-surface-variant">Titular</p>
+<p class="text-on-surface">Carlos Javier Mendez</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-outline">mail</span>
+<div>
+<p class="text-xs font-label-caps text-on-surface-variant">Email</p>
+<p class="text-on-surface">c.mendez@losarroyos.com.ar</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-outline">location_on</span>
+<div>
+<p class="text-xs font-label-caps text-on-surface-variant">Ubicación</p>
+<p class="text-on-surface">Balcarce, Prov. Buenos Aires</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 rounded-lg border border-outline text-on-surface font-label-caps hover:bg-surface-variant transition-all">
+                        Editar Perfil
+                    </button>
+</div>
+<!-- Technical Status -->
+<div class="glass-card rounded-xl p-6">
+<h3 class="font-title-md text-on-surface mb-6">Estado Técnico</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-low border border-outline-variant/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">cloud_done</span>
+<span class="font-body-sm">API Gateway</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] bg-primary/20 text-primary font-bold">STABLE</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-low border border-outline-variant/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">memory</span>
+<span class="font-body-sm">MQTT Broker</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] bg-primary/20 text-primary font-bold">ONLINE</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-low border border-outline-variant/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">database</span>
+<span class="font-body-sm">Storage (Postgres)</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] bg-secondary/20 text-secondary font-bold">92% CAP</span>
+</div>
+</div>
+</div>
+<!-- Support Ticket -->
+<div class="bg-tertiary-container rounded-xl p-6 text-on-tertiary-container">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined">support_agent</span>
+<h3 class="font-title-md">Soporte Prioritario</h3>
+</div>
+<p class="text-sm opacity-90 mb-6">Este cliente tiene un SLA de respuesta de 2 horas. Hay 1 ticket abierto esperando respuesta.</p>
+<button class="w-full py-3 rounded-lg bg-on-tertiary-container text-tertiary-container font-label-caps hover:brightness-90 transition-all">
+                        Abrir Consola de Tickets
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Footer -->
+<footer class="fixed bottom-0 right-0 left-[280px] bg-surface-container-lowest border-t border-outline-variant py-4 px-margin-desktop flex justify-between items-center z-40">
+<div class="text-on-surface-variant font-body-sm">
+            © 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.
+        </div>
+<div class="flex gap-6">
+<a href="#" class="text-on-surface-variant font-body-sm hover:text-on-surface transition-colors">Privacidad</a>
+<a href="#" class="text-on-surface-variant font-body-sm hover:text-on-surface transition-colors">Términos</a>
+<a href="#" class="text-on-surface-variant font-body-sm hover:text-on-surface transition-colors">Soporte</a>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for rows
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.add('scale-[0.99]');
+                setTimeout(() => row.classList.remove('scale-[0.99]'), 150);
+            });
+        });
+    </script>
+</body></html>

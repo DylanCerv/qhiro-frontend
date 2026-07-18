@@ -1,19 +1,29 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/client';
 import StatusBadge from '../components/StatusBadge';
+import { useParcels } from '../context/ParcelContext';
 import { formatDate, getDeviceStatusLabel, getDeviceTypeLabel, ui } from '../i18n/es';
 
-const deviceTypeOptions = ['drone', 'sensor', 'nest'];
+const deviceTypeOptions = ['drone', 'sensor', 'nest', 'sentinel'];
+const emptyDeviceForm = {
+  name: '',
+  type: 'sensor',
+  status: 'online',
+  parcelId: '',
+  zoneId: '',
+};
 
 export default function Devices() {
+  const { parcels } = useParcels();
   const [devices, setDevices] = useState([]);
-  const [form, setForm] = useState({ name: '', type: 'sensor' });
+  const [form, setForm] = useState(emptyDeviceForm);
   const [editingDeviceId, setEditingDeviceId] = useState(null);
-  const [editForm, setEditForm] = useState({ name: '', type: 'sensor' });
+  const [editForm, setEditForm] = useState(emptyDeviceForm);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const getParcelName = (parcelId) => parcels.find((parcel) => parcel.parcelId === parcelId)?.name ?? 'Parcela';
 
   const loadDevices = () =>
     api
@@ -25,15 +35,39 @@ export default function Devices() {
     loadDevices().finally(() => setLoading(false));
   }, []);
 
+  const hydrateSentinelDefaults = (nextForm) => {
+    if (nextForm.type !== 'sentinel') return nextForm;
+    const selectedParcel = parcels.find((parcel) => parcel.parcelId === nextForm.parcelId) ?? parcels[0];
+    return {
+      ...nextForm,
+      parcelId: nextForm.parcelId || selectedParcel?.parcelId || '',
+      zoneId: nextForm.zoneId || selectedParcel?.zoneId || '',
+    };
+  };
+
+  const buildDevicePayload = (source) => {
+    const payload = {
+      name: source.name,
+      type: source.type,
+      status: source.status ?? 'online',
+    };
+    if (source.type !== 'sentinel') return payload;
+    return {
+      ...payload,
+      parcelId: source.parcelId,
+      zoneId: source.zoneId || undefined,
+    };
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
     setError('');
     setMessage('');
     try {
-      const result = await api.createDevice(form);
+      const result = await api.createDevice(buildDevicePayload(form));
       setDevices((prev) => [...prev, result.device]);
-      setForm({ name: '', type: 'sensor' });
+      setForm(emptyDeviceForm);
       setMessage(ui.devices.added);
     } catch (err) {
       setError(err.message);
@@ -44,14 +78,20 @@ export default function Devices() {
 
   const startEdit = (device) => {
     setEditingDeviceId(device.deviceId);
-    setEditForm({ name: device.name, type: device.type });
+    setEditForm({
+      name: device.name,
+      type: device.type,
+      status: device.status,
+      parcelId: device.parcelId ?? '',
+      zoneId: device.zoneId ?? '',
+    });
     setMessage('');
     setError('');
   };
 
   const cancelEdit = () => {
     setEditingDeviceId(null);
-    setEditForm({ name: '', type: 'sensor' });
+    setEditForm(emptyDeviceForm);
   };
 
   const handleUpdate = async (event) => {
@@ -60,12 +100,30 @@ export default function Devices() {
     setError('');
     setMessage('');
     try {
-      const result = await api.updateDevice(editingDeviceId, editForm);
+      const result = await api.updateDevice(editingDeviceId, buildDevicePayload(editForm));
       setDevices((prev) =>
         prev.map((device) => (device.deviceId === editingDeviceId ? result.device : device)),
       );
       cancelEdit();
       setMessage(ui.devices.updated);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleToggleStatus = async (device) => {
+    setSubmitting(true);
+    setError('');
+    setMessage('');
+    try {
+      const nextStatus = device.status === 'online' ? 'offline' : 'online';
+      const result = await api.toggleDeviceStatus(device.deviceId, nextStatus);
+      setDevices((prev) =>
+        prev.map((item) => (item.deviceId === device.deviceId ? result.device : item)),
+      );
+      setMessage(nextStatus === 'online' ? 'Dispositivo conectado.' : 'Dispositivo desconectado.');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -105,8 +163,8 @@ export default function Devices() {
                 value={editingDeviceId ? editForm.type : form.type}
                 onChange={(e) =>
                   editingDeviceId
-                    ? setEditForm({ ...editForm, type: e.target.value })
-                    : setForm({ ...form, type: e.target.value })
+                    ? setEditForm(hydrateSentinelDefaults({ ...editForm, type: e.target.value }))
+                    : setForm(hydrateSentinelDefaults({ ...form, type: e.target.value }))
                 }
               >
                 {deviceTypeOptions.map((type) => (
@@ -117,6 +175,50 @@ export default function Devices() {
               </select>
             </label>
           </div>
+          {(editingDeviceId ? editForm.type : form.type) === 'sentinel' && (
+            <>
+              <div className="grid-2">
+                <label>
+                  Parcela asignada
+                  <select
+                    value={editingDeviceId ? editForm.parcelId : form.parcelId}
+                    onChange={(e) => {
+                      const selectedParcel = parcels.find((parcel) => parcel.parcelId === e.target.value);
+                      const next = {
+                        ...(editingDeviceId ? editForm : form),
+                        parcelId: e.target.value,
+                        zoneId: selectedParcel?.zoneId ?? '',
+                      };
+                      editingDeviceId ? setEditForm(next) : setForm(next);
+                    }}
+                    required
+                  >
+                    <option value="">Seleccionar parcela</option>
+                    {parcels.map((parcel) => (
+                      <option key={parcel.parcelId} value={parcel.parcelId}>
+                        {parcel.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Zona
+                  <input
+                    value={editingDeviceId ? editForm.zoneId : form.zoneId}
+                    onChange={(e) =>
+                      editingDeviceId
+                        ? setEditForm({ ...editForm, zoneId: e.target.value })
+                        : setForm({ ...form, zoneId: e.target.value })
+                    }
+                    placeholder="Ej. zone_a"
+                  />
+                </label>
+              </div>
+              <p className="map-meta">
+                MVP: solo se permite un centinela por parcela. El backend enviará automáticamente la orden al centinela registrado para esa parcela.
+              </p>
+            </>
+          )}
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={submitting}>
               {editingDeviceId ? ui.devices.saveChanges : ui.devices.addButton}
@@ -143,7 +245,6 @@ export default function Devices() {
               />
             </div>
             <p className="device-name">{device.name}</p>
-            <p className="device-id">{device.deviceId}</p>
             <div className="battery-bar">
               <div className="battery-fill" style={{ width: `${device.batteryLevel}%` }} />
             </div>
@@ -153,9 +254,18 @@ export default function Devices() {
             <p className="device-meta">
               {ui.devices.lastSeen}: {formatDate(device.lastSeenAt)}
             </p>
+            {device.type === 'sentinel' && (
+              <div className="simple-list">
+                <span>Parcela: {device.parcelId ? getParcelName(device.parcelId) : 'Sin asignar'}</span>
+                <span>Zona: {device.zoneId ? 'Configurada' : 'Sin zona'}</span>
+              </div>
+            )}
             <div className="form-actions">
               <button type="button" className="btn-secondary" onClick={() => startEdit(device)}>
                 {ui.common.edit}
+              </button>
+              <button type="button" className="btn-secondary" onClick={() => handleToggleStatus(device)}>
+                {device.status === 'online' ? 'Desconectar' : 'Conectar'}
               </button>
             </div>
           </section>

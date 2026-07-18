@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { api } from '../api/client';
 import StatusBadge from '../components/StatusBadge';
 import { ui } from '../i18n/es';
@@ -117,16 +117,32 @@ export default function MqttDiagnostics() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('drone');
   const [submitting, setSubmitting] = useState(false);
   const [telemetrySubmitting, setTelemetrySubmitting] = useState(false);
   const [testFlightSubmitting, setTestFlightSubmitting] = useState(false);
   const [fullFlowSubmitting, setFullFlowSubmitting] = useState(false);
+  const [selectedActionId, setSelectedActionId] = useState('');
+  const [actionAckStatus, setActionAckStatus] = useState('completed');
+  const [actionAckDetails, setActionAckDetails] = useState('Injection completed successfully.');
+  const [actionAckError, setActionAckError] = useState('');
+  const [actionAckSubmitting, setActionAckSubmitting] = useState(false);
 
   const loadStatus = async () => {
     setError('');
     const response = await api.getMqttStatus();
     setStatus(response.mqtt);
   };
+
+  const refreshClientLogs = useCallback(async (clientUserId = userId) => {
+    if (!clientUserId) return;
+    const [telemetryResponse, actionResponse] = await Promise.all([
+      api.getClientTelemetryLogs(clientUserId),
+      api.getClientActionLogs(clientUserId),
+    ]);
+    setLogs(telemetryResponse.logs ?? []);
+    setActionLogs(actionResponse.logs ?? []);
+  }, [userId]);
 
   useEffect(() => {
     Promise.all([loadStatus(), api.getClients()])
@@ -167,21 +183,22 @@ export default function MqttDiagnostics() {
         setError(err.message);
       });
 
-    Promise.all([api.getClientTelemetryLogs(userId), api.getClientActionLogs(userId)])
-      .then(([telemetryResponse, actionResponse]) => {
-        setLogs(telemetryResponse.logs ?? []);
-        setActionLogs(actionResponse.logs ?? []);
-      })
+    refreshClientLogs(userId)
       .catch(() => {
         setLogs([]);
         setActionLogs([]);
       });
-  }, [userId]);
+  }, [refreshClientLogs, userId]);
 
   useEffect(() => {
     const device = devices.find((item) => item.deviceId === deviceId);
     if (device?.type) setDeviceType(device.type);
   }, [deviceId, devices]);
+
+  useEffect(() => {
+    const pendingAction = actionLogs.find((log) => log.status === 'pending');
+    setSelectedActionId(pendingAction?.actionId ?? actionLogs[0]?.actionId ?? '');
+  }, [actionLogs]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -262,12 +279,7 @@ export default function MqttDiagnostics() {
       });
       setStatus(response.mqtt);
       setResult(`${ui.mqttDiagnostics.sent} ${ui.mqttDiagnostics.topic}: ${response.topic}`);
-      const [logsResponse, actionResponse] = await Promise.all([
-        api.getClientTelemetryLogs(userId),
-        api.getClientActionLogs(userId),
-      ]);
-      setLogs(logsResponse.logs ?? []);
-      setActionLogs(actionResponse.logs ?? []);
+      await refreshClientLogs();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -343,12 +355,7 @@ export default function MqttDiagnostics() {
       setResult(`Flujo completo publicado. Vuelo: ${response.flight.flightId}. Topic: ${response.topic}`);
 
       setTimeout(async () => {
-        const [logsResponse, actionResponse] = await Promise.all([
-          api.getClientTelemetryLogs(userId),
-          api.getClientActionLogs(userId),
-        ]);
-        setLogs(logsResponse.logs ?? []);
-        setActionLogs(actionResponse.logs ?? []);
+        await refreshClientLogs(userId);
       }, 1200);
     } catch (err) {
       setError(err.message);
@@ -357,7 +364,38 @@ export default function MqttDiagnostics() {
     }
   };
 
+  const handleActionAckSubmit = async (event) => {
+    event.preventDefault();
+    setActionAckSubmitting(true);
+    setResult('');
+    setError('');
+    try {
+      const action = actionLogs.find((log) => log.actionId === selectedActionId);
+      if (!action) {
+        throw new Error('Selecciona una acción registrada para simular el ACK del centinela.');
+      }
+
+      const response = await api.sendAdminActionAck({
+        userId,
+        deviceId: action.deviceId,
+        actionId: action.actionId,
+        status: actionAckStatus,
+        details: actionAckStatus === 'completed' ? actionAckDetails : undefined,
+        error: actionAckStatus === 'failed' ? actionAckError : undefined,
+        missingResource: actionAckStatus === 'failed' ? actionAckDetails : undefined,
+      });
+      setStatus(response.mqtt);
+      setResult(`ACK de centinela publicado. Topic: ${response.topic}`);
+      setTimeout(() => refreshClientLogs(userId).catch((err) => setError(err.message)), 800);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setActionAckSubmitting(false);
+    }
+  };
+
   const selectedClient = clients.find((client) => client.userId === userId);
+  const selectedAction = actionLogs.find((log) => log.actionId === selectedActionId);
 
   if (loading) return <p className="page-state">{ui.common.loadingSession}</p>;
 
@@ -410,205 +448,312 @@ export default function MqttDiagnostics() {
       </section>
 
       <section className="card">
-        <h2>Contrato de integración del dron</h2>
-        <p className="map-meta">
-          El backend debe estar corriendo siempre, incluso si el frontend está cerrado. El dron se conecta al broker MQTT y publica en un topic restringido por usuario y dispositivo.
-        </p>
-        <div className="simple-list">
-          <span>1. Registrar el dispositivo en Qhiro desde la sección Dispositivos.</span>
-          <span>2. Copiar userId, deviceId y deviceType del dispositivo asignado.</span>
-          <span>3. Conectar el dron al broker con usuario/contraseña MQTT.</span>
-          <span>4. Publicar telemetría en qhiro/users/&lcub;userId&rcub;/devices/&lcub;deviceId&rcub;/&lcub;deviceType&rcub;/telemetry.</span>
-          <span>5. El backend valida pertenencia y tipo antes de guardar datos o llamar a IA.</span>
-          <span>6. Si la IA ordena una acción, el backend publica un comando con actionId en qhiro/users/&lcub;userId&rcub;/devices/&lcub;sensorId&rcub;/command.</span>
-          <span>7. El centinela/sensor debe confirmar fin de acción en qhiro/users/&lcub;userId&rcub;/devices/&lcub;sensorId&rcub;/actions/&lcub;actionId&rcub;/ack con status completed o failed.</span>
-        </div>
-      </section>
-
-      <section className="card">
-        <h2>Formatos MQTT soportados</h2>
-        <p className="map-meta">
-          Haz clic en una plantilla para cargarla con la parcela seleccionada. El `flightId` queda vacío porque debe ser un vuelo real creado por el backend; inventarlo provoca rechazo.
-        </p>
         <div className="form-actions">
-          {telemetryTemplates.map((template) => (
-            <button
-              key={template.id}
-              type="button"
-              className="btn-secondary"
-              onClick={() => applyTemplate(template)}
-            >
-              <strong>{template.label}</strong>
-              <span>{template.description}</span>
-            </button>
-          ))}
+          <button
+            type="button"
+            className={activeTab === 'drone' ? 'btn-primary' : 'btn-secondary'}
+            onClick={() => setActiveTab('drone')}
+          >
+            Dron y telemetría
+          </button>
+          <button
+            type="button"
+            className={activeTab === 'sentinel' ? 'btn-primary' : 'btn-secondary'}
+            onClick={() => setActiveTab('sentinel')}
+          >
+            Centinela y acciones
+          </button>
         </div>
       </section>
 
-      <section className="card">
-        <h2>Publicar telemetría validada</h2>
-        <form className="form" onSubmit={handleTelemetrySubmit}>
-          <div className="grid-2">
-            <label>
-              Cliente
-              <select value={userId} onChange={(event) => setUserId(event.target.value)} required>
-                <option value="">Seleccionar cliente</option>
-                {clients.map((client) => (
-                  <option key={client.userId} value={client.userId}>
-                    {client.displayName} · {client.email}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              userId
-              <input value={userId} readOnly />
-            </label>
-            <label>
-              Dispositivo
-              <select value={deviceId} onChange={(event) => setDeviceId(event.target.value)} required>
-                <option value="">Seleccionar dispositivo</option>
-                {devices.map((device) => (
-                  <option key={device.deviceId} value={device.deviceId}>
-                    {device.name} · {device.type} · {device.deviceId}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Parcela
-              <select value={parcelId} onChange={(event) => setParcelId(event.target.value)}>
-                <option value="">Sin parcela</option>
-                {parcels.map((parcel) => (
-                  <option key={parcel.parcelId} value={parcel.parcelId}>
-                    {parcel.name} · {parcel.parcelId}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              deviceId
-              <input value={deviceId} readOnly />
-            </label>
-            <label>
-              deviceType
-              <input value={deviceType} readOnly />
-            </label>
-            <label>
-              Topic resultante
-              <input
-                readOnly
-                value={
-                  userId && deviceId
-                    ? `qhiro/users/${userId}/devices/${deviceId}/${deviceType}/telemetry`
-                    : ''
-                }
-              />
-            </label>
-          </div>
-          {selectedClient && (
+      {activeTab === 'drone' && (
+        <>
+          <section className="card">
+            <h2>Contrato de integración del dron</h2>
             <p className="map-meta">
-              Cliente seleccionado: {selectedClient.displayName} · {selectedClient.email}
+              El backend debe estar corriendo siempre, incluso si el frontend está cerrado. El dron se conecta al broker MQTT y publica en un topic restringido por usuario y dispositivo.
             </p>
-          )}
-          {userId && devices.length === 0 && (
-            <p className="form-error">
-              Este cliente no tiene dispositivos registrados. Registra un dron/sensor/nido antes de probar MQTT.
-            </p>
-          )}
-          <label>
-            Payload JSON
-            <textarea
-              rows="16"
-              value={payloadText}
-              onChange={(event) => setPayloadText(event.target.value)}
-              spellCheck={false}
-              required
-            />
-          </label>
-          <div className="form-actions">
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={handleCreateTestFlight}
-              disabled={testFlightSubmitting}
-            >
-              {testFlightSubmitting ? 'Creando vuelo de prueba...' : 'Crear vuelo de prueba y rellenar flightId'}
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={handleRunFullDroneFlow}
-              disabled={fullFlowSubmitting}
-            >
-              {fullFlowSubmitting ? 'Ejecutando flujo completo...' : 'Ejecutar flujo completo como dron'}
-            </button>
-          </div>
-          <button
-            type="submit"
-            className="btn-primary"
-            disabled={telemetrySubmitting || !userId || !deviceId}
-          >
-            Publicar telemetría
-          </button>
-        </form>
-      </section>
+            <div className="simple-list">
+              <span>1. Registrar el dispositivo en Qhiro desde la sección Dispositivos.</span>
+              <span>2. Copiar userId, deviceId y deviceType del dispositivo asignado.</span>
+              <span>3. Conectar el dron al broker con usuario/contraseña MQTT.</span>
+              <span>4. Publicar telemetría en qhiro/users/&lcub;userId&rcub;/devices/&lcub;deviceId&rcub;/&lcub;deviceType&rcub;/telemetry.</span>
+              <span>5. El backend valida pertenencia y tipo antes de guardar datos o llamar a IA.</span>
+              <span>6. Si la IA ordena una acción, el backend publica un comando con actionId al centinela objetivo.</span>
+            </div>
+          </section>
 
-      <section className="card">
-        <h2>Registros recientes de procesamiento</h2>
-        {logs.length === 0 ? (
-          <p className="empty-state">Aún no hay telemetría procesada para este cliente.</p>
-        ) : (
-          <ul className="simple-list">
-            {logs.map((log) => (
-              <li key={log.logId}>
-                <strong>
-                  {log.deviceType} · {log.deviceId}
-                </strong>
-                <span>Estado: {log.status}</span>
-                <span>Duración: {log.durationMs} ms</span>
-                <span>Parcela: {log.parcelId ?? 'N/A'}</span>
-                <span>Vuelo: {log.flightId ?? 'N/A'}</span>
-                <span>Acciones: {log.actions?.length ? log.actions.join(', ') : 'Ninguna'}</span>
-                {log.aiResponse && (
-                  <span>
-                    IA: severidad {log.aiResponse.severity} · {log.aiResponse.recommendedAction}
-                  </span>
+          <section className="card">
+            <h2>Formatos MQTT soportados</h2>
+            <p className="map-meta">
+              Haz clic en una plantilla para cargarla con la parcela seleccionada. El `flightId` queda vacío porque debe ser un vuelo real creado por el backend; inventarlo provoca rechazo.
+            </p>
+            <div className="form-actions">
+              {telemetryTemplates.map((template) => (
+                <button
+                  key={template.id}
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => applyTemplate(template)}
+                >
+                  <strong>{template.label}</strong>
+                  <span>{template.description}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="card">
+            <h2>Publicar telemetría validada</h2>
+            <form className="form" onSubmit={handleTelemetrySubmit}>
+              <div className="grid-2">
+                <label>
+                  Cliente
+                  <select value={userId} onChange={(event) => setUserId(event.target.value)} required>
+                    <option value="">Seleccionar cliente</option>
+                    {clients.map((client) => (
+                      <option key={client.userId} value={client.userId}>
+                        {client.displayName} · {client.email}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  userId
+                  <input value={userId} readOnly />
+                </label>
+                <label>
+                  Dispositivo
+                  <select value={deviceId} onChange={(event) => setDeviceId(event.target.value)} required>
+                    <option value="">Seleccionar dispositivo</option>
+                    {devices.map((device) => (
+                      <option key={device.deviceId} value={device.deviceId}>
+                        {device.name} · {device.type} · {device.deviceId}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Parcela
+                  <select value={parcelId} onChange={(event) => setParcelId(event.target.value)}>
+                    <option value="">Sin parcela</option>
+                    {parcels.map((parcel) => (
+                      <option key={parcel.parcelId} value={parcel.parcelId}>
+                        {parcel.name} · {parcel.parcelId}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  deviceId
+                  <input value={deviceId} readOnly />
+                </label>
+                <label>
+                  deviceType
+                  <input value={deviceType} readOnly />
+                </label>
+                <label>
+                  Topic resultante
+                  <input
+                    readOnly
+                    value={
+                      userId && deviceId
+                        ? `qhiro/users/${userId}/devices/${deviceId}/${deviceType}/telemetry`
+                        : ''
+                    }
+                  />
+                </label>
+              </div>
+              {selectedClient && (
+                <p className="map-meta">
+                  Cliente seleccionado: {selectedClient.displayName} · {selectedClient.email}
+                </p>
+              )}
+              {userId && devices.length === 0 && (
+                <p className="form-error">
+                  Este cliente no tiene dispositivos registrados. Registra un dron/sensor/nido antes de probar MQTT.
+                </p>
+              )}
+              <label>
+                Payload JSON
+                <textarea
+                  rows="16"
+                  value={payloadText}
+                  onChange={(event) => setPayloadText(event.target.value)}
+                  spellCheck={false}
+                  required
+                />
+              </label>
+              <div className="form-actions">
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={handleCreateTestFlight}
+                  disabled={testFlightSubmitting}
+                >
+                  {testFlightSubmitting ? 'Creando vuelo de prueba...' : 'Crear vuelo de prueba y rellenar flightId'}
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={handleRunFullDroneFlow}
+                  disabled={fullFlowSubmitting}
+                >
+                  {fullFlowSubmitting ? 'Ejecutando flujo completo...' : 'Ejecutar flujo completo como dron'}
+                </button>
+              </div>
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={telemetrySubmitting || !userId || !deviceId}
+              >
+                Publicar telemetría
+              </button>
+            </form>
+          </section>
+
+          <section className="card">
+            <h2>Registros recientes de procesamiento</h2>
+            {logs.length === 0 ? (
+              <p className="empty-state">Aún no hay telemetría procesada para este cliente.</p>
+            ) : (
+              <ul className="simple-list">
+                {logs.map((log) => (
+                  <li key={log.logId}>
+                    <strong>
+                      {log.deviceType} · {log.deviceId}
+                    </strong>
+                    <span>Estado: {log.status}</span>
+                    <span>Duración: {log.durationMs} ms</span>
+                    <span>Parcela: {log.parcelId ?? 'N/A'}</span>
+                    <span>Vuelo: {log.flightId ?? 'N/A'}</span>
+                    <span>Acciones: {log.actions?.length ? log.actions.join(', ') : 'Ninguna'}</span>
+                    {log.aiResponse && (
+                      <span>
+                        IA: severidad {log.aiResponse.severity} · {log.aiResponse.recommendedAction}
+                      </span>
+                    )}
+                    {log.validationMessage && <span>Detalle: {log.validationMessage}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </>
+      )}
+
+      {activeTab === 'sentinel' && (
+        <>
+          <section className="card">
+            <h2>Contrato del centinela</h2>
+            <p className="map-meta">
+              El centinela escucha comandos MQTT del backend, ejecuta la acción física y confirma por ACK. No debe llamar endpoints HTTP para cerrar acciones.
+            </p>
+            <div className="simple-list">
+              <span>1. Suscribirse a qhiro/users/&lcub;userId&rcub;/devices/&lcub;deviceId&rcub;/command.</span>
+              <span>2. Recibir command con actionId, action, parcelId, zoneId y npkFormula.</span>
+              <span>3. Validar recursos físicos: NPK, presión, válvula, batería, seguridad.</span>
+              <span>4. Ejecutar o rechazar la acción.</span>
+              <span>5. Publicar ACK en qhiro/users/&lcub;userId&rcub;/devices/&lcub;deviceId&rcub;/actions/&lcub;actionId&rcub;/ack.</span>
+            </div>
+          </section>
+
+          <section className="card">
+            <h2>Simular respuesta del centinela</h2>
+            <p className="map-meta">
+              Esto publica un ACK por MQTT como lo haría el centinela real. El frontend no cierra la acción; el backend la finaliza cuando recibe este mensaje por el broker.
+            </p>
+            {actionLogs.length === 0 ? (
+              <p className="empty-state">Primero ejecuta un análisis que genere una acción de inyección.</p>
+            ) : (
+              <form className="form" onSubmit={handleActionAckSubmit}>
+                <label>
+                  Acción a confirmar
+                  <select value={selectedActionId} onChange={(event) => setSelectedActionId(event.target.value)} required>
+                    {actionLogs.map((log) => (
+                      <option key={log.actionId} value={log.actionId}>
+                        {log.status} · {log.action} · {log.deviceId} · {log.actionId}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {selectedAction && (
+                  <div className="simple-list">
+                    <span>Topic ACK: qhiro/users/{userId}/devices/{selectedAction.deviceId}/actions/{selectedAction.actionId}/ack</span>
+                    <span>Parcela: {selectedAction.parcelId}</span>
+                    <span>Zona: {selectedAction.zoneId}</span>
+                  </div>
                 )}
-                {log.validationMessage && <span>Detalle: {log.validationMessage}</span>}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                <div className="grid-2">
+                  <label>
+                    Resultado
+                    <select
+                      value={actionAckStatus}
+                      onChange={(event) => setActionAckStatus(event.target.value)}
+                    >
+                      <option value="completed">Completado</option>
+                      <option value="failed">Fallido</option>
+                    </select>
+                  </label>
+                  <label>
+                    Detalle o recurso faltante
+                    <input
+                      value={actionAckDetails}
+                      onChange={(event) => setActionAckDetails(event.target.value)}
+                      placeholder="Ej. Inyección completada o faltó NPK"
+                    />
+                  </label>
+                </div>
+                {actionAckStatus === 'failed' && (
+                  <label>
+                    Error técnico
+                    <input
+                      value={actionAckError}
+                      onChange={(event) => setActionAckError(event.target.value)}
+                      placeholder="Ej. Baja presión en válvula"
+                    />
+                  </label>
+                )}
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={actionAckSubmitting || !selectedActionId}
+                >
+                  {actionAckSubmitting ? 'Publicando ACK...' : 'Publicar ACK del centinela'}
+                </button>
+              </form>
+            )}
+          </section>
 
-      <section className="card">
-        <h2>Registros reales de acciones</h2>
-        <p className="map-meta">
-          Estos estados no los calcula el frontend. El backend los marca como pendientes al enviar la orden y los finaliza solo cuando llega un ACK MQTT del dispositivo.
-        </p>
-        {actionLogs.length === 0 ? (
-          <p className="empty-state">Aún no hay acciones registradas para este cliente.</p>
-        ) : (
-          <ul className="simple-list">
-            {actionLogs.map((log) => (
-              <li key={log.actionId}>
-                <strong>
-                  {log.action} · {log.deviceId}
-                </strong>
-                <span>Estado: {log.status}</span>
-                <span>Acción ID: {log.actionId}</span>
-                <span>Parcela: {log.parcelId}</span>
-                <span>Zona: {log.zoneId}</span>
-                <span>Inicio: {log.startedAt}</span>
-                <span>Finalizó: {log.completedAt ?? 'Pendiente de ACK'}</span>
-                <span>Duración hasta finalización: {log.durationMs ? `${log.durationMs} ms` : 'Pendiente'}</span>
-                {log.error && <span>Error: {log.error}</span>}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+          <section className="card">
+            <h2>Registros reales de acciones</h2>
+            <p className="map-meta">
+              Estos estados no los calcula el frontend. El backend los marca como pendientes al enviar la orden y los finaliza solo cuando llega un ACK MQTT del dispositivo.
+            </p>
+            {actionLogs.length === 0 ? (
+              <p className="empty-state">Aún no hay acciones registradas para este cliente.</p>
+            ) : (
+              <ul className="simple-list">
+                {actionLogs.map((log) => (
+                  <li key={log.actionId}>
+                    <strong>
+                      {log.action} · {log.deviceId}
+                    </strong>
+                    <span>Estado: {log.status}</span>
+                    <span>Acción ID: {log.actionId}</span>
+                    <span>Parcela: {log.parcelId}</span>
+                    <span>Zona: {log.zoneId}</span>
+                    <span>Inicio: {log.startedAt}</span>
+                    <span>Finalizó: {log.completedAt ?? 'Pendiente de ACK'}</span>
+                    <span>Duración hasta finalización: {log.durationMs ? `${log.durationMs} ms` : 'Pendiente'}</span>
+                    {log.error && <span>Error: {log.error}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </>
+      )}
     </div>
   );
 }

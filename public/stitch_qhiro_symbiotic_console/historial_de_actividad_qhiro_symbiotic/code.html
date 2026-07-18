@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#005228",
+                      "secondary-container": "#3398db",
+                      "surface-container-high": "#282a2c",
+                      "surface-variant": "#333537",
+                      "on-tertiary-fixed": "#00210c",
+                      "secondary-fixed-dim": "#92ccff",
+                      "on-tertiary": "#00391a",
+                      "surface-container": "#1e2022",
+                      "primary-fixed": "#6bfe9c",
+                      "tertiary-container": "#4bca78",
+                      "on-secondary": "#003351",
+                      "on-primary": "#003919",
+                      "on-secondary-container": "#002c47",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#37393b",
+                      "on-background": "#e2e2e5",
+                      "surface": "#121416",
+                      "primary-fixed-dim": "#4ae183",
+                      "on-tertiary-container": "#005127",
+                      "outline-variant": "#3d4a3e",
+                      "error-container": "#93000a",
+                      "on-primary-fixed": "#00210c",
+                      "surface-tint": "#4ae183",
+                      "on-tertiary-fixed-variant": "#005228",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#005027",
+                      "on-error": "#690005",
+                      "secondary-fixed": "#cce5ff",
+                      "on-secondary-fixed": "#001d31",
+                      "background": "#121416",
+                      "tertiary-fixed-dim": "#61de8a",
+                      "primary": "#54e98a",
+                      "surface-container-low": "#1a1c1e",
+                      "on-secondary-fixed-variant": "#004b73",
+                      "on-surface-variant": "#bbcbbb",
+                      "tertiary": "#69e792",
+                      "secondary": "#92ccff",
+                      "inverse-surface": "#e2e2e5",
+                      "tertiary-fixed": "#7efba4",
+                      "inverse-primary": "#006d37",
+                      "outline": "#869486",
+                      "primary-container": "#2ecc71",
+                      "surface-container-highest": "#333537",
+                      "surface-container-lowest": "#0c0e10",
+                      "on-surface": "#e2e2e5",
+                      "surface-dim": "#121416",
+                      "inverse-on-surface": "#2f3133"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "max-width": "1600px",
+                      "gutter": "16px",
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Geist"],
+                      "body-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "headline-lg-mobile": ["Geist"],
+                      "body-sm": ["Geist"],
+                      "data-mono": ["Geist"],
+                      "title-md": ["Geist"],
+                      "label-caps": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="flex flex-col min-h-screen">
+<!-- TopNavBar: Product shell based on JSON logic -->
+<header class="bg-surface-container border-b border-outline-variant docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center px-margin-desktop w-full h-14">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" class="w-8 h-8 rounded-full" alt="Qhiro Logo">
+<span class="font-title-md text-title-md font-black text-primary">qhiro</span>
+</div>
+<nav class="hidden md:flex gap-6 items-center">
+<a href="#" class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 px-3 py-1 transition-all">Panel</a>
+<a href="#" class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 px-3 py-1 transition-all">Parcelas</a>
+<a href="#" class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 px-3 py-1 transition-all">Programación</a>
+<a href="#" class="text-primary font-bold border-b-2 border-primary font-body-sm text-body-sm px-3 py-1">Actividad</a>
+<a href="#" class="text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 px-3 py-1 transition-all">Dispositivos</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input type="text" placeholder="Buscar actividad..." class="bg-surface-container-low border border-outline-variant rounded-lg pl-9 pr-4 py-1.5 text-body-sm w-64 focus:border-primary focus:ring-0">
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full">settings</button>
+<img class="w-8 h-8 rounded-full border border-outline object-cover" data-alt="Close up professional portrait of a senior agronomist wearing a dark tactical field vest, sharp focus, clean office lighting with a hint of natural field light from a window. Cinematic tech aesthetic, high resolution, dark mode compatible lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCborGUxdLJqZv-f9gXHg9ikoMFT5Lhohw2tb8A712UtGgONq66j4u5BeqQS7qw0mIxUGNmRnWbqyzorVByqTmbRyMD2VwBDJjslsh6SCGRM5FDFKqzRyZJjNLvNerZoSfJxgTdJaGqnBUA1hO6GRcY9-0UI2WOk01hvO1z6g_M30haAews3LtSCfXxooRr93P6j-HYBTfNn9D4QvhXpfI1EiVnE_Bp5uRspsI8OSm2znYW6sHv6yy5P8hETdlqN5yYr-16UkNU7Nj7">
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col max-w-max-width mx-auto w-full px-margin-desktop py-8 gap-8">
+<!-- Header & Filters -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col md:flex-row justify-between items-end gap-4">
+<div>
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">Panel de Control</span>
+<h1 class="font-headline-lg text-headline-lg mt-1">Historial de Actividad</h1>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-caps text-label-caps hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">download</span>
+                        EXPORTAR DATA
+                    </button>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3 py-4 border-y border-outline-variant">
+<span class="font-label-caps text-label-caps text-on-surface-variant mr-2">FILTRAR POR:</span>
+<button class="px-4 py-1.5 rounded-full border border-primary bg-primary/10 text-primary font-body-sm text-body-sm">Todos</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant hover:border-primary text-on-surface-variant hover:text-primary font-body-sm text-body-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">flight_takeoff</span> Vuelos
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant hover:border-error text-on-surface-variant hover:text-error font-body-sm text-body-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">warning</span> Alertas
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant hover:border-secondary text-on-surface-variant hover:text-secondary font-body-sm text-body-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">description</span> Reportes
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant hover:border-tertiary text-on-surface-variant hover:text-tertiary font-body-sm text-body-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">precision_manufacturing</span> Intervenciones
+                </button>
+</div>
+</section>
+<!-- Unified Activity Timeline -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Timeline Feed (Left) -->
+<div class="lg:col-span-8 flex flex-col gap-0 relative activity-line">
+<!-- Entry 1: Critical Alert -->
+<article class="relative pl-14 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-error-container flex items-center justify-center z-10 border-2 border-background">
+<span class="material-symbols-outlined text-error text-[20px]" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="bento-card p-5 rounded-xl border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-label-caps text-label-caps text-error block mb-1">ALERTA CRÍTICA</span>
+<h3 class="font-title-md text-title-md text-on-surface">Anomalía detectada en zona A4</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">14:22 · Hoy</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            Los sensores térmicos del sector Noreste han detectado un aumento inusual de temperatura (+4.2°C sobre el promedio). Riesgo potencial de estrés hídrico severo o fallo en línea de goteo.
+                        </p>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-error text-on-error font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity">INTERVENIR AHORA</button>
+<button class="px-4 py-2 border border-outline-variant text-on-surface font-label-caps text-label-caps rounded hover:bg-surface-variant transition-colors">DETALLES TÉRMICOS</button>
+</div>
+</div>
+</article>
+<!-- Entry 2: Flight Completion -->
+<article class="relative pl-14 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary-container flex items-center justify-center z-10 border-2 border-background">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]">flight_takeoff</span>
+</div>
+<div class="bento-card p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-label-caps text-label-caps text-primary block mb-1">MISIÓN COMPLETADA</span>
+<h3 class="font-title-md text-title-md text-on-surface">Vuelo Completado - Lote Norte</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">11:05 · Hoy</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            El Centinela D-04 ha finalizado el barrido multiespectral del Lote Norte (42 Ha). Se han procesado 1,240 imágenes de alta resolución.
+                        </p>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="bg-surface-container-low p-3 border border-outline-variant rounded flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">potted_plant</span>
+<div>
+<p class="text-[10px] font-label-caps text-on-surface-variant">SALUD NDVI</p>
+<p class="font-data-mono text-body-md text-primary">0.82 (Óptimo)</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 border border-outline-variant rounded flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">battery_very_low</span>
+<div>
+<p class="text-[10px] font-label-caps text-on-surface-variant">BATERÍA RETORNO</p>
+<p class="font-data-mono text-body-md text-on-surface">12%</p>
+</div>
+</div>
+</div>
+<a class="inline-flex items-center gap-2 text-primary font-label-caps text-label-caps hover:underline" href="#">
+                            VER MAPA NDVI <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Entry 3: Hardware Intervention -->
+<article class="relative pl-14 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center z-10 border-2 border-background">
+<span class="material-symbols-outlined text-tertiary text-[20px]">precision_manufacturing</span>
+</div>
+<div class="bento-card p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-label-caps text-label-caps text-tertiary block mb-1">INTERVENCIÓN DE HARDWARE</span>
+<h3 class="font-title-md text-title-md text-on-surface">Centinela C-08: Inyección NPK exitosa</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">Ayer · 18:45</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Se ha completado la dosificación programada de macro-nutrientes en el sector B2. Consumo: 45L NPK-Plus. Sistema recalibrado para el ciclo de maduración.
+                        </p>
+</div>
+</article>
+<!-- Entry 4: Report Generation -->
+<article class="relative pl-14 pb-10">
+<div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center z-10 border-2 border-background">
+<span class="material-symbols-outlined text-on-secondary-container text-[20px]">description</span>
+</div>
+<div class="bento-card p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-1">SISTEMA - REPORTES</span>
+<h3 class="font-title-md text-title-md text-on-surface">Reporte Semanal Generado</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">Ayer · 08:00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            Análisis consolidado de la semana 42. Incluye proyecciones de rendimiento y comparativa histórica de humedad de suelo.
+                        </p>
+<button class="flex items-center gap-3 px-4 py-2 border border-secondary text-secondary rounded-lg hover:bg-secondary/10 transition-colors font-label-caps text-label-caps">
+<span class="material-symbols-outlined">picture_as_pdf</span> DESCARGAR PDF (4.8MB)
+                        </button>
+</div>
+</article>
+</div>
+<!-- Contextual Sidebar (Right) -->
+<aside class="lg:col-span-4 flex flex-col gap-6">
+<!-- Quick Stats -->
+<div class="bento-card p-6 rounded-xl flex flex-col gap-6">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant pb-3">ESTADO DE FLOTA</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-body-sm text-body-sm">Centinelas Activos</span>
+</div>
+<span class="font-data-mono text-body-md text-primary">08 / 10</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-sm text-body-sm">Alertas Críticas</span>
+</div>
+<span class="font-data-mono text-body-md text-error">01</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-body-sm text-body-sm">Vuelos Programados</span>
+</div>
+<span class="font-data-mono text-body-md text-secondary">04</span>
+</div>
+</div>
+</div>
+<!-- Field View Preview -->
+<div class="bento-card rounded-xl overflow-hidden group">
+<div class="h-48 relative">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Satellite top-down view of a precision agriculture field divided into geometric plots. High-tech digital overlay showing a semi-transparent heat map in emerald green and amber yellow. Technical telemetry lines and data markers floating over the landscape. Cinematic deep charcoal and vitality green palette." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCk6kb33Cx8R36vssEmqrP76V0n0UMBS9V-P0WhE0GWnfwCVlnfjiQ_eeWcGVHaUycMXSxx6WSH5L1vwZSQhgmzsYBT80nhj23aKY_r3V1raripV9hZlimQq4j9BXlK4dcpAAubNeH6x4lzpo6ZoBDTC-FDRjjYF90Nh1JeMb9cfesfMZxRE7C9-PTW2PBuh-eAjC-1vC0wsXgLSUhfBw9qLc8ACIYGL0Eyx4-tFThVPpiW8wMWP4oHfD7JDEM-H6cRCo7cT2H6dEZW')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#1e2022] to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<span class="font-label-caps text-label-caps text-primary px-2 py-1 bg-surface-container rounded border border-primary/30">VISTA SATELITAL</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-title-md text-title-md mb-2">Mapa de Calor Activo</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Actualizado hace 12 min. Sector Norte A4 requiere atención inmediata por irregularidad térmica.</p>
+<button class="w-full py-2 bg-surface-container-highest border border-outline-variant hover:border-primary transition-all rounded font-label-caps text-label-caps text-on-surface">ABRIR MAPA COMPLETO</button>
+</div>
+</div>
+<!-- System Health -->
+<div class="bento-card p-6 rounded-xl">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant pb-3 mb-4">LATENCIA DE SISTEMA</h4>
+<div class="h-16 flex items-end gap-1 mb-4">
+<div class="flex-grow bg-primary/20 h-8 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/40 h-10 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/20 h-6 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/60 h-14 rounded-t-sm"></div>
+<div class="flex-grow bg-primary h-12 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/30 h-9 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/50 h-11 rounded-t-sm"></div>
+<div class="flex-grow bg-primary/80 h-16 rounded-t-sm"></div>
+</div>
+<div class="flex justify-between font-data-mono text-label-caps text-on-surface-variant">
+<span>48ms Latency</span>
+<span class="text-primary">SYNC OK</span>
+</div>
+</div>
+</aside>
+</section>
+</main>
+<!-- Footer based on JSON -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full py-8 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-max-width mx-auto w-full gap-4">
+<div class="flex flex-col items-center md:items-start">
+<span class="font-title-md text-title-md text-outline mb-2">qhiro symbiotic</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
+</div>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacidad</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Términos</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Soporte</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Hover effects for bento cards
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Simple filter logic simulation
+        const filterButtons = document.querySelectorAll('.flex.items-center.gap-3.py-4 button');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
+                    b.classList.add('border-outline-variant', 'text-on-surface-variant');
+                });
+                btn.classList.add('border-primary', 'bg-primary/10', 'text-primary');
+                btn.classList.remove('border-outline-variant', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#005228",
+                        "secondary-container": "#3398db",
+                        "surface-container-high": "#282a2c",
+                        "surface-variant": "#333537",
+                        "on-tertiary-fixed": "#00210c",
+                        "secondary-fixed-dim": "#92ccff",
+                        "on-tertiary": "#00391a",
+                        "surface-container": "#1e2022",
+                        "primary-fixed": "#6bfe9c",
+                        "tertiary-container": "#4bca78",
+                        "on-secondary": "#003351",
+                        "on-primary": "#003919",
+                        "on-secondary-container": "#002c47",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#37393b",
+                        "on-background": "#e2e2e5",
+                        "surface": "#121416",
+                        "primary-fixed-dim": "#4ae183",
+                        "on-tertiary-container": "#005127",
+                        "outline-variant": "#3d4a3e",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#00210c",
+                        "surface-tint": "#4ae183",
+                        "on-tertiary-fixed-variant": "#005228",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#005027",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#cce5ff",
+                        "on-secondary-fixed": "#001d31",
+                        "background": "#121416",
+                        "tertiary-fixed-dim": "#61de8a",
+                        "primary": "#54e98a",
+                        "surface-container-low": "#1a1c1e",
+                        "on-secondary-fixed-variant": "#004b73",
+                        "on-surface-variant": "#bbcbbb",
+                        "tertiary": "#69e792",
+                        "secondary": "#92ccff",
+                        "inverse-surface": "#e2e2e5",
+                        "tertiary-fixed": "#7efba4",
+                        "inverse-primary": "#006d37",
+                        "outline": "#869486",
+                        "primary-container": "#2ecc71",
+                        "surface-container-highest": "#333537",
+                        "surface-container-lowest": "#0c0e10",
+                        "on-surface": "#e2e2e5",
+                        "surface-dim": "#121416",
+                        "inverse-on-surface": "#2f3133"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1600px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "data-mono": ["Geist"],
+                        "title-md": ["Geist"],
+                        "label-caps": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Dashboard Variant) -->
+<header class="bg-surface-container border-b border-outline-variant w-full h-14 flex justify-between items-center px-margin-desktop z-50">
+<div class="flex items-center gap-6">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" class="h-8 w-auto" alt="Qhiro Logo">
+<span class="font-title-md text-title-md font-black text-primary uppercase tracking-widest">qhiro</span>
+</div>
+<nav class="hidden md:flex items-center gap-8 h-full">
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-3 h-full flex items-center transition-all">Panel</a>
+<a href="#" class="font-body-sm text-body-sm text-primary font-bold border-b-2 border-primary px-3 h-full flex items-center transition-all">Parcelas</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-3 h-full flex items-center transition-all">Programación</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-3 h-full flex items-center transition-all">Actividad</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-3 h-full flex items-center transition-all">Dispositivos</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a tech-savvy agronomist in a clean laboratory environment, subtle green lighting reflecting off glasses, cinematic depth of field, high-end commercial photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfFzBHlOSdrfRJ4CNfBKuN1BWtLQOSvNQpOeix8VxA6P2FYhfPcvvhWW65YNuhnuZ5K2RTepl-UVHHmWwcetpechbfDggK1vagE4ju3XFvBrA4_pFwBwEt-uY6PEpyDADfXgE2m3l4Ay0_z7XBN7CGEzblutwEEaz8gpjBQpYUYmfghhkomS_2z9FWRoOqvNBLvvGnVj899l_HxSx33jPAu_V58va7mMPur8qlNzbNeygfYfQufl4uMYmTUc1sSj2V30hUD4aGrtzb">
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+<!-- Left: Large NDVI Heatmap Area -->
+<section class="flex-1 relative bg-surface-dim border-r border-outline-variant overflow-hidden">
+<!-- Satellite Base Image (Simulated) -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 grayscale-[0.2]" data-alt="High-resolution satellite view of large agricultural crop circles and rectangular fields in a rural landscape. Overlaid with a transparent green and red NDVI heatmap visualization showing vegetation density variations. High-detail topography, technical mission control aesthetic, deep blacks and vibrant bioluminescent greens." data-location="La Pampa, Argentina" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUEgBvokZUBlY-le-JMVrfBZHo-fFxR3k_4DrTPpuiuIybhEzzx2pGqO-NsnouVrAtEv6n3PtEjC__CJpJJkaSYF9MlseZvBCECNDIadX23bfhRhw_ed5oo2IrLTTkt-Pr_hGu3CfJYaP2lqy6mZrN3fELQj28OM1nDzNI7cN18Mvd_l4N7blkMrQTf2OPUlqL5Jqtnza0JO_xs_oYnzT9qB9RBgbiRSR_L-sfKvqusHqitCj_7uxEC9yAf-VK5jrXOwj02VEt2T1f">
+</div>
+<!-- -->
+<svg class="absolute inset-0 w-full h-full z-10 pointer-events-none" viewBox="0 0 1000 1000">
+<path class="animate-pulse" d="M450 300 L600 320 L580 500 L420 480 Z" fill="rgba(255, 77, 77, 0.2)" stroke="#ff4d4d" stroke-width="2"></path>
+<path d="M200 600 L350 620 L330 800 L180 780 Z" fill="rgba(255, 204, 0, 0.2)" stroke="#ffcc00" stroke-width="2"></path>
+</svg>
+<!-- Anomalies Markers -->
+<div class="absolute top-[320px] left-[500px] z-20">
+<div class="flex flex-col items-center">
+<div class="bg-error px-2 py-1 rounded text-on-error font-label-caps text-[10px] mb-1">ANOMALÍA A-1</div>
+<div class="w-4 h-4 bg-error rounded-full map-pulse"></div>
+</div>
+</div>
+<!-- Header Content Floating -->
+<div class="absolute top-margin-desktop left-margin-desktop z-30 glass-panel p-6 rounded-xl max-w-md">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-primary-container/20 text-primary border border-primary/30 px-2 py-0.5 rounded font-label-caps text-[10px]">ANALÍTICA POST-VUELO</span>
+<span class="text-on-surface-variant font-data-mono text-xs">ID: 8842</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Reporte de Análisis Multiespectral</h1>
+<p class="font-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                    Lote Norte | 24 Oct 2023
+                </p>
+</div>
+<!-- NDVI Legend -->
+<div class="absolute bottom-margin-desktop left-margin-desktop z-30 glass-panel p-4 rounded-xl">
+<p class="font-label-caps text-on-surface-variant mb-2">Índice NDVI</p>
+<div class="w-48 h-2 ndvi-gradient rounded-full mb-1"></div>
+<div class="flex justify-between font-data-mono text-[10px] text-on-surface-variant">
+<span>ESTRÉS (0.1)</span>
+<span>VIGOR (0.9)</span>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute bottom-margin-desktop right-margin-desktop z-30 flex flex-col gap-2">
+<button class="w-10 h-10 glass-panel rounded flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="w-10 h-10 glass-panel rounded flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<button class="w-10 h-10 glass-panel rounded flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+</div>
+</section>
+<!-- Right: Diagnostic Sidebar -->
+<aside class="w-full md:w-[420px] bg-surface-container flex flex-col overflow-y-auto border-l border-outline-variant">
+<div class="p-margin-desktop space-y-8">
+<!-- Diagnóstico de IA -->
+<section>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="psychology">psychology</span>
+<h2 class="font-title-md text-title-md text-on-surface font-bold uppercase tracking-tight">Diagnóstico de IA</h2>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+<p class="font-label-caps text-on-surface-variant mb-1">ÁREA AFECTADA</p>
+<p class="font-display-lg text-[32px] text-error font-bold">14.2%</p>
+<p class="font-body-sm text-on-surface-variant text-[11px]">~4.2 Hectáreas</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant">
+<p class="font-label-caps text-on-surface-variant mb-1">VIGOR PROMEDIO</p>
+<p class="font-display-lg text-[32px] text-primary font-bold">0.72</p>
+<p class="font-body-sm text-on-surface-variant text-[11px]">Saludable (+2% vs Sept)</p>
+</div>
+</div>
+<!-- NPK Calculation -->
+<div class="space-y-4 mb-8">
+<h3 class="font-label-caps text-on-surface-variant">REQUERIMIENTO NPK ESTIMADO</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-data-mono text-sm">Nitrógeno (N)</span>
+<div class="flex-1 mx-4 h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 65%;"></div>
+</div>
+<span class="font-data-mono text-sm text-primary">65 kg/ha</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-data-mono text-sm">Fósforo (P)</span>
+<div class="flex-1 mx-4 h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 20%;"></div>
+</div>
+<span class="font-data-mono text-sm text-primary">20 kg/ha</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-data-mono text-sm">Potasio (K)</span>
+<div class="flex-1 mx-4 h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 45%;"></div>
+</div>
+<span class="font-data-mono text-sm text-primary">45 kg/ha</span>
+</div>
+</div>
+</div>
+<!-- Suggested Actions -->
+<div class="space-y-4">
+<h3 class="font-label-caps text-on-surface-variant">ACCIONES SUGERIDAS</h3>
+<div class="space-y-3">
+<div class="flex gap-4 p-4 bg-error-container/10 border-l-4 border-error rounded-r-lg">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<div>
+<p class="font-body-md font-bold text-on-surface">Estrés Hídrico Detectado</p>
+<p class="font-body-sm text-on-surface-variant">Zona A-1 requiere irrigación inmediata por caída de 15% en humedad relativa.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-tertiary-container/10 border-l-4 border-tertiary rounded-r-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="smart_toy">smart_toy</span>
+<div>
+<p class="font-body-md font-bold text-on-surface">Despliegue de Centinelas</p>
+<p class="font-body-sm text-on-surface-variant">Activar monitoreo terrestre en cuadrantes de baja densidad.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Stream Table -->
+<section>
+<h3 class="font-label-caps text-on-surface-variant mb-4">LOG DE SENSORES (REAL-TIME)</h3>
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden">
+<table class="w-full text-left font-data-mono text-[12px]">
+<thead>
+<tr class="bg-surface-variant/30 text-on-surface-variant border-b border-outline-variant">
+<th class="p-2">SENSOR</th>
+<th class="p-2">VALOR</th>
+<th class="p-2">ESTADO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/10">
+<td class="p-2">Humedad Suelo</td>
+<td class="p-2 text-primary">22.4%</td>
+<td class="p-2"><span class="inline-block w-2 h-2 rounded-full bg-error mr-1"></span> Crítico</td>
+</tr>
+<tr class="bg-surface-container/50 border-b border-outline-variant/30 hover:bg-surface-variant/10">
+<td class="p-2">Temp. Foliar</td>
+<td class="p-2">28.5°C</td>
+<td class="p-2"><span class="inline-block w-2 h-2 rounded-full bg-primary mr-1"></span> Normal</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/10">
+<td class="p-2">CO2 Atmosf.</td>
+<td class="p-2">412 ppm</td>
+<td class="p-2"><span class="inline-block w-2 h-2 rounded-full bg-primary mr-1"></span> Optimo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</aside>
+</main>
+<!-- Footer Action Bar -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant h-16 flex items-center justify-between px-margin-desktop z-50">
+<div class="flex items-center gap-8">
+<div class="hidden md:flex gap-4">
+<a class="font-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacidad</a>
+<a class="font-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Términos</a>
+<a class="font-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Soporte</a>
+</div>
+<p class="text-[10px] text-outline font-data-mono hidden lg:block">
+                © 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.
+            </p>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 border border-outline-variant text-on-surface font-label-caps rounded flex items-center gap-2 hover:bg-surface-variant transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                Descargar Reporte PDF
+            </button>
+<button class="px-6 py-2 bg-primary text-background font-label-caps font-bold rounded flex items-center gap-2 hover:brightness-110 transition-all active:scale-95 shadow-[0_0_20px_rgba(84,233,138,0.2)]">
+<span class="material-symbols-outlined text-sm" data-icon="robot_2">robot_2</span>
+                Activar Centinelas en Zona A
+            </button>
+</div>
+</footer>
+<script>
+        // Micro-interactions for map hotspots
+        document.querySelectorAll('.map-pulse').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.transform = 'scale(1.5)';
+                el.style.transition = 'transform 0.3s ease';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

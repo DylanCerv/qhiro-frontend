@@ -56,6 +56,9 @@ export const api = {
   deleteParcel: (parcelId) => request(`/parcels/${parcelId}`, { method: 'DELETE' }),
 
   getAlerts: () => request('/alerts'),
+  getActionLogs: () => request('/action-logs'),
+  getActivity: () => request('/activity'),
+  retryAction: (actionId) => request(`/action-logs/${actionId}/retry`, { method: 'POST' }),
   getSchedules: () => request('/schedules'),
   saveSchedule: (schedule) =>
     request('/schedules', { method: 'PUT', body: JSON.stringify(schedule) }),
@@ -66,6 +69,11 @@ export const api = {
     request('/devices', { method: 'POST', body: JSON.stringify(payload) }),
   updateDevice: (deviceId, payload) =>
     request(`/devices/${deviceId}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  toggleDeviceStatus: (deviceId, status) =>
+    request(`/devices/${deviceId}/toggle-status`, {
+      method: 'POST',
+      body: JSON.stringify({ status }),
+    }),
   simulateTelemetry: (payload) =>
     request('/simulator/telemetry', { method: 'POST', body: JSON.stringify(payload) }),
   getReports: () => request('/reports'),
@@ -101,6 +109,8 @@ export const api = {
     request('/admin/mqtt/diagnostic', { method: 'POST', body: JSON.stringify(payload) }),
   sendAdminTelemetry: (payload) =>
     request('/admin/mqtt/telemetry', { method: 'POST', body: JSON.stringify(payload) }),
+  sendAdminActionAck: (payload) =>
+    request('/admin/mqtt/action-ack', { method: 'POST', body: JSON.stringify(payload) }),
   createAdminTestFlight: (payload) =>
     request('/admin/mqtt/test-flight', { method: 'POST', body: JSON.stringify(payload) }),
   runAdminTestDroneFlow: (payload) =>

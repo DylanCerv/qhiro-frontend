@@ -13,7 +13,6 @@ import MqttDiagnostics from './pages/MqttDiagnostics';
 import Parcels from './pages/Parcels';
 import Register from './pages/Register';
 import ScheduleSettings from './pages/ScheduleSettings';
-import TelemetrySimulator from './pages/TelemetrySimulator';
 
 function ClientLayout() {
   return (
@@ -60,7 +59,6 @@ export default function App() {
               <Route path="schedule" element={<ScheduleSettings />} />
               <Route path="flights" element={<FlightHistory />} />
               <Route path="devices" element={<Devices />} />
-              <Route path="simulator" element={<TelemetrySimulator />} />
             </Route>
 
             <Route

@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#005228",
+                    "secondary-container": "#3398db",
+                    "surface-container-high": "#282a2c",
+                    "surface-variant": "#333537",
+                    "on-tertiary-fixed": "#00210c",
+                    "secondary-fixed-dim": "#92ccff",
+                    "on-tertiary": "#00391a",
+                    "surface-container": "#1e2022",
+                    "primary-fixed": "#6bfe9c",
+                    "tertiary-container": "#4bca78",
+                    "on-secondary": "#003351",
+                    "on-primary": "#003919",
+                    "on-secondary-container": "#002c47",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#37393b",
+                    "on-background": "#e2e2e5",
+                    "surface": "#121416",
+                    "primary-fixed-dim": "#4ae183",
+                    "on-tertiary-container": "#005127",
+                    "outline-variant": "#3d4a3e",
+                    "error-container": "#93000a",
+                    "on-primary-fixed": "#00210c",
+                    "surface-tint": "#4ae183",
+                    "on-tertiary-fixed-variant": "#005228",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#005027",
+                    "on-error": "#690005",
+                    "secondary-fixed": "#cce5ff",
+                    "on-secondary-fixed": "#001d31",
+                    "background": "#121416",
+                    "tertiary-fixed-dim": "#61de8a",
+                    "primary": "#54e98a",
+                    "surface-container-low": "#1a1c1e",
+                    "on-secondary-fixed-variant": "#004b73",
+                    "on-surface-variant": "#bbcbbb",
+                    "tertiary": "#69e792",
+                    "secondary": "#92ccff",
+                    "inverse-surface": "#e2e2e5",
+                    "tertiary-fixed": "#7efba4",
+                    "inverse-primary": "#006d37",
+                    "outline": "#869486",
+                    "primary-container": "#2ecc71",
+                    "surface-container-highest": "#333537",
+                    "surface-container-lowest": "#0c0e10",
+                    "on-surface": "#e2e2e5",
+                    "surface-dim": "#121416",
+                    "inverse-on-surface": "#2f3133"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "max-width": "1600px",
+                    "gutter": "16px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "data-mono": ["Geist"],
+                    "title-md": ["Geist"],
+                    "label-caps": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-background text-on-background font-body-md">
+<!-- TopNavBar (Dashboard Context) -->
+<header class="bg-surface-container border-b border-outline-variant flex justify-between items-center px-margin-desktop w-full h-14 fixed top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" alt="Qhiro Logo" class="w-8 h-8 object-contain">
+<span class="font-title-md text-title-md font-black text-primary uppercase">qhiro</span>
+</div>
+<nav class="hidden md:flex gap-6 h-14 items-center">
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 transition-all">Panel</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 transition-all">Parcelas</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 transition-all">Programación</a>
+<a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-variant/50 px-2 transition-all">Actividad</a>
+<a class="font-body-sm text-body-sm text-primary font-bold border-b-2 border-primary h-full flex items-center" href="#">Dispositivos</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a professional agronomist technician wearing a dark tactical field jacket, clean minimalist corporate style, soft industrial lighting, neutral grey background, high resolution photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8XDOXtuxdVHhRBGijST5qhwINdlVPm70UKedh_jp9XpI34VriFzmY_G9mquH7aZpNyDXvJU6ovbjqJtNWmhSA8aTVTNZ1KlGM3FcKWBUz_SUKp807JgfJMAdsg2msPzCwh6XGS56YLQjm3GKB-ksRvmi6G7OqNFkWZcYc4EHdWRXWPN_hAKtZh1avYwbrPH_Bu8mbYTyy4qkTyilWyjf71i59zeTwbwJz8pdWkfLKWOZR4Ky8LRy3G8Bk4SXuEpqISQP4nBQwLJqa">
+</div>
+</div>
+</header>
+<main class="pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+<div>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest block mb-2">Hardware-Ops Dashboard</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Flota de Hardware</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
+                    Monitoreo en tiempo real de nodos, drones y sensores perimetrales. Gestión de telemetría y estado de enlace.
+                </p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded flex items-center gap-2 font-label-caps text-label-caps transition-transform active:scale-95 shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined">add_circle</span>
+                VINCULAR NUEVO DISPOSITIVO
+            </button>
+</div>
+<!-- Devices Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- El Vigía (Drone) Card -->
+<div class="glass-card p-6 flex flex-col gap-6 group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-lg border border-outline-variant group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" data-original-icon="airborne">airware</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">El Vigía</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">UAV - Reconocimiento</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+<span class="w-2 h-2 rounded-full bg-primary status-pulse"></span>
+<span class="font-label-caps text-label-caps uppercase">Online</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 bg-surface-container-low/50 p-4 rounded border border-outline-variant/30">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">BATERÍA</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary font-variation-settings-fill">battery_horiz_075</span>
+<span class="font-data-mono text-data-mono text-on-surface">80%</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">ÚLT. VISTO</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">history</span>
+<span class="font-data-mono text-data-mono text-on-surface">Hace 5m</span>
+</div>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[80%]"></div>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Señal: <span class="text-on-surface font-bold">-64 dBm</span></span>
+<button class="text-primary font-label-caps text-label-caps hover:underline">VER TELEMETRÍA</button>
+</div>
+</div>
+<!-- El Nido (Base) Card -->
+<div class="glass-card p-6 flex flex-col gap-6 group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-lg border border-outline-variant group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" data-original-icon="nest_remote_max">nest_remote</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">El Nido</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Base Estacionaria</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+<span class="w-2 h-2 rounded-full bg-primary status-pulse"></span>
+<span class="font-label-caps text-label-caps uppercase">Online</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 bg-surface-container-low/50 p-4 rounded border border-outline-variant/30">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">NUTRIENTES</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">eco</span>
+<span class="font-data-mono text-data-mono text-on-surface uppercase">Alto</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">TEMPERATURA</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">device_thermostat</span>
+<span class="font-data-mono text-data-mono text-on-surface">24.2°C</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Estado de Depósitos</span>
+<div class="flex gap-1 h-3">
+<div class="flex-1 bg-primary rounded-sm"></div>
+<div class="flex-1 bg-primary rounded-sm"></div>
+<div class="flex-1 bg-primary rounded-sm"></div>
+<div class="flex-1 bg-surface-variant rounded-sm"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Activo desde: <span class="text-on-surface font-bold">Mar 12</span></span>
+<button class="text-primary font-label-caps text-label-caps hover:underline">CONFIGURAR</button>
+</div>
+</div>
+<!-- Centinela C-01 (Sensor) Card -->
+<div class="glass-card p-6 flex flex-col gap-6 group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-lg border border-outline-variant group-hover:border-error transition-colors">
+<span class="material-symbols-outlined text-error text-3xl">sensors_off</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Centinela C-01</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sensor de Humedad</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10 text-error border border-error/20">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-caps text-label-caps uppercase">Offline</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 bg-surface-container-low/50 p-4 rounded border border-outline-variant/30">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">PARCELA</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">map</span>
+<span class="font-data-mono text-data-mono text-on-surface uppercase">Lote Norte</span>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">ALERTA</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="font-data-mono text-data-mono text-error uppercase">Crítico</span>
+</div>
+</div>
+</div>
+<div class="p-3 bg-error-container/20 border border-error/30 rounded">
+<p class="font-body-sm text-body-sm text-error flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">error_outline</span>
+                        Pérdida de enlace - Revise batería física.
+                    </p>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Últ. registro: <span class="text-on-surface font-bold">14h ago</span></span>
+<button class="text-error font-label-caps text-label-caps hover:underline">DIAGNÓSTICO</button>
+</div>
+</div>
+</div>
+<!-- Telemetry Feed (Zebra Table) -->
+<section class="mt-12">
+<h2 class="font-title-md text-title-md mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+                Registro de Eventos Críticos
+            </h2>
+<div class="overflow-x-auto rounded border border-outline-variant bg-surface-container-low">
+<table class="w-full text-left zebra-table">
+<thead>
+<tr class="border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps">
+<th class="p-4">Timestamp</th>
+<th class="p-4">Dispositivo</th>
+<th class="p-4">Evento</th>
+<th class="p-4">Estado</th>
+<th class="p-4 text-right">Prioridad</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono text-on-surface">
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-4 opacity-70">2024-10-24 14:02:11</td>
+<td class="p-4">El Vigía</td>
+<td class="p-4">Carga finalizada (Estación 02)</td>
+<td class="p-4 text-primary">Operacional</td>
+<td class="p-4 text-right">Media</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-4 opacity-70">2024-10-24 13:45:02</td>
+<td class="p-4">Centinela C-01</td>
+<td class="p-4">Timeout de respuesta (Retries: 3)</td>
+<td class="p-4 text-error">Falla</td>
+<td class="p-4 text-right text-error font-bold">Alta</td>
+</tr>
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-4 opacity-70">2024-10-24 12:30:55</td>
+<td class="p-4">El Nido</td>
+<td class="p-4">Calibración de inyectores OK</td>
+<td class="p-4 text-primary">Sync</td>
+<td class="p-4 text-right">Baja</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant w-full py-8 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-max-width mx-auto gap-4">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-outline uppercase font-bold">qhiro symbiotic</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">
+                © 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.
+            </p>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacidad</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Términos</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Soporte</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

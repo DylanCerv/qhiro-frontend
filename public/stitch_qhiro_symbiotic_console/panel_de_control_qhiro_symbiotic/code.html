@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#005228",
+                    "secondary-container": "#3398db",
+                    "surface-container-high": "#282a2c",
+                    "surface-variant": "#333537",
+                    "on-tertiary-fixed": "#00210c",
+                    "secondary-fixed-dim": "#92ccff",
+                    "on-tertiary": "#00391a",
+                    "surface-container": "#1e2022",
+                    "primary-fixed": "#6bfe9c",
+                    "tertiary-container": "#4bca78",
+                    "on-secondary": "#003351",
+                    "on-primary": "#003919",
+                    "on-secondary-container": "#002c47",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#37393b",
+                    "on-background": "#e2e2e5",
+                    "surface": "#121416",
+                    "primary-fixed-dim": "#4ae183",
+                    "on-tertiary-container": "#005127",
+                    "outline-variant": "#3d4a3e",
+                    "error-container": "#93000a",
+                    "on-primary-fixed": "#00210c",
+                    "surface-tint": "#4ae183",
+                    "on-tertiary-fixed-variant": "#005228",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#005027",
+                    "on-error": "#690005",
+                    "secondary-fixed": "#cce5ff",
+                    "on-secondary-fixed": "#001d31",
+                    "background": "#121416",
+                    "tertiary-fixed-dim": "#61de8a",
+                    "primary": "#54e98a",
+                    "surface-container-low": "#1a1c1e",
+                    "on-secondary-fixed-variant": "#004b73",
+                    "on-surface-variant": "#bbcbbb",
+                    "tertiary": "#69e792",
+                    "secondary": "#92ccff",
+                    "inverse-surface": "#e2e2e5",
+                    "tertiary-fixed": "#7efba4",
+                    "inverse-primary": "#006d37",
+                    "outline": "#869486",
+                    "primary-container": "#2ecc71",
+                    "surface-container-highest": "#333537",
+                    "surface-container-lowest": "#0c0e10",
+                    "on-surface": "#e2e2e5",
+                    "surface-dim": "#121416",
+                    "inverse-on-surface": "#2f3133"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "max-width": "1600px",
+                    "gutter": "16px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "data-mono": ["Geist"],
+                    "title-md": ["Geist"],
+                    "label-caps": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-background text-on-surface">
+<!-- TopNavBar (Dashboard Context) -->
+<nav class="flex justify-between items-center px-margin-desktop w-full h-14 bg-surface-container dark:bg-surface-container border-b border-outline-variant fixed top-0 z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c" class="w-8 h-8 object-contain" alt="Qhiro Logo">
+<span class="font-title-md text-title-md font-black text-primary">qhiro</span>
+</div>
+<div class="hidden md:flex items-center h-full">
+<a href="#" class="px-4 h-14 flex items-center text-primary font-bold border-b-2 border-primary font-body-sm text-body-sm transition-all">Panel</a>
+<a href="#" class="px-4 h-14 flex items-center text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 transition-all">Parcelas</a>
+<a href="#" class="px-4 h-14 flex items-center text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 transition-all">Programación</a>
+<a href="#" class="px-4 h-14 flex items-center text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 transition-all">Actividad</a>
+<a href="#" class="px-4 h-14 flex items-center text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-variant/50 transition-all">Dispositivos</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input type="text" placeholder="Buscar parcela..." class="bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-1.5 text-body-sm focus:border-primary focus:ring-0 w-64">
+</div>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary font-bold text-xs">JD</div>
+</div>
+</nav>
+<main class="pt-20 px-margin-desktop pb-10 max-w-max-width mx-auto">
+<!-- Header -->
+<header class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant font-label-caps text-label-caps mb-2">
+<span>Misión Control</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">Lote Norte</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg">Panel de Control - Parcela: Lote Norte (Maíz)</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container border border-outline-variant px-4 py-2 rounded-lg text-body-sm flex items-center gap-2 hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Reporte NDVI
+                </button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-bold text-body-sm flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">flight_takeoff</span>
+                    Misión Manual
+                </button>
+</div>
+</header>
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Salud de Parcela</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 bg-on-primary-fixed-variant/20 text-primary border border-primary/30 rounded-full text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+ESTADO ÓPTIMO
+                    </div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-[40px] font-bold leading-none tracking-tight">92%</span>
+<span class="text-primary font-data-mono text-data-mono">+2.4% vs semana ant.</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%"></div>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Próximo Vuelo</span>
+<span class="material-symbols-outlined text-secondary">schedule</span>
+</div>
+<div class="flex flex-col">
+<span class="text-title-md font-bold">Hoy 16:00</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Escaneo Multiespectral (Sentinel 4)</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-secondary font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-[16px]">cloud</span>
+                    Viento 8km/h - Despejado
+                </div>
+</div>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Alertas Activas</span>
+<span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[40px] font-bold leading-none">0</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Sistema operando con normalidad</span>
+</div>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant font-data-mono text-data-mono">
+<span class="material-symbols-outlined text-[16px]">history</span>
+                    Última incidencia: hace 14 días
+                </div>
+</div>
+</div>
+<!-- Main Dashboard Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-gutter h-auto lg:h-[600px]">
+<!-- Centerpiece: Map Widget -->
+<div class="lg:col-span-3 bg-surface-container rounded-xl border border-outline-variant relative overflow-hidden flex flex-col">
+<div class="flex items-center justify-between p-4 border-b border-outline-variant bg-surface-container-high/50 backdrop-blur-md z-10">
+<div class="flex items-center gap-4">
+<span class="font-title-md text-title-md">Vista Satelital Live</span>
+<div class="flex bg-surface-container-low p-1 rounded-lg border border-outline-variant">
+<button class="px-3 py-1 text-[11px] font-bold rounded bg-primary text-on-primary">MAPA</button>
+<button class="px-3 py-1 text-[11px] font-bold rounded text-on-surface-variant hover:text-on-surface">NDVI</button>
+<button class="px-3 py-1 text-[11px] font-bold rounded text-on-surface-variant hover:text-on-surface">TÉRMICO</button>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-highest px-3 py-1.5 rounded-lg text-label-caps font-label-caps flex items-center gap-2 border border-outline hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[16px]">layers</span>
+                            Activar Capa NDVI
+                        </button>
+<button class="bg-surface-container-highest px-3 py-1.5 rounded-lg text-label-caps font-label-caps flex items-center gap-2 border border-outline hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+                            Ver Telemetría
+                        </button>
+</div>
+</div>
+<!-- Simulated-->
+<div class="flex-grow relative bg-[#0a0c0e]">
+<div class="absolute inset-0 grayscale opacity-40 bg-cover bg-center" data-alt="Satellite imagery of a vast agricultural landscape with distinct rectangular fields separated by dirt roads, in a high-contrast dark mode aesthetic with deep shadows and metallic green hues for vegetation. The lighting is low-angle, highlighting the relief of the terrain." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDutM1gbfm0VT7WXX28TvcuxDFsegZByUqgoKuSA4cXf1KPlkq2DgqmAIrzs0o3Eht2dlMJXgADOGQIU3M9iUlFy2riNAszDGrqQXnPJyAjj2F8hhZ5lvk09-L68U61a4GCXWsZPX1K-Pz5leFkLvGiTYNvWkCkcYo0nMK28lxZAu0QtsROPiKFXSwGIBvACz8M8nPA95o3T8xUQI8T-U7XztfF-xr7O8PnvXKMVnTOFfnOB8raDawQuTnYslsFi3YGDIvZIxT4c9iH')"></div>
+<!-- SVG Overlay for Fields -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 600">
+<!-- Heatmap effect via radial gradients -->
+<defs>
+<radialGradient cx="50%" cy="50%" id="heat-1" r="50%">
+<stop offset="0%" stop-color="#54e98a" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#54e98a" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<!-- Active Field Polygon -->
+<path class="active-field pointer-events-auto cursor-pointer" d="M300,100 L700,150 L650,500 L250,450 Z" fill="rgba(84, 233, 138, 0.15)" stroke="#54e98a" stroke-width="2"></path>
+<!-- NDVI Heat Spots -->
+<circle cx="450" cy="250" fill="url(#heat-1)" r="100"></circle>
+<circle cx="550" cy="350" fill="url(#heat-1)" r="80"></circle>
+</svg>
+<!-- Map Overlay UI Controls -->
+<div class="absolute bottom-6 right-6 flex flex-col gap-2">
+<div class="bg-surface-container-high/90 backdrop-blur-md p-2 rounded-lg border border-outline-variant flex flex-col gap-2">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded"><span class="material-symbols-outlined">add</span></button>
+<div class="h-px bg-outline-variant w-full"></div>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded"><span class="material-symbols-outlined">remove</span></button>
+</div>
+<button class="bg-surface-container-high/90 backdrop-blur-md p-2 rounded-lg border border-outline-variant w-8 h-8 flex items-center justify-center hover:bg-surface-variant">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- Floating Tooltip -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface-container-high/95 backdrop-blur-xl border border-primary p-4 rounded-xl ndvi-glow pointer-events-none">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="font-title-md text-title-md">Zona 04-A</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Humedad</p>
+<p class="font-data-mono text-data-mono">68.4%</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Índice NDVI</p>
+<p class="font-data-mono text-data-mono text-primary">0.84</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Field View Data Strip -->
+<div class="bg-surface-container-low border-t border-outline-variant p-3 flex items-center gap-8 overflow-x-auto whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Coords:</span>
+<span class="font-data-mono text-data-mono text-xs">31.4285° S, 64.1855° W</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Altitud Escaneo:</span>
+<span class="font-data-mono text-data-mono text-xs">120m AGL</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Últ. Refresco:</span>
+<span class="font-data-mono text-data-mono text-xs">Hace 2 min</span>
+</div>
+<div class="ml-auto flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] font-bold">Vigor Alto</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+<span class="text-[10px] font-bold">Estrés Leve</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+<span class="text-[10px] font-bold">Crítico</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar/Feed: Alerts & Activity -->
+<div class="lg:col-span-1 flex flex-col gap-gutter">
+<!-- Alerts Feed -->
+<div class="bg-surface-container rounded-xl border border-outline-variant p-5 flex flex-col h-1/2">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-title-md text-title-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">notifications_active</span>
+                            Alertas Recientes
+                        </h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto space-y-4 pr-1">
+<!-- Alert Item -->
+<div class="p-3 bg-surface-variant/30 rounded-lg border-l-4 border-primary">
+<p class="text-body-sm font-bold">Sistema OK</p>
+<p class="text-[12px] text-on-surface-variant">Calibración de sensores completada con éxito.</p>
+<p class="text-[10px] font-data-mono mt-2 opacity-60">10:45 AM</p>
+</div>
+<!-- Alert Item -->
+<div class="p-3 bg-surface-variant/10 rounded-lg border-l-4 border-outline">
+<p class="text-body-sm font-bold">Resumen Semanal</p>
+<p class="text-[12px] text-on-surface-variant">El vigor vegetativo ha aumentado un 12% en el sector Sur.</p>
+<p class="text-[10px] font-data-mono mt-2 opacity-60">Ayer</p>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-outline-variant rounded-lg text-label-caps font-label-caps hover:bg-surface-variant transition-all">Ver Historial</button>
+</div>
+<!-- Activity Feed -->
+<div class="bg-surface-container rounded-xl border border-outline-variant p-5 flex flex-col h-1/2">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-title-md text-title-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">precision_manufacturing</span>
+                            Actividad en Campo
+                        </h2>
+</div>
+<div class="flex-grow overflow-y-auto space-y-4 pr-1">
+<!-- Activity Item -->
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded bg-secondary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-secondary text-[18px]">sprinkler</span>
+</div>
+<div>
+<p class="text-body-sm font-bold leading-tight">Centinela Alpha-1</p>
+<p class="text-[12px] text-on-surface-variant">Aplicando NPK - Sector Norte 2</p>
+<div class="flex items-center gap-2 mt-1">
+<div class="h-1 w-16 bg-surface-variant rounded-full">
+<div class="h-full bg-secondary w-3/4"></div>
+</div>
+<span class="text-[10px] font-data-mono">75%</span>
+</div>
+</div>
+</div>
+<!-- Activity Item -->
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[18px]">sensors</span>
+</div>
+<div>
+<p class="text-body-sm font-bold leading-tight">Sonda Humedad #04</p>
+<p class="text-[12px] text-on-surface-variant">Transmitiendo telemetría vía MQTT</p>
+<p class="text-[10px] font-data-mono text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                    ONLINE
+                                </p>
+</div>
+</div>
+<!-- Activity Item -->
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">drone</span>
+</div>
+<div>
+<p class="text-body-sm font-bold leading-tight">Sentinel Drone 4</p>
+<p class="text-[12px] text-on-surface-variant">En base - Carga completa</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 mt-auto border-t border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-max-width mx-auto gap-4">
+<div class="flex flex-col items-center md:items-start gap-1">
+<span class="font-title-md text-title-md text-outline">qhiro</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">
+                    © 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.
+                </p>
+</div>
+<div class="flex items-center gap-8">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Privacidad</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Términos</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">Soporte</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for map buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

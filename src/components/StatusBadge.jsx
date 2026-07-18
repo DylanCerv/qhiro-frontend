@@ -7,6 +7,12 @@ const styles = {
   lowBattery: 'status-yellow',
   scheduled: 'status-yellow',
   started: 'status-yellow',
+  pending: 'status-yellow',
+  unread: 'status-yellow',
+  read: 'status-green',
+  info: 'status-green',
+  warning: 'status-yellow',
+  critical: 'status-red',
   completed: 'status-green',
   failed: 'status-red',
 };
