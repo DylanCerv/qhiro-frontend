@@ -1,19 +1,442 @@
 /* Activity timeline */
+.activity-page {
+  gap: 18px;
+}
+
 .activity-head {
-  padding: 18px 0 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--st-line);
 }
 
-.activity-summary {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.activity-head-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.activity-summary .card {
-  min-height: 112px;
+.activity-head-copy h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.08;
+}
+
+.activity-export-button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-export-button .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.activity-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 8px;
+  overflow-x: auto;
+}
+
+.activity-tab {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid var(--st-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--st-muted);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.activity-tab .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.activity-tab.active {
+  border-color: var(--st-green);
+  background: rgba(84, 233, 138, 0.14);
+  color: var(--st-green);
+}
+
+.activity-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.8fr) minmax(260px, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.activity-main-column {
+  display: grid;
+  gap: 14px;
+}
+
+.activity-card,
+.activity-side-card {
+  position: relative;
+  padding: 18px;
+  border: 1px solid var(--st-line);
+  border-radius: 8px;
+  background: var(--st-surface);
+}
+
+.activity-card {
+  padding-left: 64px;
+}
+
+.activity-card::before {
+  content: "history";
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--st-green);
+  font-family: "Material Symbols Outlined";
+  font-size: 17px;
+}
+
+.activity-alert-card::before {
+  content: "error";
+  background: rgba(255, 84, 84, 0.16);
+  color: #ff6d6d;
+}
+
+.activity-flight-card::before {
+  content: "flight_takeoff";
+  background: rgba(84, 233, 138, 0.16);
+  color: var(--st-green);
+}
+
+.activity-action-card::before {
+  content: "precision_manufacturing";
+  background: rgba(75, 155, 255, 0.14);
+  color: var(--st-blue);
+}
+
+.activity-report-card::before {
+  content: "description";
+  background: rgba(255, 255, 255, 0.08);
+  color: #b7c0ce;
+}
+
+.activity-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.activity-card-kicker {
+  color: #ffb4ab;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.activity-card-kicker--green {
+  color: var(--st-green);
+}
+
+.activity-card-kicker--blue {
+  color: var(--st-blue);
+}
+
+.activity-card-kicker--muted {
+  color: var(--st-muted);
+}
+
+.activity-card-time {
+  color: var(--st-muted);
+  font-size: 11px;
+}
+
+.activity-card h2,
+.activity-side-card h2,
+.activity-timeline-card > h2 {
+  margin: 0;
+  color: var(--st-text);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.activity-card p {
+  margin-top: 8px;
+  color: var(--st-muted);
+  line-height: 1.5;
+}
+
+.activity-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.activity-action-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--st-text);
+  font-size: 12px;
+}
+
+.activity-action-btn--danger {
+  border-color: rgba(255, 180, 171, 0.45);
+  background: rgba(255, 180, 171, 0.12);
+  color: #ffb4ab;
+}
+
+.activity-flight-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.activity-flight-stats > div {
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-bg-deep);
+}
+
+.activity-flight-stats span {
+  display: block;
+  color: var(--st-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.activity-flight-stats strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--st-green);
+  font-size: 13px;
+}
+
+.activity-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: var(--st-green);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.activity-link .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.activity-download-btn {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 0 14px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--st-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.activity-download-btn .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.activity-side-column {
+  display: grid;
+  gap: 14px;
+}
+
+.activity-side-card h2 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--st-line);
+}
+
+.activity-status-list {
+  display: grid;
+  gap: 12px;
+  padding-top: 14px;
+}
+
+.activity-status-list > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.activity-status-list span {
+  color: var(--st-muted);
+  font-size: 12px;
+}
+
+.activity-status-list strong {
+  color: var(--st-text);
+  font-size: 16px;
+}
+
+.activity-mini-chart {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: end;
+  gap: 6px;
+  height: 96px;
+  margin-top: 18px;
+}
+
+.activity-mini-chart span {
+  display: block;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, rgba(84, 233, 138, 0.95), rgba(84, 233, 138, 0.4));
+}
+
+.activity-mini-chart span:nth-child(3),
+.activity-mini-chart span:nth-child(5) {
+  background: linear-gradient(180deg, rgba(84, 233, 138, 0.45), rgba(84, 233, 138, 0.18));
+}
+
+.activity-mini-chart span:nth-child(4) {
+  background: linear-gradient(180deg, rgba(84, 233, 138, 1), rgba(84, 233, 138, 0.55));
+}
+
+.activity-mini-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  color: var(--st-muted);
+  font-family: Consolas, monospace;
+  font-size: 10px;
+}
+
+.activity-sidebar-list {
+  display: grid;
+  gap: 12px;
+  padding-top: 14px;
+  list-style: none;
+}
+
+.activity-sidebar-item {
+  display: flex;
+  gap: 12px;
+}
+
+.activity-sidebar-accent {
+  width: 3px;
+  min-height: 100%;
+  border-radius: 999px;
+  background: var(--st-green);
+}
+
+.activity-sidebar-item strong {
+  display: block;
+  color: var(--st-text);
+  font-size: 13px;
+}
+
+.activity-sidebar-item p {
+  margin-top: 3px;
+  color: var(--st-muted);
+  font-size: 11px;
+}
+
+.activity-sidebar-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: rgba(84, 233, 138, 0.1);
+  color: var(--st-green);
+}
+
+.activity-sidebar-icon .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.activity-side-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 38px;
+  margin-top: 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  color: var(--st-text);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.activity-empty-card {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border: 1px dashed var(--st-line);
+  border-radius: 8px;
+  color: var(--st-muted);
+  background: var(--st-surface-low);
+}
+
+.activity-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+  padding: 12px 0 4px;
+}
+
+.activity-pagination-btn {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--st-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.activity-pagination-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.activity-pagination-label {
+  color: var(--st-muted);
+  font-size: 12px;
+  letter-spacing: 0.03em;
 }
 
 .activity-timeline-card {
-  padding: 24px;
+  display: grid;
+  gap: 16px;
+  padding: 0;
   background: transparent;
 }
 
@@ -22,45 +445,84 @@
   border-bottom: 1px solid var(--st-line);
 }
 
-.activity-timeline-card .simple-list {
-  position: relative;
-  max-width: 980px;
-  padding-left: 54px;
-}
-
-.activity-timeline-card .simple-list::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: 19px;
-  width: 1px;
-  background: var(--st-line);
+.activity-feed {
+  display: grid;
+  gap: 14px;
 }
 
 .activity-entry {
   position: relative;
-  padding: 20px !important;
-  border: 0 !important;
-  border-left: 3px solid var(--st-green) !important;
+  padding: 18px 18px 18px 64px !important;
+  border: 1px solid var(--st-line) !important;
+  border-left-width: 4px !important;
+  border-radius: 8px !important;
   background: var(--st-surface-low) !important;
 }
 
 .activity-entry::before {
   content: "history";
   position: absolute;
-  top: 0;
-  left: -57px;
-  width: 38px;
-  height: 38px;
+  top: 16px;
+  left: 18px;
+  width: 28px;
+  height: 28px;
   display: grid;
   place-items: center;
-  border: 2px solid var(--st-bg);
-  border-radius: 50%;
-  background: var(--st-surface-high);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
   color: var(--st-green);
   font-family: "Material Symbols Outlined";
-  font-size: 19px;
+  font-size: 17px;
+}
+
+.activity-entry-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.activity-entry-kicker {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--st-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.activity-entry strong {
+  color: var(--st-text);
+  font-size: 16px;
+}
+
+.activity-entry > span {
+  display: block;
+  margin-top: 6px;
+  color: var(--st-muted);
+  font-size: 12px;
+}
+
+.activity-entry .list-actions {
+  margin-top: 12px;
+}
+
+.activity-entry .list-actions .activity-link-button {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--st-text);
+  font-size: 11px;
+}
+
+.activity-entry .list-actions .activity-link-button .material-symbols-outlined {
+  font-size: 16px;
 }
 
 .activity-alert {
@@ -69,8 +531,8 @@
 
 .activity-alert::before {
   content: "error";
-  background: #5c171a;
-  color: var(--st-red);
+  background: rgba(255, 84, 84, 0.16);
+  color: #ff6d6d;
 }
 
 .activity-report {
@@ -79,25 +541,50 @@
 
 .activity-report::before {
   content: "description";
-  color: var(--st-blue);
+  background: rgba(255, 255, 255, 0.08);
+  color: #b7c0ce;
+}
+
+.activity-flight {
+  border-left-color: var(--st-green) !important;
 }
 
 .activity-flight::before {
   content: "flight_takeoff";
+  background: rgba(84, 233, 138, 0.16);
+  color: var(--st-green);
+}
+
+.activity-action {
+  border-left-color: var(--st-yellow) !important;
 }
 
 .activity-action::before {
   content: "precision_manufacturing";
+  background: rgba(75, 155, 255, 0.14);
+  color: var(--st-blue);
+}
+
+@media (max-width: 1100px) {
+  .activity-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 820px) {
-  .activity-summary {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .activity-flight-stats {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 520px) {
-  .activity-summary {
-    grid-template-columns: 1fr;
+  .activity-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .activity-export-button {
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -62,6 +62,7 @@ export default function Layout() {
   const { profile, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const links = isAdmin ? adminLinks : clientLinks;
+  const initials = getInitials(profile?.displayName);
 
   const handleLogout = async () => {
     await logout();
@@ -117,25 +118,35 @@ export default function Layout() {
 
   return (
     <div className="app-shell app-shell--client">
-      <header className="app-header">
+      <header className="app-header app-header--client">
         <div className="brand">
-          <div className="brand-mark">q</div>
+          <img className="brand-mark brand-mark--image" src={qhiroLogo} alt="Qhiro" />
           <div>
             <p className="brand-title">qhiro</p>
-            <p className="brand-sub">{profile?.displayName ?? ui.brandSubtitle}</p>
           </div>
         </div>
         <nav className="app-nav">
           {links.map((link) => (
             <ShellNavLink key={link.to} {...link} />
           ))}
-          <button type="button" className="logout-btn nav-link" onClick={handleLogout}>
-            <span className="material-symbols-outlined" aria-hidden="true">
-              logout
-            </span>
-            <span>{ui.common.logout}</span>
-          </button>
         </nav>
+        <div className="app-header-tools">
+          <label className="app-search">
+            <span className="material-symbols-outlined" aria-hidden="true">
+              search
+            </span>
+            <input type="search" placeholder="Buscar parcela..." aria-label="Buscar parcela" />
+          </label>
+          <button type="button" className="header-icon-btn" aria-label="Notificaciones">
+            <span className="material-symbols-outlined" aria-hidden="true">notifications</span>
+          </button>
+          <button type="button" className="header-icon-btn" aria-label="Configuración">
+            <span className="material-symbols-outlined" aria-hidden="true">settings</span>
+          </button>
+          <button type="button" className="user-chip" onClick={handleLogout} aria-label={ui.common.logout}>
+            {initials}
+          </button>
+        </div>
       </header>
       <main className="app-main">
         <Outlet />

@@ -134,7 +134,8 @@ export default function Dashboard() {
         <div>
           <p className="page-eyebrow">Misión Control · {activeParcel?.name ?? 'Sin parcela'}</p>
           <h1>
-            Panel de Control{activeParcel ? ` - Parcela: ${activeParcel.name} (${getCropTypeLabel(activeParcel.cropType)})` : ''}
+            Panel de Control
+            {activeParcel ? ` - Parcela: ${activeParcel.name} (${getCropTypeLabel(activeParcel.cropType)})` : ''}
           </h1>
         </div>
         <div className="dashboard-head-actions">
@@ -232,7 +233,7 @@ export default function Dashboard() {
         <aside className="dashboard-side">
           <section className="card">
             <h2>Alertas Recientes</h2>
-            <AlertList alerts={alertsToShow.slice(0, 3)} />
+            <AlertList alerts={alertsToShow.slice(0, 2)} />
             <Link to="/app/flights" className="btn-secondary dashboard-full-button">
               Ver historial
             </Link>
