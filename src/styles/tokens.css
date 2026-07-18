@@ -1,0 +1,21 @@
+:root {
+  --st-bg: #111315;
+  --st-bg-deep: #0c0e10;
+  --st-surface: #1e2022;
+  --st-surface-high: #282a2c;
+  --st-surface-low: #1a1c1e;
+  --st-line: #3d4a3e;
+  --st-line-soft: rgba(134, 148, 134, 0.28);
+  --st-text: #e2e2e5;
+  --st-muted: #aebbae;
+  --st-dim: #7f8b80;
+  --st-green: #54e98a;
+  --st-green-dark: #003919;
+  --st-blue: #92ccff;
+  --st-red: #ffaaa6;
+  --st-yellow: #f3cc54;
+  color: var(--st-text);
+  background: var(--st-bg);
+  font-family: Geist, "Segoe UI", sans-serif;
+  font-size: 14px;
+}

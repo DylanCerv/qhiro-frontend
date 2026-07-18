@@ -1,0 +1,259 @@
+/* Flat Stitch controls */
+.card {
+  padding: 20px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-surface);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.card h2 {
+  margin: 0 0 18px;
+  color: var(--st-text);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.grid-2 {
+  gap: 16px;
+}
+
+.stat-label,
+.device-meta,
+.empty-state,
+.map-meta,
+.location-preview,
+.alert-date,
+.parcel-zone,
+.device-id {
+  color: var(--st-muted);
+}
+
+.stat-value,
+.device-name,
+.alert-event,
+.simple-list strong {
+  color: var(--st-text);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.status-badge {
+  min-height: 22px;
+  gap: 6px;
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-green {
+  background: rgba(84, 233, 138, 0.1);
+  color: var(--st-green);
+}
+
+.status-yellow {
+  background: rgba(243, 204, 84, 0.1);
+  color: var(--st-yellow);
+}
+
+.status-red {
+  background: rgba(255, 170, 166, 0.1);
+  color: var(--st-red);
+}
+
+.form {
+  gap: 16px;
+}
+
+.form label,
+.crop-select-label,
+.parcel-selector {
+  gap: 7px;
+  color: var(--st-muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form input,
+.form select,
+.form textarea,
+.crop-select-label select,
+.parcel-selector select,
+.map-toolbar select {
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 3px;
+  background: var(--st-surface-low);
+  color: var(--st-text);
+  text-transform: none;
+  letter-spacing: normal;
+  outline: none;
+}
+
+.form textarea {
+  min-height: 160px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  line-height: 1.55;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus,
+.crop-select-label select:focus,
+.parcel-selector select:focus {
+  border-color: var(--st-green);
+  box-shadow: 0 0 0 1px rgba(84, 233, 138, 0.25);
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  color: #667168;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 3px;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  border: 1px solid var(--st-green);
+  background: var(--st-green);
+  color: var(--st-green-dark);
+}
+
+.btn-secondary {
+  border: 1px solid var(--st-line);
+  background: transparent;
+  color: var(--st-text);
+}
+
+.btn-danger {
+  border: 1px solid #7b3d40;
+  background: rgba(147, 0, 10, 0.25);
+  color: var(--st-red);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+  transform: none;
+  filter: brightness(1.08);
+}
+
+.form-success,
+.form-error {
+  padding: 10px 12px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+}
+
+.form-success {
+  background: rgba(84, 233, 138, 0.08);
+  color: var(--st-green);
+}
+
+.form-error {
+  background: rgba(147, 0, 10, 0.2);
+  color: var(--st-red);
+}
+
+.simple-list,
+.alert-list {
+  gap: 0;
+}
+
+.simple-list li,
+.alert-item,
+.parcel-list-item,
+.device-card {
+  border: 1px solid var(--st-line-soft);
+  border-radius: 3px;
+  background: var(--st-surface-low);
+}
+
+.simple-list li {
+  padding: 14px;
+}
+
+.simple-list li + li {
+  margin-top: 8px;
+}
+
+.data-table {
+  font-size: 13px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--st-line-soft);
+}
+
+.data-table th {
+  background: var(--st-surface-low);
+  color: var(--st-muted);
+  font-size: 10px;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(84, 233, 138, 0.04);
+}
+
+.device-grid {
+  gap: 24px;
+}
+
+.device-card {
+  padding: 24px;
+}
+
+.battery-bar {
+  height: 6px;
+  margin: 16px 0;
+  border-radius: 2px;
+  background: #34383a;
+}
+
+.battery-fill {
+  border-radius: 0;
+  background: var(--st-green);
+}
+.page-eyebrow {
+  margin: 0 0 10px !important;
+  color: var(--st-green) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

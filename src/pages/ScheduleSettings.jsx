@@ -104,14 +104,14 @@ export default function ScheduleSettings() {
     parcels.find((p) => p.parcelId === parcelId)?.name ?? parcelId;
 
   return (
-    <div className="page">
-      <div className="page-head">
+    <div className="page schedule-page">
+      <div className="page-head schedule-head">
         <h1>{ui.schedule.title}</h1>
         <p>{ui.schedule.subtitle}</p>
       </div>
 
-      <div className="grid-2">
-        <section className="card">
+      <div className="grid-2 schedule-grid">
+        <section className="card schedule-form-card">
           <h2>{editingScheduleId ? ui.schedule.editSchedule : ui.schedule.newSchedule}</h2>
           <form className="form" onSubmit={handleSubmit}>
             <label>
@@ -187,7 +187,7 @@ export default function ScheduleSettings() {
           {error && <p className="form-error">{error}</p>}
         </section>
 
-        <section className="card">
+        <section className="card schedule-list-card">
           <h2>{ui.schedule.activeSchedules}</h2>
           {schedules.length === 0 ? (
             <p className="empty-state">{ui.schedule.noSchedules}</p>

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import QhiroPublicShell from '../components/QhiroPublicShell';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
-import { countryDefaults, resolveUserLocation } from '../utils/geo';
+import { countryDefaults, detectCountryCode } from '../utils/geo';
 
 export default function Register() {
   const { registerClient, error, setError } = useAuth();
@@ -11,32 +11,29 @@ export default function Register() {
   const [form, setForm] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
     displayName: '',
-    country: 'EC',
+    country: detectCountryCode(),
   });
-  const [location, setLocation] = useState(countryDefaults.EC);
-  const [locating, setLocating] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    resolveUserLocation(form.country).then(setLocation);
-  }, [form.country]);
-
-  const handleUseLocation = async () => {
-    setLocating(true);
-    const coords = await resolveUserLocation(form.country);
-    setLocation(coords);
-    setLocating(false);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
     try {
+      if (form.password !== form.confirmPassword) {
+        throw new Error('Las contraseñas no coinciden.');
+      }
       await registerClient({
-        ...form,
-        location: { lat: location.lat, lng: location.lng },
+        email: form.email,
+        password: form.password,
+        displayName: form.displayName,
+        country: form.country,
+        location: {
+          lat: (countryDefaults[form.country] ?? countryDefaults.EC).lat,
+          lng: (countryDefaults[form.country] ?? countryDefaults.EC).lng,
+        },
       });
       navigate('/app/parcels');
     } catch (err) {
@@ -47,58 +44,85 @@ export default function Register() {
   };
 
   return (
-    <QhiroPublicShell>
+    <QhiroPublicShell variant="register">
       <div className="qhiro-auth-panel">
-        <h1 className="qhiro-auth-title">{ui.auth.registerTitle}</h1>
+        <h1 className="qhiro-auth-title">Crear cuenta</h1>
+        <p className="qhiro-auth-intro">Únase al ecosistema de agricultura simbiótica.</p>
         <form className="form qhiro-form" onSubmit={handleSubmit}>
-          <label>
-            {ui.auth.displayName}
-            <input
-              value={form.displayName}
-              onChange={(e) => setForm({ ...form, displayName: e.target.value })}
-              required
-            />
+          <label className="qhiro-field">
+            <span>{ui.auth.displayName}</span>
+            <span className="qhiro-input-wrap">
+              <span className="material-symbols-outlined" aria-hidden="true">person</span>
+              <input
+                placeholder="Ej. Juan Pérez"
+                value={form.displayName}
+                onChange={(e) => setForm({ ...form, displayName: e.target.value })}
+                required
+              />
+            </span>
           </label>
-          <label>
-            {ui.auth.email}
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-            />
+          <label className="qhiro-field">
+            <span>Email corporativo</span>
+            <span className="qhiro-input-wrap">
+              <span className="material-symbols-outlined" aria-hidden="true">alternate_email</span>
+              <input
+                type="email"
+                placeholder="nombre@empresa.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+              />
+            </span>
           </label>
-          <label>
-            {ui.auth.password}
-            <input
-              type="password"
-              minLength={6}
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
+          <label className="qhiro-field">
+            <span>{ui.auth.country}</span>
+            <span className="qhiro-input-wrap">
+              <span className="material-symbols-outlined" aria-hidden="true">public</span>
+              <select
+                value={form.country}
+                onChange={(e) => setForm({ ...form, country: e.target.value })}
+              >
+                {Object.entries(countryDefaults).map(([code, data]) => (
+                  <option key={code} value={code}>{data.label}</option>
+                ))}
+              </select>
+            </span>
           </label>
-          <label>
-            {ui.auth.country}
-            <select
-              value={form.country}
-              onChange={(e) => setForm({ ...form, country: e.target.value })}
-            >
-              {Object.entries(countryDefaults).map(([code, data]) => (
-                <option key={code} value={code}>
-                  {data.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button type="button" className="qhiro-btn qhiro-btn-outline" onClick={handleUseLocation}>
-            {locating ? ui.auth.locating : ui.auth.useLocation}
-          </button>
-          <p className="location-preview qhiro-muted">
-            {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
-          </p>
+          <div className="qhiro-form-grid">
+            <label className="qhiro-field">
+              <span>{ui.auth.password}</span>
+              <span className="qhiro-input-wrap">
+                <span className="material-symbols-outlined" aria-hidden="true">lock</span>
+                <input
+                  type="password"
+                  minLength={6}
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  required
+                />
+              </span>
+            </label>
+            <label className="qhiro-field">
+              <span>Confirmar</span>
+              <span className="qhiro-input-wrap">
+                <span className="material-symbols-outlined" aria-hidden="true">lock_reset</span>
+                <input
+                  type="password"
+                  minLength={6}
+                  placeholder="••••••••"
+                  value={form.confirmPassword}
+                  onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                  required
+                />
+              </span>
+            </label>
+          </div>
           <button type="submit" className="qhiro-btn qhiro-btn-solid" disabled={submitting}>
-            {ui.auth.registerButton}
+            <span>{submitting ? 'Procesando…' : 'Comenzar registro'}</span>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              {submitting ? 'progress_activity' : 'arrow_forward'}
+            </span>
           </button>
         </form>
 
@@ -107,10 +131,11 @@ export default function Register() {
         <p className="qhiro-auth-switch">
           {ui.auth.hasAccount}{' '}
           <Link to="/login">{ui.auth.goLogin}</Link>
+          <span className="qhiro-auth-legal">
+            <a href="#terms">Términos</a>
+            <a href="#privacy">Privacidad</a>
+          </span>
         </p>
-        <Link to="/" className="qhiro-back-link">
-          {ui.landing.backHome}
-        </Link>
       </div>
     </QhiroPublicShell>
   );

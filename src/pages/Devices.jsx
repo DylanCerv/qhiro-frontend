@@ -134,9 +134,12 @@ export default function Devices() {
   if (loading) return <p className="page-state">{ui.common.loadingDevices}</p>;
 
   return (
-    <div className="page">
-      <div className="page-head">
-        <h1>{ui.devices.title}</h1>
+    <div className="page devices-page">
+      <div className="page-head devices-head">
+        <div>
+          <p className="page-eyebrow">Hardware-Ops Dashboard</p>
+          <h1>Flota de Hardware</h1>
+        </div>
         <p>{ui.devices.subtitle}</p>
       </div>
 

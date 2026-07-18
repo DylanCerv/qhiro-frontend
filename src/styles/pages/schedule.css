@@ -1,0 +1,74 @@
+/* Flight scheduling */
+.schedule-head {
+  padding: 18px 0 10px;
+}
+
+.schedule-grid {
+  grid-template-columns: minmax(290px, 0.42fr) minmax(500px, 1fr);
+  align-items: start;
+}
+
+.schedule-form-card,
+.schedule-list-card {
+  padding: 24px;
+}
+
+.schedule-form-card h2::before {
+  content: "add_task";
+  margin-right: 8px;
+  color: var(--st-green);
+  font-family: "Material Symbols Outlined";
+  font-size: 20px;
+  vertical-align: -3px;
+}
+
+.schedule-list-card h2::before {
+  content: "calendar_clock";
+  margin-right: 8px;
+  color: var(--st-green);
+  font-family: "Material Symbols Outlined";
+  font-size: 20px;
+  vertical-align: -3px;
+}
+
+.schedule-list-card .simple-list li {
+  display: grid;
+  grid-template-columns: minmax(160px, 1.4fr) minmax(130px, 1fr) auto;
+  align-items: center;
+  gap: 10px 20px;
+  padding: 16px 18px;
+}
+
+.schedule-list-card .simple-list strong {
+  grid-row: span 2;
+  margin: 0;
+  font-size: 15px;
+}
+
+.schedule-list-card .list-actions {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.schedule-list-card .list-actions button {
+  min-height: 32px;
+  padding: 5px 9px;
+}
+
+@media (max-width: 960px) {
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .schedule-list-card .simple-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-list-card .simple-list strong,
+  .schedule-list-card .list-actions {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

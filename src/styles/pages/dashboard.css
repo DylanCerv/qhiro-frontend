@@ -1,0 +1,189 @@
+/* Dashboard */
+.dashboard-page {
+  gap: 26px;
+}
+
+.dashboard-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.dashboard-head-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.dashboard-head-actions .parcel-selector {
+  min-width: 210px;
+  margin: 0;
+}
+
+.dashboard-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-kpi {
+  min-height: 142px;
+  padding: 22px 24px;
+}
+
+.dashboard-kpi-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--st-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.dashboard-kpi-value {
+  margin-top: 12px;
+  color: var(--st-text);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dashboard-kpi-time {
+  margin-top: 18px;
+  color: var(--st-text);
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.dashboard-kpi-note {
+  margin-top: 4px;
+  color: var(--st-muted);
+  font-size: 12px;
+}
+
+.dashboard-blue {
+  color: var(--st-blue);
+}
+
+.dashboard-progress {
+  height: 4px;
+  margin-top: 18px;
+  overflow: hidden;
+  background: #363a3c;
+}
+
+.dashboard-progress span {
+  display: block;
+  height: 100%;
+  background: var(--st-green);
+}
+
+.dashboard-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(260px, 0.95fr);
+  gap: 16px;
+}
+
+.dashboard-map-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.dashboard-card-toolbar {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--st-line);
+}
+
+.dashboard-card-toolbar h2 {
+  margin: 0;
+}
+
+.dashboard-map-tabs {
+  display: flex;
+  border: 1px solid var(--st-line);
+  background: var(--st-bg-deep);
+}
+
+.dashboard-map-tabs button {
+  min-height: 28px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--st-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.dashboard-map-tabs button.active {
+  background: var(--st-green);
+  color: var(--st-green-dark);
+}
+
+.dashboard-map-card .map-wrap {
+  border: 0;
+  border-radius: 0;
+}
+
+.dashboard-map-card .map-wrap .leaflet-container {
+  min-height: 520px;
+}
+
+.dashboard-map-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 11px 14px;
+  border-top: 1px solid var(--st-line);
+  background: var(--st-bg-deep);
+  color: var(--st-muted);
+  font-family: Consolas, monospace;
+  font-size: 10px;
+}
+
+.dashboard-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-side .card {
+  flex: 1;
+}
+
+.dashboard-full-button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.dashboard-actions-list li {
+  position: relative;
+  padding-left: 16px;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-head-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-workspace {
+    grid-template-columns: 1fr;
+  }
+}

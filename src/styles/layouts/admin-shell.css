@@ -1,0 +1,146 @@
+/* Admin shell */
+.app-shell--admin {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.app-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  padding: 16px;
+  border-right: 1px solid var(--st-line);
+  background: var(--st-surface-high);
+  backdrop-filter: none;
+}
+
+.app-sidebar-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px 24px;
+  border-bottom: 1px solid var(--st-line-soft);
+  text-align: center;
+}
+
+.sidebar-brand-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  background: #fff;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-brand-copy .brand-title {
+  color: var(--st-green);
+  font-size: 18px;
+}
+
+.sidebar-brand-copy .brand-sub {
+  color: var(--st-muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.app-sidebar-nav {
+  padding-top: 16px;
+}
+
+.app-sidebar-nav .nav-link {
+  margin-bottom: 8px;
+}
+
+.app-sidebar-nav .nav-link .material-symbols-outlined {
+  width: 22px;
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.app-sidebar-nav .nav-link span:last-child {
+  font-size: 13px;
+}
+
+.app-sidebar-nav .nav-link {
+  min-height: 44px;
+  justify-content: flex-start;
+  padding: 0 14px;
+  border-radius: 4px;
+}
+
+.app-sidebar-nav .nav-link .material-symbols-outlined {
+  display: inline-block;
+}
+
+.app-sidebar-nav .nav-link.active {
+  background: var(--st-green);
+  color: var(--st-green-dark);
+}
+
+.app-sidebar-nav .nav-link.active::after {
+  display: none;
+}
+
+.app-sidebar-footer {
+  padding-top: 16px;
+  border-color: var(--st-line-soft);
+}
+
+.sidebar-avatar {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--st-green);
+  color: var(--st-green-dark);
+  box-shadow: none;
+}
+
+.sidebar-name {
+  color: var(--st-text);
+}
+
+.sidebar-role {
+  color: var(--st-muted);
+}
+
+.app-sidebar-footer .logout-btn {
+  width: 100%;
+}
+
+.app-shell--admin .app-main {
+  width: 100%;
+  max-width: none;
+  padding: 32px;
+}
+@media (max-width: 1000px) {
+  .app-shell--admin .app-main {
+    padding: 24px 16px;
+  }
+
+  .app-shell--admin {
+    grid-template-columns: 1fr;
+  }
+
+  .app-sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--st-line);
+  }
+
+  .app-sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .app-sidebar-brand {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .app-sidebar-footer {
+    display: none;
+  }
+}

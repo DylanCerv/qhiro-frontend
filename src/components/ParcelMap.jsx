@@ -5,9 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import { mapTiles } from '../utils/geo';
 
 const healthColors = {
-  green: '#22c55e',
-  yellow: '#eab308',
-  red: '#ef4444',
+  green: '#54e98a',
+  yellow: '#f3cc54',
+  red: '#ffaaa6',
 };
 
 function FitBounds({ parcels, center }) {
@@ -54,9 +54,9 @@ export default function ParcelMap({
               pathOptions={{
                 color:
                   p.parcelId === selectedParcelId
-                    ? '#aa3bff'
-                    : healthColors[p.healthStatus] ?? '#aa3bff',
-                fillColor: healthColors[p.healthStatus] ?? '#aa3bff',
+                    ? '#54e98a'
+                    : healthColors[p.healthStatus] ?? '#54e98a',
+                fillColor: healthColors[p.healthStatus] ?? '#54e98a',
                 fillOpacity: p.parcelId === selectedParcelId ? 0.5 : 0.35,
                 weight: p.parcelId === selectedParcelId ? 3 : 2,
               }}

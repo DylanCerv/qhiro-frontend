@@ -400,7 +400,7 @@ export default function MqttDiagnostics() {
   if (loading) return <p className="page-state">{ui.common.loadingSession}</p>;
 
   return (
-    <div className="page">
+    <div className="page mqtt-page">
       <div className="page-head">
         <h1>{ui.mqttDiagnostics.title}</h1>
         <p>{ui.mqttDiagnostics.subtitle}</p>

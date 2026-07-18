@@ -2,17 +2,61 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
 
+const qhiroLogo =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c';
+
 const clientLinks = [
-  { to: '/app', label: ui.nav.dashboard, end: true },
-  { to: '/app/parcels', label: ui.nav.parcels },
-  { to: '/app/flights', label: ui.nav.activity },
-  { to: '/app/devices', label: ui.nav.devices },
+  { to: '/app', label: ui.nav.dashboard, icon: 'dashboard', end: true },
+  { to: '/app/parcels', label: ui.nav.parcels, icon: 'agriculture' },
+  { to: '/app/schedule', label: 'Programación', icon: 'calendar_month' },
+  { to: '/app/flights', label: ui.nav.activity, icon: 'history' },
+  { to: '/app/devices', label: ui.nav.devices, icon: 'sensors' },
 ];
 
 const adminLinks = [
-  { to: '/app/admin/clients', label: ui.nav.admin, end: true },
-  { to: '/app/admin/clients/mqtt', label: ui.nav.mqttDiagnostics },
+  { to: '/app/admin/clients', label: ui.nav.admin, icon: 'groups', end: true },
+  { to: '/app/admin/clients/mqtt', label: ui.nav.mqttDiagnostics, icon: 'terminal' },
 ];
+
+function getInitials(name) {
+  return (
+    name
+      ?.split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('') ?? 'QH'
+  );
+}
+
+function ShellNavLink({ to, label, icon, end }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+    >
+      <span className="material-symbols-outlined" aria-hidden="true">
+        {icon}
+      </span>
+      <span>{label}</span>
+    </NavLink>
+  );
+}
+
+function AppFooter() {
+  return (
+    <footer className="app-footer">
+      <strong>qhiro symbiotic</strong>
+      <p>© 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
+      <nav aria-label="Enlaces legales">
+        <a href="#privacy">Privacidad</a>
+        <a href="#terms">Términos</a>
+        <a href="#support">Soporte</a>
+      </nav>
+    </footer>
+  );
+}
 
 export default function Layout() {
   const { profile, logout, isAdmin } = useAuth();
@@ -24,11 +68,58 @@ export default function Layout() {
     navigate('/');
   };
 
+  if (isAdmin) {
+    return (
+      <div className="app-shell app-shell--admin">
+        <aside className="app-sidebar">
+          <div className="app-sidebar-brand">
+            <img className="sidebar-brand-logo" src={qhiroLogo} alt="Qhiro" />
+            <div className="sidebar-brand-copy">
+              <p className="brand-title">Admin Console</p>
+              <p className="brand-sub">TECHNICAL OPERATIONS</p>
+            </div>
+          </div>
+
+          <nav className="app-sidebar-nav" aria-label={ui.nav.admin}>
+            {links.map((link) => (
+              <ShellNavLink key={link.to} {...link} />
+            ))}
+          </nav>
+
+          <div className="app-sidebar-footer">
+            <div className="sidebar-profile">
+              <div className="sidebar-avatar" aria-hidden="true">
+                {getInitials(profile?.displayName)}
+              </div>
+              <div>
+                <p className="sidebar-name">{profile?.displayName ?? 'Admin'}</p>
+                <p className="sidebar-role">Technical Operations</p>
+              </div>
+            </div>
+            <button type="button" className="logout-btn" onClick={handleLogout}>
+              <span className="material-symbols-outlined" aria-hidden="true">
+                logout
+              </span>
+              <span>{ui.common.logout}</span>
+            </button>
+          </div>
+        </aside>
+
+        <div className="app-shell-content">
+          <main className="app-main">
+            <Outlet />
+          </main>
+          <AppFooter />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="app-shell">
+    <div className="app-shell app-shell--client">
       <header className="app-header">
         <div className="brand">
-          <span className="brand-mark">q</span>
+          <div className="brand-mark">q</div>
           <div>
             <p className="brand-title">qhiro</p>
             <p className="brand-sub">{profile?.displayName ?? ui.brandSubtitle}</p>
@@ -36,23 +127,20 @@ export default function Layout() {
         </div>
         <nav className="app-nav">
           {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.end}
-              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
-            >
-              {link.label}
-            </NavLink>
+            <ShellNavLink key={link.to} {...link} />
           ))}
-          <button type="button" className="nav-link logout-btn" onClick={handleLogout}>
-            {ui.common.logout}
+          <button type="button" className="logout-btn nav-link" onClick={handleLogout}>
+            <span className="material-symbols-outlined" aria-hidden="true">
+              logout
+            </span>
+            <span>{ui.common.logout}</span>
           </button>
         </nav>
       </header>
       <main className="app-main">
         <Outlet />
       </main>
+      <AppFooter />
     </div>
   );
 }

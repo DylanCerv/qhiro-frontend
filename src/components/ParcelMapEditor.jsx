@@ -205,7 +205,7 @@ export default function ParcelMapEditor({ center, points, setPoints }) {
           {points.length >= 3 && (
             <Polygon
               positions={points.map((p) => [p.lat, p.lng])}
-              pathOptions={{ color: '#aa3bff', fillColor: '#aa3bff', fillOpacity: 0.25 }}
+              pathOptions={{ color: '#54e98a', fillColor: '#54e98a', fillOpacity: 0.25 }}
             />
           )}
         </MapContainer>

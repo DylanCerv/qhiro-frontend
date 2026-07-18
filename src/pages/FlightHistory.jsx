@@ -91,15 +91,16 @@ export default function FlightHistory() {
   }
 
   return (
-    <div className="page">
-      <div className="page-head">
-        <h1>Actividad</h1>
+    <div className="page activity-page">
+      <div className="page-head activity-head">
+        <p className="page-eyebrow">Panel de Control</p>
+        <h1>Historial de Actividad</h1>
         <p>Alertas, informes, vuelos y acciones del cultivo en una sola vista.</p>
       </div>
 
       {error && <p className="form-error">{error}</p>}
 
-      <div className="grid-2">
+      <div className="grid-2 activity-summary">
         <section className="card">
           <h2>Informes</h2>
           <p className="stat-value">{summary.reports}</p>
@@ -121,7 +122,7 @@ export default function FlightHistory() {
         </section>
       </div>
 
-      <section className="card">
+      <section className="card activity-timeline-card">
         <h2>Actividad reciente</h2>
         {activity.length === 0 ? (
           <p className="empty-state">Todavía no hay actividad registrada.</p>
@@ -139,7 +140,7 @@ export default function FlightHistory() {
                   ? getActionStatusLabel(item.status)
                   : getActionStatusLabel(item.status);
               return (
-                <li key={item.id}>
+                <li key={item.id} className={`activity-entry activity-${item.kind}`}>
                   <div className="stat-row" style={{ alignItems: 'center' }}>
                     <strong>{item.title}</strong>
                     <StatusBadge status={item.status} label={statusLabel} />

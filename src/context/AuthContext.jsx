@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
-import { auth, signInWithEmailAndPassword } from '../config/firebase';
+import { auth, sendPasswordResetEmail, signInWithEmailAndPassword } from '../config/firebase';
 
 const TOKEN_KEY = 'qhiro_auth_token';
 
@@ -54,6 +54,17 @@ export function AuthProvider({ children }) {
     await loadProfile(response.token);
   }, [loadProfile]);
 
+  const resetPassword = useCallback(async (email) => {
+    setError(null);
+    if (!email) {
+      throw new Error('Ingresa tu correo electrónico para recuperar la contraseña.');
+    }
+    if (!auth) {
+      throw new Error('La recuperación de contraseña no está disponible en este momento.');
+    }
+    await sendPasswordResetEmail(auth, email);
+  }, []);
+
   const logout = useCallback(async () => {
     setError(null);
     setProfile(null);
@@ -78,11 +89,12 @@ export function AuthProvider({ children }) {
       isClient: profile?.role === 'client',
       login,
       registerClient,
+      resetPassword,
       logout,
       refreshProfile,
       setError,
     }),
-    [profile, token, loading, error, login, registerClient, logout, refreshProfile],
+    [profile, token, loading, error, login, registerClient, resetPassword, logout, refreshProfile],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

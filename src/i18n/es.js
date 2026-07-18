@@ -243,8 +243,8 @@ export const ui = {
     recentAlerts: 'Alertas recientes',
   },
   schedule: {
-    title: 'Programación',
-    subtitle: 'Configura horario y frecuencia de vuelos automáticos del dron.',
+    title: 'Programación de vuelos',
+    subtitle: 'Gestión de misiones autónomas y telemetría de flota.',
     newSchedule: 'Nueva programación',
     editSchedule: 'Editar programación',
     scheduleType: 'Tipo de programación',

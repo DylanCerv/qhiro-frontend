@@ -1,0 +1,1002 @@
+/* Authentication */
+.qhiro-auth-shell {
+  min-height: 100svh;
+  padding: 0;
+  background: var(--st-bg);
+  overflow: auto;
+}
+
+.qhiro-auth-brand {
+  z-index: 20;
+  top: 28px;
+  left: 32px;
+  color: var(--st-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.qhiro-auth-brand::before {
+  content: "← ";
+}
+
+.qhiro-auth-card {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: var(--st-bg);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.qhiro-auth-visual {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #101214;
+}
+
+.qhiro-auth-doodle {
+  display: none;
+}
+
+.qhiro-auth-brand-block {
+  width: min(100%, 420px);
+  margin: 0;
+  padding: 48px 32px;
+  border: 1px solid var(--st-line-soft);
+  background:
+    linear-gradient(var(--st-line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--st-line-soft) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+.qhiro-auth-logo {
+  color: var(--st-green);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 54px;
+}
+
+.qhiro-auth-brand-block p:not(.qhiro-auth-logo) {
+  color: var(--st-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+}
+
+.qhiro-auth-form-section {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 72px;
+  border-left: 1px solid rgba(255, 255, 255, 0.025);
+  background: var(--st-bg-deep);
+}
+
+.qhiro-auth-form-section .qhiro-auth-panel {
+  width: 100%;
+  max-width: 440px;
+}
+
+.qhiro-auth-shell--login .qhiro-auth-visual {
+  grid-column: 2;
+  grid-row: 1;
+  background: var(--st-bg-deep);
+}
+
+.qhiro-auth-shell--login .qhiro-auth-form-section {
+  grid-column: 1;
+  grid-row: 1;
+  border-right: 1px solid rgba(255, 255, 255, 0.025);
+  border-left: 0;
+  background: var(--st-bg);
+}
+
+.qhiro-auth-shell--login .qhiro-auth-brand-block {
+  min-height: 410px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.qhiro-auth-shell--login .qhiro-auth-logo,
+.qhiro-auth-shell--login .qhiro-auth-brand-block > p:not(.qhiro-auth-logo) {
+  display: none;
+}
+
+.qhiro-auth-system {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+  color: rgba(84, 233, 138, 0.48);
+}
+
+.qhiro-auth-system .material-symbols-outlined {
+  font-size: 86px;
+}
+
+.qhiro-auth-system small {
+  color: var(--st-green);
+  font-family: Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-system {
+  display: none;
+}
+
+.qhiro-auth-title {
+  margin-bottom: 28px;
+  color: var(--st-text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.qhiro-auth-intro {
+  margin: -20px 0 28px;
+  color: var(--st-muted);
+  line-height: 1.5;
+}
+
+.qhiro-auth-form-section .qhiro-form input,
+.qhiro-auth-form-section .qhiro-form select {
+  min-height: 52px;
+  border-color: var(--st-line);
+  border-radius: 3px;
+  background: var(--st-surface);
+}
+
+.qhiro-btn {
+  min-height: 52px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.qhiro-btn-solid {
+  border-color: var(--st-green);
+  background: var(--st-green);
+  color: var(--st-green-dark);
+}
+
+.qhiro-btn-outline {
+  border-color: var(--st-line);
+  background: transparent;
+  color: var(--st-text);
+}
+
+.qhiro-auth-switch,
+.qhiro-back-link {
+  color: var(--st-muted);
+  text-align: left;
+}
+
+.qhiro-auth-switch a,
+.qhiro-back-link {
+  color: var(--st-green);
+}
+@media (max-width: 1000px) {
+  .qhiro-auth-form-section {
+    padding: 48px 24px;
+  }
+}
+@media (max-width: 760px) {
+  .qhiro-auth-card {
+    grid-template-columns: 1fr;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-visual,
+  .qhiro-auth-shell--login .qhiro-auth-form-section {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-form-section {
+    order: 1;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-visual {
+    order: 2;
+  }
+
+  .qhiro-auth-visual {
+    min-height: 300px;
+    padding: 80px 24px 24px;
+  }
+
+  .qhiro-auth-form-section {
+    min-height: auto;
+    padding: 48px 24px;
+    border-top: 1px solid var(--st-line);
+    border-left: 0;
+  }
+}
+
+/* Stitch authentication screens */
+.qhiro-auth-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-x: hidden;
+  background: #121416;
+  color: #e2e2e5;
+  font-family: Geist, "Segoe UI", sans-serif;
+}
+
+.qhiro-auth-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 86% 15%, rgba(84, 233, 138, 0.055), transparent 34rem),
+    radial-gradient(circle at 8% 92%, rgba(146, 204, 255, 0.035), transparent 30rem);
+}
+
+.qhiro-auth-shell .qhiro-auth-brand {
+  position: absolute;
+  z-index: 30;
+  top: 30px;
+  left: 28px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #bbcbbb;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.qhiro-auth-shell .qhiro-auth-brand::before {
+  content: none;
+}
+
+.qhiro-auth-brand .material-symbols-outlined {
+  font-size: 17px;
+  transition: transform 180ms ease;
+}
+
+.qhiro-auth-brand:hover {
+  color: #54e98a;
+}
+
+.qhiro-auth-brand:hover .material-symbols-outlined {
+  transform: translateX(-3px);
+}
+
+.qhiro-auth-shell .qhiro-auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: grid;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.qhiro-auth-shell .qhiro-auth-form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: #121416;
+}
+
+.qhiro-auth-shell .qhiro-auth-panel {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+.qhiro-auth-shell .qhiro-auth-title {
+  margin: 0;
+  color: #e2e2e5;
+  font-family: Geist, "Segoe UI", sans-serif;
+  font-size: 32px;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  text-align: left;
+}
+
+.qhiro-auth-shell .qhiro-auth-intro {
+  margin: 8px 0 34px;
+  color: #bbcbbb;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.qhiro-auth-shell .qhiro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.qhiro-auth-shell .qhiro-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #bbcbbb;
+}
+
+.qhiro-auth-shell .qhiro-field > span:first-child,
+.qhiro-password-label {
+  color: #bbcbbb;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 16px;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.qhiro-input-wrap {
+  position: relative;
+  display: block;
+}
+
+.qhiro-input-wrap > .material-symbols-outlined {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 13px;
+  color: #869486;
+  font-size: 20px;
+  transform: translateY(-50%);
+  transition: color 180ms ease;
+  pointer-events: none;
+}
+
+.qhiro-input-wrap:focus-within > .material-symbols-outlined {
+  color: #54e98a;
+}
+
+.qhiro-auth-shell .qhiro-form .qhiro-input-wrap input,
+.qhiro-auth-shell .qhiro-form .qhiro-input-wrap select {
+  width: 100%;
+  min-height: 50px;
+  margin: 0;
+  padding: 0 14px 0 44px;
+  border: 1px solid #3d4a3e;
+  border-radius: 4px;
+  outline: 0;
+  background: #1e2022;
+  color: #e2e2e5;
+  font: inherit;
+  box-shadow: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.qhiro-auth-shell .qhiro-form .qhiro-input-wrap input::placeholder {
+  color: rgba(187, 203, 187, 0.28);
+}
+
+.qhiro-auth-shell .qhiro-form .qhiro-input-wrap input:focus,
+.qhiro-auth-shell .qhiro-form .qhiro-input-wrap select:focus {
+  border-color: #54e98a;
+  box-shadow: 0 0 0 2px rgba(84, 233, 138, 0.08);
+}
+
+.qhiro-password-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.qhiro-password-label button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #54e98a;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.qhiro-password-label button:hover {
+  color: #6bfe9c;
+}
+
+.qhiro-auth-shell .qhiro-btn {
+  width: 100%;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 0 20px;
+  border: 1px solid #54e98a;
+  border-radius: 4px;
+  background: #54e98a;
+  color: #003919;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.qhiro-auth-shell .qhiro-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: none;
+}
+
+.qhiro-auth-shell .qhiro-btn:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+.qhiro-auth-shell .qhiro-btn:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.qhiro-auth-shell .qhiro-btn .material-symbols-outlined {
+  font-size: 19px;
+}
+
+.qhiro-auth-shell .form-error,
+.qhiro-auth-shell .form-success {
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 180, 171, 0.25);
+  border-radius: 4px;
+  background: rgba(147, 0, 10, 0.16);
+  color: #ffb4ab;
+  font-size: 12px;
+}
+
+.qhiro-auth-shell .form-success {
+  border-color: rgba(84, 233, 138, 0.25);
+  background: rgba(84, 233, 138, 0.08);
+  color: #69e792;
+}
+
+.qhiro-auth-shell .qhiro-auth-switch {
+  display: flex;
+  align-items: center;
+  margin: 30px 0 0;
+  padding-top: 25px;
+  border-top: 1px solid rgba(61, 74, 62, 0.5);
+  color: #bbcbbb;
+  font-size: 12px;
+  text-align: left;
+}
+
+.qhiro-auth-shell .qhiro-auth-switch > a {
+  margin-left: 4px;
+  color: #54e98a;
+  text-decoration: none;
+}
+
+.qhiro-auth-shell .qhiro-auth-switch > a:hover,
+.qhiro-auth-legal a:hover {
+  text-decoration: underline;
+}
+
+/* Login */
+.qhiro-auth-shell--login .qhiro-auth-card {
+  min-height: 100svh;
+  grid-template-columns: minmax(390px, 40%) minmax(0, 60%);
+}
+
+.qhiro-auth-shell--login .qhiro-auth-form-section {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 100svh;
+  padding: 96px 50px 64px;
+  border-right: 1px solid rgba(61, 74, 62, 0.18);
+}
+
+.qhiro-auth-shell--login .qhiro-auth-panel {
+  max-width: 384px;
+}
+
+.qhiro-login-logo {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin-bottom: 26px;
+  object-fit: contain;
+}
+
+.qhiro-auth-shell--login .qhiro-auth-visual {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 100svh;
+  padding: 72px;
+  overflow: hidden;
+  border: 0;
+  background:
+    radial-gradient(circle at center, rgba(84, 233, 138, 0.055), transparent 38%),
+    #0c0e10;
+}
+
+.qhiro-telemetry-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  background-image: radial-gradient(circle, rgba(84, 233, 138, 0.11) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.qhiro-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(84, 233, 138, 0.22), transparent);
+  animation: qhiro-scan 5s linear infinite;
+}
+
+@keyframes qhiro-scan {
+  from { top: 0; }
+  to { top: 100%; }
+}
+
+.qhiro-hud {
+  position: relative;
+  width: min(58vw, 460px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(61, 74, 62, 0.28);
+  border-radius: 50%;
+}
+
+.qhiro-hud::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgba(84, 233, 138, 0.19);
+  border-radius: 12px;
+}
+
+.qhiro-hud-ring {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.qhiro-hud-ring--outer {
+  inset: 3%;
+  border: 1px dashed rgba(61, 74, 62, 0.45);
+  animation: qhiro-spin 60s linear infinite;
+}
+
+.qhiro-hud-ring--inner {
+  inset: 18%;
+  border: 1px solid rgba(84, 233, 138, 0.15);
+}
+
+@keyframes qhiro-spin {
+  to { transform: rotate(360deg); }
+}
+
+.qhiro-hud-machine {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qhiro-hud-machine .material-symbols-outlined {
+  color: rgba(84, 233, 138, 0.42);
+  font-size: 110px;
+  font-variation-settings: "wght" 100, "FILL" 0;
+}
+
+.qhiro-hud-machine strong {
+  margin-top: 10px;
+  color: #54e98a;
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+}
+
+.qhiro-hud-machine small {
+  margin-top: 5px;
+  color: rgba(187, 203, 187, 0.5);
+  font-family: Consolas, monospace;
+  font-size: 9px;
+}
+
+.qhiro-hud-data {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: rgba(30, 32, 34, 0.46);
+  backdrop-filter: blur(6px);
+}
+
+.qhiro-hud-data small {
+  color: rgba(84, 233, 138, 0.72);
+  font-family: Consolas, monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.qhiro-hud-data strong {
+  color: #e2e2e5;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+}
+
+.qhiro-hud-data--altitude {
+  top: 15%;
+  left: 15%;
+  border-top: 1px solid rgba(84, 233, 138, 0.38);
+  border-left: 1px solid rgba(84, 233, 138, 0.38);
+}
+
+.qhiro-hud-data--coordinates {
+  right: 5%;
+  bottom: 20%;
+  align-items: flex-end;
+  border-right: 1px solid rgba(84, 233, 138, 0.38);
+  border-bottom: 1px solid rgba(84, 233, 138, 0.38);
+}
+
+.qhiro-operational-status {
+  position: absolute;
+  right: 12%;
+  bottom: 10%;
+  left: 12%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 28px;
+}
+
+.qhiro-operational-status > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qhiro-operational-status > div:last-child {
+  align-items: flex-end;
+}
+
+.qhiro-operational-status small {
+  color: #869486;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.qhiro-operational-status strong {
+  color: #e2e2e5;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.qhiro-operational-status strong span {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #54e98a;
+  box-shadow: 0 0 8px rgba(84, 233, 138, 0.55);
+}
+
+.qhiro-operational-status em {
+  color: rgba(84, 233, 138, 0.55);
+  font-family: Consolas, monospace;
+  font-size: 9px;
+  font-style: normal;
+}
+
+/* Register */
+.qhiro-auth-shell--register {
+  justify-content: space-between;
+  background: #121416;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-card {
+  width: min(calc(100% - 32px), 1100px);
+  min-height: 570px;
+  grid-template-columns: 1fr 1fr;
+  margin: 52px auto;
+  border: 1px solid rgba(61, 74, 62, 0.46);
+  border-radius: 8px;
+  background: rgba(30, 32, 34, 0.82);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
+.qhiro-auth-shell--register .qhiro-auth-form-section {
+  min-height: 570px;
+  padding: 44px 50px;
+  background: rgba(12, 14, 16, 0.72);
+}
+
+.qhiro-auth-shell--register .qhiro-auth-panel {
+  max-width: 480px;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-intro {
+  margin-bottom: 28px;
+}
+
+.qhiro-auth-shell--register .qhiro-form {
+  gap: 18px;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-visual {
+  position: relative;
+  min-height: 570px;
+  padding: 46px;
+  overflow: hidden;
+  border-right: 1px solid #3d4a3e;
+  background: #1e2022;
+}
+
+.qhiro-register-pattern {
+  position: absolute;
+  inset: 120px 44px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  pointer-events: none;
+}
+
+.qhiro-register-block {
+  border: 16px solid rgba(84, 233, 138, 0.055);
+  background: transparent;
+}
+.qhiro-register-block--top-left {
+  margin: 0 22px 22px 0;
+}
+
+.qhiro-register-block--top-right {
+  margin: 0 0 22px 22px;
+}
+
+.qhiro-register-block--bottom-left {
+  margin: 22px 22px 0 0;
+}
+
+.qhiro-register-block--bottom-right {
+  margin: 22px 0 0 22px;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-brand-block {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 390px;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-brand-block > img {
+  width: 94px;
+  height: 94px;
+  object-fit: contain;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-logo {
+  margin: 20px 0 12px;
+  color: #54e98a;
+  font-family: Geist, "Segoe UI", sans-serif;
+  font-size: 42px;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-brand-block > p:not(.qhiro-auth-logo) {
+  max-width: 340px;
+  margin: 0;
+  color: #bbcbbb;
+  font-family: Geist, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.qhiro-register-features {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 36px;
+  text-align: left;
+}
+
+.qhiro-register-features > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.qhiro-register-features .material-symbols-outlined {
+  color: #54e98a;
+  font-size: 21px;
+}
+
+.qhiro-register-features p {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  color: #bbcbbb;
+  font-size: 12px;
+}
+
+.qhiro-register-features strong {
+  color: #54e98a;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.qhiro-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.qhiro-auth-shell--register .qhiro-auth-switch {
+  justify-content: flex-start;
+  margin-top: 28px;
+}
+
+.qhiro-auth-legal {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.qhiro-auth-legal a {
+  color: #bbcbbb;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1000px) {
+  .qhiro-auth-shell--login .qhiro-auth-card {
+    grid-template-columns: minmax(360px, 46%) minmax(0, 54%);
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-form-section {
+    padding-inline: 36px;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-form-section {
+    padding-inline: 32px;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-visual {
+    padding-inline: 32px;
+  }
+
+  .qhiro-hud {
+    width: min(48vw, 400px);
+  }
+}
+
+@media (max-width: 760px) {
+  .qhiro-auth-shell .qhiro-auth-brand {
+    top: 12px;
+    left: 16px;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-card,
+  .qhiro-auth-shell--register .qhiro-auth-card {
+    width: 100%;
+    min-height: 100svh;
+    grid-template-columns: 1fr;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-form-section {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 100svh;
+    padding: 84px 24px 48px;
+    border: 0;
+  }
+
+  .qhiro-auth-shell--login .qhiro-auth-visual {
+    display: none;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-visual {
+    min-height: auto;
+    padding: 40px 24px;
+    border-right: 0;
+    border-bottom: 1px solid #3d4a3e;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-brand-block > img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-logo {
+    margin-top: 12px;
+    font-size: 32px;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-brand-block > p:not(.qhiro-auth-logo),
+  .qhiro-register-features,
+  .qhiro-register-pattern {
+    display: none;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-form-section {
+    min-height: auto;
+    padding: 42px 24px;
+  }
+
+  .qhiro-auth-shell .qhiro-auth-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 520px) {
+  .qhiro-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .qhiro-auth-shell--register .qhiro-auth-switch {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .qhiro-auth-legal {
+    width: 100%;
+    margin: 8px 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qhiro-scanline,
+  .qhiro-hud-ring--outer {
+    animation: none;
+  }
+}

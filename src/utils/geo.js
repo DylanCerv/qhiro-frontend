@@ -24,6 +24,35 @@ export function getCountryCenter(countryCode) {
   return countryDefaults[countryCode] ?? countryDefaults.EC;
 }
 
+export function detectCountryCode() {
+  if (typeof navigator === 'undefined') return 'EC';
+
+  const supportedCountries = new Set(Object.keys(countryDefaults));
+  const timezoneCountries = {
+    'America/Argentina/Buenos_Aires': 'AR',
+    'America/Bogota': 'CO',
+    'America/Guayaquil': 'EC',
+    'America/Lima': 'PE',
+    'America/Mexico_City': 'MX',
+    'America/Santiago': 'CL',
+    'Europe/Madrid': 'ES',
+  };
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (timezoneCountries[timezone]) return timezoneCountries[timezone];
+
+  const locales = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const locale of locales) {
+    try {
+      const countryCode = new Intl.Locale(locale).region;
+      if (supportedCountries.has(countryCode)) return countryCode;
+    } catch {
+      // Ignore malformed browser locales and continue with the default country.
+    }
+  }
+
+  return 'EC';
+}
+
 export async function resolveUserLocation(countryCode) {
   const fallback = getCountryCenter(countryCode);
 

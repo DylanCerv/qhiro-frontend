@@ -1,0 +1,79 @@
+/* Hardware fleet */
+.devices-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0 8px;
+}
+
+.devices-head > p {
+  max-width: 620px;
+}
+
+.devices-page > .card:first-of-type {
+  border-left: 3px solid var(--st-green);
+}
+
+.devices-page .device-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.devices-page .device-card {
+  min-height: 258px;
+  position: relative;
+  overflow: hidden;
+}
+
+.devices-page .device-card::before {
+  content: "sensors";
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  border: 1px solid var(--st-line);
+  border-radius: 3px;
+  background: var(--st-surface-high);
+  color: var(--st-green);
+  font-family: "Material Symbols Outlined";
+  font-size: 24px;
+}
+
+.devices-page .device-head {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  left: 80px;
+  min-height: 42px;
+}
+
+.devices-page .device-name {
+  margin-top: 8px;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.devices-page .device-card .simple-list {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--st-line-soft);
+  background: var(--st-surface-low);
+}
+
+@media (max-width: 1000px) {
+  .devices-page .device-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .devices-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .devices-page .device-grid {
+    grid-template-columns: 1fr;
+  }
+}

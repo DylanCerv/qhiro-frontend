@@ -129,107 +129,143 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="page">
-      <div className="page-head">
-        <h1>{ui.dashboard.title}</h1>
-        <p>{ui.dashboard.subtitle}</p>
-        <ParcelSelector />
-      </div>
+    <div className="page dashboard-page">
+      <header className="page-head dashboard-head">
+        <div>
+          <p className="page-eyebrow">Misión Control · {activeParcel?.name ?? 'Sin parcela'}</p>
+          <h1>
+            Panel de Control{activeParcel ? ` - Parcela: ${activeParcel.name} (${getCropTypeLabel(activeParcel.cropType)})` : ''}
+          </h1>
+        </div>
+        <div className="dashboard-head-actions">
+          <ParcelSelector />
+          <Link to="/app/flights" className="btn-secondary">Reporte NDVI</Link>
+          <Link to="/app/schedule" className="btn-primary">Misión Manual</Link>
+        </div>
+      </header>
 
-      <div className="grid-2">
-        <section className="card">
-          <h2>{ui.dashboard.parcelHealth}</h2>
+      <div className="dashboard-kpis">
+        <section className="card dashboard-kpi">
+          <div className="dashboard-kpi-head">
+            <span>Salud de parcela</span>
+            {activeParcel && (
+              <StatusBadge
+                status={activeParcel.healthStatus}
+                label={getHealthLabel(activeParcel.healthStatus)}
+              />
+            )}
+          </div>
           {activeParcel ? (
-            <div className="stat-block">
-              <p className="stat-label">{activeParcel.name}</p>
-              <p className="stat-value">{getCropTypeLabel(activeParcel.cropType)}</p>
-              <div className="stat-row">
-                <StatusBadge
-                  status={activeParcel.healthStatus}
-                  label={getHealthLabel(activeParcel.healthStatus)}
-                />
-                <span>NDVI {activeParcel.ndvi?.toFixed(2)}</span>
+            <>
+              <p className="dashboard-kpi-value">
+                {Math.round((activeParcel.ndvi ?? 0) * 100)}%
+              </p>
+              <p className="dashboard-kpi-note">
+                NDVI {activeParcel.ndvi?.toFixed(2)} · {activeParcel.name}
+              </p>
+              <div className="dashboard-progress">
+                <span style={{ width: `${Math.round((activeParcel.ndvi ?? 0) * 100)}%` }} />
               </div>
-            </div>
+            </>
           ) : (
-            <div>
-              <p className="empty-state">{ui.dashboard.noParcels}</p>
-              <Link to="/app/parcels" className="btn-primary inline-link">
-                {ui.dashboard.createParcelLink}
-              </Link>
-            </div>
+            <Link to="/app/parcels" className="btn-primary inline-link">
+              {ui.dashboard.createParcelLink}
+            </Link>
           )}
         </section>
 
-        <section className="card">
-          <h2>{ui.dashboard.nextFlight}</h2>
+        <section className="card dashboard-kpi">
+          <div className="dashboard-kpi-head">
+            <span>Próximo vuelo</span>
+            <span className="material-symbols-outlined dashboard-blue">schedule</span>
+          </div>
           {data.nextScheduledFlight ? (
-            <div className="stat-block">
-              <p className="stat-value">{formatDate(data.nextScheduledFlight.nextRunAt)}</p>
-              <p className="stat-label">
-                {ui.dashboard.parcelLabel}: {parcelNameById.get(data.nextScheduledFlight.parcelId) ?? 'Parcela'}
-              </p>
-              <p className="stat-label">
+            <>
+              <p className="dashboard-kpi-time">{formatDate(data.nextScheduledFlight.nextRunAt)}</p>
+              <p className="dashboard-kpi-note">
+                {parcelNameById.get(data.nextScheduledFlight.parcelId) ?? 'Parcela'} ·{' '}
                 {formatFrequency(data.nextScheduledFlight.frequencyDays)}
               </p>
-              <Link to="/app/schedule" className="btn-secondary inline-link">
-                Ver programación
-              </Link>
-            </div>
+            </>
           ) : (
             <p className="empty-state">{ui.dashboard.noFlightsScheduled}</p>
           )}
         </section>
+
+        <section className="card dashboard-kpi">
+          <div className="dashboard-kpi-head">
+            <span>Alertas activas</span>
+            <span className="material-symbols-outlined">check_circle</span>
+          </div>
+          <p className="dashboard-kpi-value">{alertsToShow.length}</p>
+          <p className="dashboard-kpi-note">
+            {alertsToShow.length ? 'Requieren revisión operativa' : 'Sistema operando con normalidad'}
+          </p>
+        </section>
       </div>
 
-      <section className="card">
-        <h2>{ui.dashboard.ndviMap}</h2>
-        <ParcelMap
-          parcels={data.parcels}
-          center={mapCenter}
-          selectedParcelId={selectedParcelId}
-          onSelectParcel={setSelectedParcelId}
-          interactive
-          tileStyle="satellite"
-        />
-      </section>
+      <div className="dashboard-workspace">
+        <section className="card dashboard-map-card">
+          <div className="dashboard-card-toolbar">
+            <h2>Vista Satelital Live</h2>
+            <div className="dashboard-map-tabs" aria-label="Capas del mapa">
+              <button type="button" className="active">Mapa</button>
+              <button type="button">NDVI</button>
+              <button type="button">Térmico</button>
+            </div>
+          </div>
+          <ParcelMap
+            parcels={data.parcels}
+            center={mapCenter}
+            selectedParcelId={selectedParcelId}
+            onSelectParcel={setSelectedParcelId}
+            interactive
+            tileStyle="satellite"
+          />
+          <div className="dashboard-map-meta">
+            <span>Parcela: {activeParcel?.name ?? 'N/A'}</span>
+            <span>NDVI: {activeParcel?.ndvi?.toFixed(2) ?? 'N/A'}</span>
+            <span>Actualización: tiempo real</span>
+          </div>
+        </section>
 
-      <section className="card">
-        <h2>{ui.dashboard.recentAlerts}</h2>
-        <AlertList alerts={alertsToShow} />
-      </section>
+        <aside className="dashboard-side">
+          <section className="card">
+            <h2>Alertas Recientes</h2>
+            <AlertList alerts={alertsToShow.slice(0, 3)} />
+            <Link to="/app/flights" className="btn-secondary dashboard-full-button">
+              Ver historial
+            </Link>
+          </section>
 
-      <section className="card">
-        <h2>Estado de intervenciones</h2>
-        {visibleActions.length === 0 ? (
-          <p className="empty-state">Aún no hay intervenciones registradas para esta parcela.</p>
-        ) : (
-          <ul className="simple-list">
-            {visibleActions.slice(0, 5).map((action) => (
-              <li key={action.actionId}>
-                <strong>{action.action} · {parcelNameById.get(action.parcelId) ?? 'Parcela'}</strong>
-                <StatusBadge status={action.status} label={getActionStatusLabel(action.status)} />
-                <span>Dispositivo: {deviceNameById.get(action.deviceId) ?? 'Centinela'}</span>
-                <span>
-                  Finalización: {action.completedAt ? formatDate(action.completedAt) : 'Pendiente de confirmación'}
-                </span>
-                {action.status === 'pending' && (
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() => handleRetryAction(action.actionId)}
-                    disabled={retryingActionId === action.actionId}
-                  >
-                    {retryingActionId === action.actionId ? 'Reintentando...' : 'Ejecutar acción'}
-                  </button>
-                )}
-                {action.error && <span>Error: {action.error}</span>}
-                {action.queueReason && <span>Motivo: {action.queueReason}</span>}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+          <section className="card">
+            <h2>Actividad en Campo</h2>
+            {visibleActions.length === 0 ? (
+              <p className="empty-state">Sin intervenciones activas.</p>
+            ) : (
+              <ul className="simple-list dashboard-actions-list">
+                {visibleActions.slice(0, 3).map((action) => (
+                  <li key={action.actionId}>
+                    <strong>{action.action}</strong>
+                    <StatusBadge status={action.status} label={getActionStatusLabel(action.status)} />
+                    <span>{deviceNameById.get(action.deviceId) ?? 'Centinela'}</span>
+                    {action.status === 'pending' && (
+                      <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={() => handleRetryAction(action.actionId)}
+                        disabled={retryingActionId === action.actionId}
+                      >
+                        {retryingActionId === action.actionId ? 'Reintentando...' : 'Ejecutar acción'}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </aside>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+.mqtt-page {
+  max-width: 1320px;
+}
+
+.mqtt-page > .card {
+  border-radius: 3px;
+}
+
+.mqtt-page > .card:nth-of-type(3) {
+  padding: 10px;
+  background: var(--st-bg-deep);
+}
+
+.mqtt-page .form-actions > .btn-secondary strong,
+.mqtt-page .form-actions > .btn-secondary span {
+  display: block;
+  text-align: left;
+}
+
+.mqtt-page .form-actions > .btn-secondary span {
+  margin-top: 4px;
+  color: var(--st-muted);
+  font-size: 10px;
+  font-weight: 400;
+}

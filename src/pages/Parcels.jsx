@@ -119,7 +119,7 @@ export default function Parcels() {
   };
 
   return (
-    <div className="page">
+    <div className="page parcels-page">
       <div className="page-head">
         <h1>{ui.parcels.title}</h1>
         <p>{ui.parcels.subtitle}</p>
@@ -128,68 +128,40 @@ export default function Parcels() {
       {message && <p className="form-success page-message">{message}</p>}
       {error && <p className="form-error page-message">{error}</p>}
 
-      {editingId && (
-        <section className="card parcel-edit-card">
-          <h2>{ui.parcels.editTitle}</h2>
-          <form className="form" onSubmit={handleUpdate}>
-            <div className="grid-2">
-              <label>
-                {ui.parcels.name}
-                <input
-                  value={editForm.name}
-                  onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                  required
-                />
-              </label>
-              <CropTypeSelect
-                id="edit-crop-type"
-                value={editForm.cropType}
-                onChange={(e) => setEditForm({ ...editForm, cropType: e.target.value })}
-              />
-              <label>
-                {ui.parcels.zoneId}
-                <input
-                  value={editForm.zoneId}
-                  onChange={(e) => setEditForm({ ...editForm, zoneId: e.target.value })}
-                  required
-                />
-              </label>
-            </div>
-
-            <ParcelMapEditor center={mapCenter} points={editPoints} setPoints={setEditPoints} />
-
-            <div className="form-actions">
-              <button type="submit" className="btn-primary" disabled={submitting}>
-                {ui.parcels.saveChanges}
-              </button>
-              <button type="button" className="btn-secondary" onClick={cancelEdit}>
-                {ui.common.cancel}
-              </button>
-            </div>
-          </form>
-        </section>
-      )}
-
-      <section className="card">
-        <h2>{ui.parcels.listTitle}</h2>
+      <div className="parcels-workspace">
+        <aside className="card parcels-list-panel">
+          <div className="parcels-panel-head">
+            <h2>{ui.parcels.listTitle}</h2>
+            <span>{parcels.length} total</span>
+          </div>
+          <a href="#parcel-form" className="btn-primary parcels-new-button">
+            <span className="material-symbols-outlined">add_location</span>
+            Nueva parcela
+          </a>
         {parcels.length === 0 ? (
           <p className="empty-state">{ui.parcels.noParcels}</p>
         ) : (
-          <>
-            <ParcelMap parcels={parcels} center={mapCenter} interactive tileStyle="satellite" />
-            <ul className="simple-list parcel-list">
+            <ul className="parcel-rail-list">
               {parcels.map((parcel) => (
-                <li key={parcel.parcelId} className="parcel-list-item">
+                <li
+                  key={parcel.parcelId}
+                  className={editingId === parcel.parcelId ? 'active' : ''}
+                >
                   <div className="parcel-list-main">
                     <strong>{parcel.name}</strong>
                     <span className="parcel-zone">{formatZoneLabel(parcel.zoneId)}</span>
                   </div>
-                  <CropTypeSelect
-                    id={`crop-${parcel.parcelId}`}
-                    value={parcel.cropType ?? ''}
-                    disabled={cropSavingId === parcel.parcelId}
-                    onChange={(e) => handleCropChange(parcel.parcelId, e.target.value)}
-                  />
+                  <span className="parcel-rail-health">
+                    {parcel.healthStatus ?? 'sin estado'}
+                  </span>
+                  <div className="parcel-rail-crop">
+                    <CropTypeSelect
+                      id={`crop-${parcel.parcelId}`}
+                      value={parcel.cropType ?? ''}
+                      disabled={cropSavingId === parcel.parcelId}
+                      onChange={(e) => handleCropChange(parcel.parcelId, e.target.value)}
+                    />
+                  </div>
                   <div className="list-actions">
                     <button type="button" className="btn-secondary" onClick={() => startEdit(parcel)}>
                       {ui.common.edit}
@@ -205,44 +177,83 @@ export default function Parcels() {
                 </li>
               ))}
             </ul>
-          </>
         )}
-      </section>
+        </aside>
 
-      <section className="card">
-        <h2>{ui.parcels.createTitle}</h2>
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="grid-2">
+        <section className="parcels-map-panel">
+          {editingId ? (
+            <ParcelMapEditor center={mapCenter} points={editPoints} setPoints={setEditPoints} />
+          ) : (
+            <ParcelMap parcels={parcels} center={mapCenter} interactive tileStyle="satellite" />
+          )}
+        </section>
+
+        <aside className={`card parcels-form-panel${editingId ? ' parcel-edit-card' : ''}`} id="parcel-form">
+          <h2>{editingId ? 'Detalles de Parcela' : ui.parcels.createTitle}</h2>
+          <p className="parcels-form-intro">
+            {editingId
+              ? 'Ajusta los parámetros técnicos del lote seleccionado.'
+              : 'Define la identificación y ubicación del nuevo lote.'}
+          </p>
+          <form className="form" onSubmit={editingId ? handleUpdate : handleSubmit}>
             <label>
               {ui.parcels.name}
               <input
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                value={editingId ? editForm.name : form.name}
+                onChange={(e) =>
+                  editingId
+                    ? setEditForm({ ...editForm, name: e.target.value })
+                    : setForm({ ...form, name: e.target.value })
+                }
                 required
               />
             </label>
             <CropTypeSelect
-              id="create-crop-type"
-              value={form.cropType}
-              onChange={(e) => setForm({ ...form, cropType: e.target.value })}
+              id={editingId ? 'edit-crop-type' : 'create-crop-type'}
+              value={editingId ? editForm.cropType : form.cropType}
+              onChange={(e) =>
+                editingId
+                  ? setEditForm({ ...editForm, cropType: e.target.value })
+                  : setForm({ ...form, cropType: e.target.value })
+              }
             />
             <label>
               {ui.parcels.zoneId}
               <input
-                value={form.zoneId}
-                onChange={(e) => setForm({ ...form, zoneId: e.target.value })}
+                value={editingId ? editForm.zoneId : form.zoneId}
+                onChange={(e) =>
+                  editingId
+                    ? setEditForm({ ...editForm, zoneId: e.target.value })
+                    : setForm({ ...form, zoneId: e.target.value })
+                }
                 required
               />
             </label>
-          </div>
-
-          <ParcelMapEditor center={mapCenter} points={points} setPoints={setPoints} />
-
-          <button type="submit" className="btn-primary" disabled={submitting}>
-            {ui.parcels.saveParcel}
-          </button>
+            {!editingId && (
+              <p className="map-meta">
+                Marca al menos tres puntos en el mapa para delimitar la parcela.
+              </p>
+            )}
+            <div className="form-actions">
+              <button type="submit" className="btn-primary" disabled={submitting}>
+                {editingId ? ui.parcels.saveChanges : ui.parcels.saveParcel}
+              </button>
+              {editingId && (
+                <button type="button" className="btn-secondary" onClick={cancelEdit}>
+                  {ui.common.cancel}
+                </button>
+              )}
+            </div>
         </form>
-      </section>
+        </aside>
+      </div>
+
+      {!editingId && (
+        <section className="card parcel-create-map">
+          <h2>Delimitar nueva parcela</h2>
+          <ParcelMapEditor center={mapCenter} points={points} setPoints={setPoints} />
+        </section>
+      )}
     </div>
   );
 }
