@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
+import QhiroLogo from './brand/QhiroLogo';
 
-const qhiroLogo =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c';
 const authTagline = 'La tierra habla, el aire observa, la IA piensa y el hardware ejecuta.';
 
 function RegisterVisual() {
@@ -14,8 +13,13 @@ function RegisterVisual() {
         <span className="qhiro-register-block qhiro-register-block--bottom-right" />
       </div>
       <div className="qhiro-auth-brand-block">
-        <img src={qhiroLogo} alt="Qhiro" />
-        <p className="qhiro-auth-logo">qhiro</p>
+        <QhiroLogo
+          className="qhiro-logo--stacked"
+          variant="full"
+          theme="dark"
+          size={88}
+          wordmark="Qhiro"
+        />
         <p>{authTagline}</p>
         <div className="qhiro-register-features">
           <div>

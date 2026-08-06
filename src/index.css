@@ -469,7 +469,7 @@ p {
   letter-spacing: -0.04em;
   line-height: 1;
   color: #fff;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .qhiro-tagline {

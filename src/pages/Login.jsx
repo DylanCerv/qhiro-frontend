@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import QhiroLogo from '../components/brand/QhiroLogo';
 import QhiroPublicShell from '../components/QhiroPublicShell';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
-
-const qhiroLogo =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c';
 
 export default function Login() {
   const { login, resetPassword, error, setError } = useAuth();
@@ -42,7 +40,7 @@ export default function Login() {
   return (
     <QhiroPublicShell variant="login">
       <div className="qhiro-auth-panel">
-        <img className="qhiro-login-logo" src={qhiroLogo} alt="Qhiro" />
+        <QhiroLogo className="qhiro-login-logo" variant="icon" theme="dark" size={56} />
         <h1 className="qhiro-auth-title">Bienvenido de nuevo</h1>
         <p className="qhiro-auth-intro">
           Ingresa tus credenciales para acceder al centro de comando de Qhiro.

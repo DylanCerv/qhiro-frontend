@@ -150,6 +150,19 @@
   line-height: 1.5;
 }
 
+.qhiro-pending-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.qhiro-pending-actions .qhiro-btn {
+  flex: 1 1 160px;
+  text-decoration: none;
+  text-align: center;
+}
+
 .qhiro-auth-form-section .qhiro-form input,
 .qhiro-auth-form-section .qhiro-form select {
   min-height: 52px;
@@ -520,11 +533,10 @@
 }
 
 .qhiro-login-logo {
-  width: 80px;
-  height: 80px;
-  display: block;
-  margin-bottom: 26px;
-  object-fit: contain;
+  display: flex;
+  width: auto;
+  height: auto;
+  margin: 0 0 26px;
 }
 
 .qhiro-auth-shell--login .qhiro-auth-visual {
@@ -809,22 +821,11 @@
   text-align: center;
 }
 
-.qhiro-auth-shell--register .qhiro-auth-brand-block > img {
-  width: 94px;
-  height: 94px;
-  object-fit: contain;
+.qhiro-auth-shell--register .qhiro-auth-brand-block .qhiro-logo {
+  margin: 0 0 12px;
 }
 
-.qhiro-auth-shell--register .qhiro-auth-logo {
-  margin: 20px 0 12px;
-  color: #54e98a;
-  font-family: Geist, "Segoe UI", sans-serif;
-  font-size: 42px;
-  font-weight: 650;
-  letter-spacing: -0.04em;
-}
-
-.qhiro-auth-shell--register .qhiro-auth-brand-block > p:not(.qhiro-auth-logo) {
+.qhiro-auth-shell--register .qhiro-auth-brand-block > p {
   max-width: 340px;
   margin: 0;
   color: #bbcbbb;
@@ -952,17 +953,11 @@
     border-bottom: 1px solid #3d4a3e;
   }
 
-  .qhiro-auth-shell--register .qhiro-auth-brand-block > img {
-    width: 64px;
-    height: 64px;
+  .qhiro-auth-shell--register .qhiro-auth-brand-block .qhiro-logo {
+    margin-bottom: 8px;
   }
 
-  .qhiro-auth-shell--register .qhiro-auth-logo {
-    margin-top: 12px;
-    font-size: 32px;
-  }
-
-  .qhiro-auth-shell--register .qhiro-auth-brand-block > p:not(.qhiro-auth-logo),
+  .qhiro-auth-shell--register .qhiro-auth-brand-block > p,
   .qhiro-register-features,
   .qhiro-register-pattern {
     display: none;

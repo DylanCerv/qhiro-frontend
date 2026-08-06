@@ -9,7 +9,7 @@ export default function QhiroHeroPanel({ children, compact = false }) {
       </div>
       <div className="qhiro-public-body">
         <div className="qhiro-public-content">
-          <p className="qhiro-logo">qhiro</p>
+          <p className="qhiro-logo">Qhiro</p>
           <p className="qhiro-tagline">{ui.landing.tagline}</p>
           {children}
         </div>

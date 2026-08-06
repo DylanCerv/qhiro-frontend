@@ -22,7 +22,6 @@ function formatArea(areaHa) {
 
 export default function AdminClients() {
   const [clients, setClients] = useState([]);
-  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
@@ -39,18 +38,6 @@ export default function AdminClients() {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [loadClients]);
-
-  const updateStatus = async (userId, accountStatus) => {
-    setError('');
-    setMessage('');
-    try {
-      await api.updateClientStatus(userId, accountStatus);
-      setMessage(ui.admin.updated);
-      await loadClients();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
 
   useEffect(() => {
     setPage(1);
@@ -107,7 +94,7 @@ export default function AdminClients() {
       <div className="page-head admin-clients-head">
         <div>
           <h1>Gestión de Clientes</h1>
-          <p>Control centralizado de cuentas y hardware desplegado.</p>
+          <p>Vista de clientes y solicitudes de acceso.</p>
         </div>
         <div className="admin-head-actions">
           <input
@@ -123,6 +110,7 @@ export default function AdminClients() {
             onChange={(event) => setStatusFilter(event.target.value)}
           >
             <option value="all">Todos los Estados</option>
+            <option value="pending">Pendientes</option>
             <option value="active">Activos</option>
             <option value="suspended">Suspendidos</option>
             <option value="disabled">Deshabilitados</option>
@@ -175,7 +163,6 @@ export default function AdminClients() {
                     <th>Parcelas</th>
                     <th>Dispositivos</th>
                     <th>Estado</th>
-                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -204,41 +191,12 @@ export default function AdminClients() {
                           status={
                             client.accountStatus === 'active'
                               ? 'green'
-                              : client.accountStatus === 'suspended'
+                              : client.accountStatus === 'pending' || client.accountStatus === 'suspended'
                                 ? 'yellow'
                                 : 'red'
                           }
                           label={getAccountStatusLabel(client.accountStatus)}
                         />
-                      </td>
-                      <td className="admin-actions">
-                        <button
-                          type="button"
-                          className="admin-icon-btn admin-icon-btn--active"
-                          onClick={() => updateStatus(client.userId, 'active')}
-                          title="Activar"
-                          aria-label="Activar cliente"
-                        >
-                          <span className="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="admin-icon-btn admin-icon-btn--suspend"
-                          onClick={() => updateStatus(client.userId, 'suspended')}
-                          title="Suspender"
-                          aria-label="Suspender cliente"
-                        >
-                          <span className="material-symbols-outlined" aria-hidden="true">pause_circle</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="admin-icon-btn admin-icon-btn--disable"
-                          onClick={() => updateStatus(client.userId, 'disabled')}
-                          title="Deshabilitar"
-                          aria-label="Deshabilitar cliente"
-                        >
-                          <span className="material-symbols-outlined" aria-hidden="true">block</span>
-                        </button>
                       </td>
                     </tr>
                   ))}
@@ -288,7 +246,6 @@ export default function AdminClients() {
             </div>
           </div>
         )}
-        {message && <p className="form-success">{message}</p>}
         {error && <p className="form-error">{error}</p>}
       </section>
     </div>

@@ -1,0 +1,66 @@
+/* Qhiro brand logo — reusable across landing, auth, client & admin shells */
+.qhiro-logo {
+  --qhiro-leaf: #3fa84a;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  line-height: 1;
+  text-decoration: none;
+  color: inherit;
+  text-transform: none;
+}
+
+.qhiro-logo__mark {
+  display: block;
+  flex-shrink: 0;
+}
+
+.qhiro-logo__wordmark {
+  font-family: Geist, "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-size: 1.35em;
+  letter-spacing: -0.045em;
+  color: inherit;
+  text-transform: none;
+}
+
+.qhiro-logo--dark {
+  color: #f2f2f2;
+}
+
+.qhiro-logo--light {
+  color: #2c2c2c;
+  --qhiro-leaf: #2e7a37;
+}
+
+.qhiro-logo--stacked {
+  flex-direction: column;
+  gap: 0.55rem;
+  text-align: center;
+}
+
+.qhiro-logo--stacked .qhiro-logo__wordmark {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+/* Context overrides */
+.sl-brand .qhiro-logo__wordmark,
+.app-sidebar-brand .qhiro-logo__wordmark,
+.brand .qhiro-logo__wordmark {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.sl-footer-brand .qhiro-logo {
+  margin-bottom: 0.25rem;
+}
+
+.qhiro-login-logo.qhiro-logo,
+.qhiro-auth-brand-block .qhiro-logo {
+  display: flex;
+}
+
+.qhiro-auth-brand-block .qhiro-logo--stacked {
+  width: 100%;
+  align-items: center;
+}

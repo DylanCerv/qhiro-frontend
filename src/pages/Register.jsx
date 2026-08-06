@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import QhiroPublicShell from '../components/QhiroPublicShell';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
@@ -7,7 +7,6 @@ import { countryDefaults, detectCountryCode } from '../utils/geo';
 
 export default function Register() {
   const { registerClient, error, setError } = useAuth();
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -16,6 +15,7 @@ export default function Register() {
     country: detectCountryCode(),
   });
   const [submitting, setSubmitting] = useState(false);
+  const [pendingSuccess, setPendingSuccess] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ export default function Register() {
           lng: (countryDefaults[form.country] ?? countryDefaults.EC).lng,
         },
       });
-      navigate('/app/parcels');
+      setPendingSuccess(true);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -43,11 +43,32 @@ export default function Register() {
     }
   };
 
+  if (pendingSuccess) {
+    return (
+      <QhiroPublicShell variant="register">
+        <div className="qhiro-auth-panel">
+          <h1 className="qhiro-auth-title">{ui.auth.pendingTitle}</h1>
+          <p className="qhiro-auth-intro">{ui.auth.pendingMessage}</p>
+          <div className="qhiro-pending-actions">
+            <Link to="/" className="qhiro-btn qhiro-btn-solid">
+              {ui.auth.pendingBack}
+            </Link>
+            <Link to="/login" className="qhiro-btn qhiro-btn-outline">
+              {ui.auth.loginButton}
+            </Link>
+          </div>
+        </div>
+      </QhiroPublicShell>
+    );
+  }
+
   return (
     <QhiroPublicShell variant="register">
       <div className="qhiro-auth-panel">
         <h1 className="qhiro-auth-title">Crear cuenta</h1>
-        <p className="qhiro-auth-intro">Únase al ecosistema de agricultura simbiótica.</p>
+        <p className="qhiro-auth-intro">
+          Solicita acceso al ecosistema. Tu cuenta quedará pendiente hasta la activación.
+        </p>
         <form className="form qhiro-form" onSubmit={handleSubmit}>
           <label className="qhiro-field">
             <span>{ui.auth.displayName}</span>
@@ -119,7 +140,7 @@ export default function Register() {
             </label>
           </div>
           <button type="submit" className="qhiro-btn qhiro-btn-solid" disabled={submitting}>
-            <span>{submitting ? 'Procesando…' : 'Comenzar registro'}</span>
+            <span>{submitting ? 'Procesando…' : 'Solicitar acceso'}</span>
             <span className="material-symbols-outlined" aria-hidden="true">
               {submitting ? 'progress_activity' : 'arrow_forward'}
             </span>

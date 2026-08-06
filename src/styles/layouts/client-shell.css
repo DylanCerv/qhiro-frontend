@@ -33,22 +33,8 @@
   gap: 8px;
 }
 
-.brand-mark {
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 2px;
-  background: #eceeed;
-  color: #274d35;
-  box-shadow: none;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.brand-mark--image {
-  object-fit: cover;
+.brand .qhiro-logo {
+  color: #f2f2f2;
 }
 
 .brand-title {

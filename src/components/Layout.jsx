@@ -1,9 +1,7 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import QhiroLogo from './brand/QhiroLogo';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
-
-const qhiroLogo =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCO7KRci78uVEOpLYa_W8IMupsYH_AWNlUNFRrAfVljbNtAT2VFasWf-cYm5NPcv16Sw0rB4D4VvyWCTFJu0nf01uoOUHImNnwA9gMz7uz8pxMvv4p55iSp547eA8FjMSPwSgqbij5bz-0nmQ6VXZoAZKNybUVl1kgHUhf-OrLlcamJrQGzEg-bZ4nloAwvp_uNHMx0HdJ2o30lRRKdcvpL6RIS1qDlz91iMkxvgTIHcpb2s6ZLvJYxnJym0vn8XjaaYL6WNF-6uf7c';
 
 const clientLinks = [
   { to: '/app', label: ui.nav.dashboard, icon: 'dashboard', end: true },
@@ -47,8 +45,8 @@ function ShellNavLink({ to, label, icon, end }) {
 function AppFooter() {
   return (
     <footer className="app-footer">
-      <strong>qhiro symbiotic</strong>
-      <p>© 2024 Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
+      <QhiroLogo variant="full" theme="dark" size={22} wordmark="Qhiro Symbiotic" />
+      <p>© {new Date().getFullYear()} Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
       <nav aria-label="Enlaces legales">
         <a href="#privacy">Privacidad</a>
         <a href="#terms">Términos</a>
@@ -74,7 +72,7 @@ export default function Layout() {
       <div className="app-shell app-shell--admin">
         <aside className="app-sidebar">
           <div className="app-sidebar-brand">
-            <img className="sidebar-brand-logo" src={qhiroLogo} alt="Qhiro" />
+            <QhiroLogo variant="icon" theme="dark" size={36} title="Qhiro" />
             <div className="sidebar-brand-copy">
               <p className="brand-title">Admin Console</p>
               <p className="brand-sub">TECHNICAL OPERATIONS</p>
@@ -120,10 +118,7 @@ export default function Layout() {
     <div className="app-shell app-shell--client">
       <header className="app-header app-header--client">
         <div className="brand">
-          <img className="brand-mark brand-mark--image" src={qhiroLogo} alt="Qhiro" />
-          <div>
-            <p className="brand-title">qhiro</p>
-          </div>
+          <QhiroLogo variant="full" theme="dark" size={30} />
         </div>
         <nav className="app-nav">
           {links.map((link) => (

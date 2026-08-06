@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
 import { auth, sendPasswordResetEmail, signInWithEmailAndPassword } from '../config/firebase';
+import { ui } from '../i18n/es';
 
 const TOKEN_KEY = 'qhiro_auth_token';
 
@@ -36,22 +37,33 @@ export function AuthProvider({ children }) {
     }).finally(() => setLoading(false));
   }, [loadProfile]);
 
+  const registerClient = useCallback(async (payload) => {
+    setError(null);
+    const response = await api.register(payload);
+    // Access requests stay pending: never open an authenticated session.
+    api.setToken(null);
+    localStorage.removeItem(TOKEN_KEY);
+    setProfile(null);
+    setToken(null);
+    return response;
+  }, []);
+
   const login = useCallback(async ({ email, password }) => {
     setError(null);
     const session = await api.login({ email, password });
     if (auth) {
       await signInWithEmailAndPassword(auth, email, password);
     }
-    await loadProfile(session.token);
-  }, [loadProfile]);
-
-  const registerClient = useCallback(async (payload) => {
-    setError(null);
-    const response = await api.register(payload);
-    if (auth) {
-      await signInWithEmailAndPassword(auth, payload.email, payload.password);
+    try {
+      await loadProfile(session.token);
+    } catch (err) {
+      api.setToken(null);
+      localStorage.removeItem(TOKEN_KEY);
+      setProfile(null);
+      setToken(null);
+      const message = err?.message ?? ui.auth.accountPending;
+      throw new Error(message);
     }
-    await loadProfile(response.token);
   }, [loadProfile]);
 
   const resetPassword = useCallback(async (email) => {

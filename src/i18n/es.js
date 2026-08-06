@@ -24,120 +24,184 @@ export const ui = {
     delete: 'Eliminar',
   },
   landing: {
-    tagline: 'Gestión inteligente de cultivos con IA y robótica avanzada',
+    tagline:
+      'Un ecosistema agrícola autónomo: robótica aérea, infraestructura de campo e inteligencia artificial como un solo organismo.',
+    heroTitle: 'Ahorra insumos. Detecta plagas antes. Cero personas dentro del lote.',
+    heroLead:
+      'Qhiro Symbiotic monitorea tu cultivo, decide en el borde y aplica la dosis exacta solo donde hace falta —sin maquinaria pesada ni fumigación masiva.',
+    heroMicro: 'Sin compromiso técnico inicial. Te mostramos el sistema y evaluamos tu lote.',
     ctaLogin: 'Iniciar sesión',
-    ctaRegister: 'Registrarse',
+    ctaPrimary: 'Solicitar acceso',
+    ctaSecondary: 'Ver cómo funciona',
+    ctaRegister: 'Solicitar acceso',
+    ctaWatch: 'Ver cómo funciona',
+    midCtaAfterSolution: '¿Listo para llevar precisión quirúrgica a tu campo?',
     backHome: 'Volver al inicio',
     problem: {
-      title: 'El problema',
+      eyebrow: 'El problema que resuelves',
+      title: 'Tu campo no debería operar a ciegas, con fuerza bruta y en promedios.',
+      lead: 'Si sigues fumigando todo por un brote localizado, pierdes agua, químico, tiempo y rendimiento.',
       items: [
         {
-          title: 'Aplicación ineficiente de nutrientes',
-          desc: 'Las operaciones agrícolas carecen de sistemas para aplicar nutrientes y agroquímicos de forma precisa, localizada y en tiempo real, generando pérdidas masivas de insumos.',
+          title: 'Dependencia humana',
+          desc: 'Cada decisión y cada aplicación exige que alguien esté en el lote, en el momento justo.',
         },
         {
-          title: 'Mercado en auge, soluciones fragmentadas',
-          desc: 'El mercado de agricultura de precisión crece aceleradamente, pero las soluciones actuales son costosas, fragmentadas y carecen de dosificación integrada y verdaderamente simbiótica.',
+          title: 'Maquinaria pesada',
+          desc: 'Tractores y equipos que compactan el suelo, dañan el cultivo y exigen logística costosa.',
         },
         {
-          title: '60% de desperdicio',
-          desc: 'Hasta el 60% de los fertilizantes nitrogenados aplicados globalmente no son absorbidos por los cultivos, evidenciando una ineficiencia masiva en los métodos convencionales.',
+          title: 'Fumigación masiva',
+          desc: 'Se trata todo el campo por un brote localizado: se desperdicia agua, químico y dinero.',
+        },
+        {
+          title: 'Diagnóstico tardío',
+          desc: 'El estrés hídrico, las plagas y las deficiencias se ven cuando ya causaron pérdida.',
         },
       ],
     },
-    ecosystem: {
-      title: 'El ecosistema simbiótico',
-      subtitle: 'Ecosistema Qhiro Symbiotic',
-      units: [
+    product: {
+      eyebrow: 'La solución',
+      title: 'Un ecosistema autónomo que vigila, decide y actúa por ti.',
+      lead: 'Robótica aérea, infraestructura desplegable e inteligencia artificial —Qhiro Core— trabajando como un solo organismo.',
+      pillars: [
         {
-          role: 'El Cerebro',
-          name: 'Qhiro Core (IA)',
-          desc: 'Sistema nervioso central. Recibe telemetría, calcula dosis exactas de NPK y coordina autónomamente todas las unidades sin intervención humana.',
+          title: 'Red viva de nodos',
+          desc: 'El Nido, los Centinelas y El Vigía se coordinan entre sí, no en cadena de mando humana.',
         },
         {
-          role: 'Los Ojos',
-          name: 'El Vigía (Dron)',
-          desc: 'Unidad aérea que escanea cultivos con sensores multiespectrales. Detecta anomalías y envía geolocalización exacta para activar la respuesta.',
+          title: 'Precisión quirúrgica',
+          desc: 'Dosis exacta, solo donde se necesita, en el momento en que se necesita.',
         },
         {
-          role: 'El Cuerpo',
-          name: 'Nido y Centinelas',
-          desc: 'El Nido es la estación base donde el dron recarga y se almacenan insumos. Los Centinelas ejecutan la inyección localizada en la coordenada afectada.',
+          title: 'Prevención, no reacción',
+          desc: 'Detecta plagas y microestrés térmico antes de que sean visibles.',
         },
       ],
-      flowTitle: 'La simbiosis en acción',
-      flow: [
-        'El Vigía detecta deficiencia de nutrientes',
-        'Qhiro Core procesa la anomalía y calcula la fórmula',
-        'Ordena al Centinela activar su mix-node local',
-        'El cultivo recibe la dosis exacta en tiempo real',
+    },
+    videos: {
+      eyebrow: 'Míralo en acción',
+      title: 'Primero ves el resultado. Luego entiendes el sistema.',
+      lead: 'Un video muestra la simulación de intervención. El otro explica qué es Qhiro Symbiotic de verdad.',
+      simulation: {
+        title: 'Simulación: el problema resuelto',
+        desc: 'Cómo el sistema detecta, decide e interviene sin personas dentro del cultivo.',
+      },
+      explain: {
+        title: 'Explicación: qué es realmente',
+        desc: 'El Nido, los Centinelas, El Vigía y Qhiro Core trabajando como un organismo.',
+      },
+    },
+    capabilities: {
+      eyebrow: 'Qué ganas en operación',
+      title: 'Cuatro capacidades. Un solo resultado: menos desperdicio.',
+      lead: 'Monitoreo continuo, aplicación focalizada, control en el borde y hardware que se protege solo.',
+      items: [
+        {
+          title: 'Monitoreo multiespectral continuo',
+          desc: 'Datos de suelo, follaje y salud vegetal (NDVI) de forma automatizada.',
+        },
+        {
+          title: 'Aplicación focalizada',
+          desc: 'Micro-aspersión desde torres que se elevan sobre el dosel solo donde se necesita.',
+        },
+        {
+          title: 'Gobernanza en el borde',
+          desc: 'Qhiro Core procesa variables agronómicas y redistribuye caudales vía LoRa Mesh.',
+        },
+        {
+          title: 'Hardware protegido',
+          desc: 'Los nodos se repliegan en reposo: menos interferencia con clima y maquinaria.',
+        },
+      ],
+    },
+    architecture: {
+      eyebrow: 'El sistema',
+      title: 'Tres nodos. Una inteligencia.',
+      lead: 'Interconectados por fluido bi-canal y comunicación en red.',
+      nodes: [
+        {
+          role: 'Centro de operaciones',
+          name: 'El Nido',
+          desc: 'Contenedor modular en el perímetro: módulo aéreo, hidráulico y energético/control.',
+        },
+        {
+          role: 'Torres desplegables',
+          name: 'Los Centinelas',
+          desc: 'Nodos en tierra que emergen para asperjar y se repliegan al terminar.',
+        },
+        {
+          role: 'El ojo aéreo',
+          name: 'El Vigía',
+          desc: 'Dron modular con RTK y sensores multiespectrales que mapea e interviene.',
+        },
+      ],
+      core: 'Qhiro Core gobierna los tres nodos: procesa en el borde, decide y reconfigura el plan al instante.',
+    },
+    cycle: {
+      eyebrow: 'Cómo funciona',
+      title: 'Del diagnóstico a la intervención en un ciclo cerrado.',
+      lead: 'Cada intervención alimenta el siguiente diagnóstico.',
+      steps: [
+        {
+          title: 'Exploración',
+          desc: 'El Vigía mapea el lote. Los Centinelas reportan cada zona.',
+        },
+        {
+          title: 'Diagnóstico',
+          desc: 'Qhiro Core procesa imágenes y lecturas climáticas.',
+        },
+        {
+          title: 'Mezcla',
+          desc: 'El Nido prepara la fórmula exacta y la envía por la red bi-canal.',
+        },
+        {
+          title: 'Aspersión',
+          desc: 'Los Centinelas del sector afectado aplican y se repliegan.',
+        },
       ],
       principle:
-        'La tierra habla, el aire observa, la IA piensa y el hardware ejecuta. Un ciclo cerrado que erradica el desperdicio tradicional.',
+        'La tierra habla, el aire observa, la IA piensa y el hardware ejecuta.',
     },
-    solution: {
-      title: 'Qhiro Symbiotic',
-      subtitle: 'Nuestra solución',
+    results: {
+      eyebrow: 'Resultado',
+      title: 'Intervención quirúrgica. Cero personas en el lote.',
+      lead: 'Diseño del sistema según el cierre de una misión autónoma.',
       items: [
-        'Erradicación del desperdicio químico: separación de solutos y mezcla instantánea en el Mix-Node, evitando floculación y pérdida del principio activo.',
-        'Inyección quirúrgica por coordenadas: Qhiro Core dirige el tratamiento exclusivamente al Centinela responsable de la coordenada detectada por el Vigía.',
-        'Eficiencia energética descentralizada: minibombas en cada nodo elevan la presión en el punto final, reduciendo estrés mecánico y consumo energético.',
-        'Mezcla just-in-time: los insumos puros se combinan en el último segundo antes de la aplicación, eliminando hasta el 60% del desperdicio convencional.',
+        { value: '98.4%', label: 'ahorro de insumo vs. método tradicional' },
+        { value: '35 ml', label: 'aplicados solo sobre el foco' },
+        { value: '12 ha', label: 'escaneadas en una misión' },
+        { value: '0', label: 'personas dentro del lote' },
       ],
+      quote:
+        'Misión completada. 12 hectáreas escaneadas. Anomalía detectada. Intervención quirúrgica ejecutada con éxito.',
     },
-    stats: {
-      title: 'Ineficiencia crítica, oportunidad de mercado',
+    faq: {
+      eyebrow: 'Preguntas frecuentes',
+      title: 'Respuestas claras antes de pedir acceso.',
+      lead: 'Lo que suelen preguntar productores y equipos técnicos al evaluar Qhiro.',
       items: [
-        { value: '60%', label: 'de fertilizantes nitrogenados se pierden con métodos convencionales' },
-        { value: '$13B+', label: 'mercado global de agricultura de precisión proyectado 2026' },
-        { value: '12.5%', label: 'CAGR del sector AgTech impulsado por fertirrigación y UAV' },
-        { value: '0', label: 'soluciones autónomas integradas — Qhiro unifica todo en un ecosistema cerrado' },
-      ],
-    },
-    segments: {
-      title: 'Segmentos y tendencias',
-      trends: [
-        'Crisis de fertilizantes',
-        'Automatización descentralizada',
-        'Presión sostenible',
-        'CapEx y ROI',
-      ],
-      audiences: [
         {
-          segment: 'Productores agrícolas de alto valor',
-          model: 'Redes B2B',
-          desc: 'Grandes exportadores de cultivos premium con millones en contratos internacionales.',
+          q: '¿Reemplaza a mi equipo de campo?',
+          a: 'El sistema monitorea solo: casi no hace falta que una persona vigile. Solo hay intervención humana cuando Qhiro avisa un problema que no puede resolver, o cuando hay que recargar componentes para las mezclas.',
         },
         {
-          segment: 'Empresas de gestión de cultivos en red',
-          model: 'SaaS B2B',
-          desc: 'Corporaciones que gestionan cadenas hoteleras e industriales con calidad homogénea.',
+          q: '¿Cómo me hace ahorrar en fumigación?',
+          a: 'Dejas de tratar el lote completo por un brote localizado. Qhiro aplica solo donde hace falta, así reduces químico, agua y costo en las zonas sanas que antes fumigabas por inercia.',
         },
         {
-          segment: 'Proveedores AgTech SaaS (terceros)',
-          model: 'SaaS B2B',
-          desc: 'Agrónomos y consultoras que necesitan infraestructura modular para análisis en campo.',
+          q: '¿Qué necesito para empezar?',
+          a: 'Solicitas acceso y queda una solicitud pendiente. Revisamos tu lote y te avisamos cuando el acceso esté listo.',
         },
       ],
     },
-    business: {
-      title: 'Nuestro modelo',
-      subtitle: 'Fuentes de ingreso',
-      plans: [
-        { name: 'Plan Base', desc: 'Acceso esencial a monitoreo, parcelas y programación de vuelos.' },
-        {
-          name: 'Symbiotic AI Pro',
-          desc: 'Analítica predictiva, automatización hidráulica y mapeo multiespectral en tiempo real.',
-        },
-      ],
-      revenue: [
-        'Venta e instalación del hardware propietario (CapEx): El Nido, Centinelas con Mix-Node y El Vigía (UAV).',
-        'Suscripción mensual SaaS (OpEx): licenciamiento escalonado de Qhiro Core.',
-        'Contratos de mantenimiento y consumibles: calibración de sensores y suministro de refacciones.',
-      ],
-      ctaTitle: 'Empieza a gestionar tus cultivos con precisión',
+    closing: {
+      eyebrow: 'Siguiente paso',
+      title: 'Solicita acceso y ve cómo Qhiro operaría en tu cultivo.',
+      lead: 'Te mostramos la simulación, la arquitectura y el plan para llevar precisión quirúrgica a tu lote.',
     },
   },
+
   auth: {
     loginTitle: 'Iniciar sesión',
     registerTitle: 'Crear cuenta de cliente',
@@ -147,6 +211,12 @@ export const ui = {
     country: 'País',
     loginButton: 'Entrar',
     registerButton: 'Registrarme',
+    pendingTitle: 'Solicitud recibida',
+    pendingMessage:
+      'Tu cuenta quedó registrada pero aún no está activa. Te contactaremos cuando el acceso esté listo.',
+    pendingBack: 'Volver al inicio',
+    accountPending:
+      'Tu cuenta está pendiente de activación. Todavía no puedes entrar a la plataforma.',
     demoTitle: 'Acceso demo (sin Firebase)',
     demoAdmin: 'Entrar como administrador',
     demoClient: 'Entrar como cliente',
@@ -198,7 +268,7 @@ export const ui = {
   },
   admin: {
     title: 'Gestión de clientes',
-    subtitle: 'Suspende o inhabilita cuentas cuando el cliente no haya pagado.',
+    subtitle: 'Vista de clientes y solicitudes de acceso.',
     client: 'Cliente',
     email: 'Correo',
     country: 'País',
@@ -226,6 +296,7 @@ export const ui = {
     topic: 'Topic',
   },
   accountStatus: {
+    pending: 'Pendiente',
     active: 'Activa',
     suspended: 'Suspendida',
     disabled: 'Inhabilitada',
