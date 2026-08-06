@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import QhiroLogo from './brand/QhiroLogo';
 import { useAuth } from '../context/AuthContext';
 import { ui } from '../i18n/es';
@@ -48,9 +48,9 @@ function AppFooter() {
       <QhiroLogo variant="full" theme="dark" size={22} wordmark="Qhiro Symbiotic" />
       <p>© {new Date().getFullYear()} Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
       <nav aria-label="Enlaces legales">
-        <a href="#privacy">Privacidad</a>
-        <a href="#terms">Términos</a>
-        <a href="#support">Soporte</a>
+        <Link to="/privacy">Privacidad</Link>
+        <Link to="/terms">Términos</Link>
+        <a href="mailto:hola@qhiro.tech">Soporte</a>
       </nav>
     </footer>
   );

@@ -11,8 +11,10 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import MqttDiagnostics from './pages/MqttDiagnostics';
 import Parcels from './pages/Parcels';
+import Privacy from './pages/Privacy';
 import Register from './pages/Register';
 import ScheduleSettings from './pages/ScheduleSettings';
+import Terms from './pages/Terms';
 
 function ClientLayout() {
   return (
@@ -40,6 +42,8 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
 
           <Route element={<PublicOnlyRoute />}>
             <Route path="/login" element={<Login />} />

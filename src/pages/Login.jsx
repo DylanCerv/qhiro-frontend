@@ -87,6 +87,10 @@ export default function Login() {
         <p className="qhiro-auth-switch">
           ¿No tienes una cuenta?{' '}
           <Link to="/register">Crear cuenta</Link>
+          <span className="qhiro-auth-legal">
+            <Link to="/terms">Términos</Link>
+            <Link to="/privacy">Privacidad</Link>
+          </span>
         </p>
       </div>
     </QhiroPublicShell>

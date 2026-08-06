@@ -309,10 +309,9 @@ export default function Landing() {
         </div>
         <div className="sl-footer-links">
           <div>
-            <strong>Producto</strong>
-            <a href="#resultado">Beneficios</a>
-            <a href="#videos">Videos</a>
-            <a href="#arquitectura">Sistema</a>
+            <strong>Legal</strong>
+            <Link to="/terms">Términos</Link>
+            <Link to="/privacy">Privacidad</Link>
           </div>
           <div>
             <strong>Acceso</strong>

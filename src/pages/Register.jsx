@@ -153,8 +153,8 @@ export default function Register() {
           {ui.auth.hasAccount}{' '}
           <Link to="/login">{ui.auth.goLogin}</Link>
           <span className="qhiro-auth-legal">
-            <a href="#terms">Términos</a>
-            <a href="#privacy">Privacidad</a>
+            <Link to="/terms">Términos</Link>
+            <Link to="/privacy">Privacidad</Link>
           </span>
         </p>
       </div>
