@@ -9,6 +9,7 @@ export default function Login() {
   const { login, resetPassword, error, setError } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
@@ -67,12 +68,22 @@ export default function Login() {
             <span className="qhiro-input-wrap">
               <span className="material-symbols-outlined" aria-hidden="true">lock</span>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 required
               />
+              <button
+                type="button"
+                className="qhiro-password-toggle"
+                onClick={() => setShowPassword((visible) => !visible)}
+                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              >
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {showPassword ? 'visibility_off' : 'visibility'}
+                </span>
+              </button>
             </span>
           </label>
           <button type="submit" className="qhiro-btn qhiro-btn-solid" disabled={submitting}>

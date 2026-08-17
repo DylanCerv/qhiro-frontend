@@ -419,6 +419,38 @@
   gap: 16px;
 }
 
+.qhiro-password-toggle {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #869486;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.qhiro-password-toggle .material-symbols-outlined {
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.qhiro-password-toggle:hover,
+.qhiro-input-wrap:focus-within .qhiro-password-toggle {
+  color: #54e98a;
+}
+
+.qhiro-input-wrap:has(.qhiro-password-toggle) input {
+  padding-right: 44px;
+}
+
 .qhiro-password-label button {
   padding: 0;
   border: 0;
