@@ -1,21 +1,28 @@
 .app-footer {
-  min-height: 92px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 32px;
+  padding: 14px 32px;
   border-top: 1px solid var(--st-line);
   background: var(--st-bg-deep);
   color: var(--st-muted);
 }
 
-.app-footer strong {
-  font-size: 16px;
-  font-weight: 500;
+.app-footer .qhiro-logo {
+  gap: 8px;
+  font-size: 14px;
+}
+
+.app-footer .qhiro-logo__wordmark {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .app-footer p {
+  margin: 0;
   font-size: 12px;
 }
 
@@ -26,16 +33,18 @@
 
 .app-footer a {
   color: var(--st-muted);
+  font-size: 12px;
   text-decoration: none;
 }
 
 .app-footer a:hover {
   color: var(--st-text);
 }
+
 @media (max-width: 760px) {
   .app-footer {
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px 16px;
+    padding: 16px;
   }
 }

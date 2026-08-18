@@ -453,9 +453,69 @@ export function formatDate(value) {
   return new Date(value).toLocaleString('es');
 }
 
+export function formatDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '—';
+  return date.toLocaleString('es', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+export function daysUntil(value) {
+  const target = new Date(value);
+  if (Number.isNaN(target.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const day = new Date(target);
+  day.setHours(0, 0, 0, 0);
+  return Math.round((day.getTime() - today.getTime()) / 86_400_000);
+}
+
+export function formatDaysUntil(value) {
+  const days = daysUntil(value);
+  if (days == null) return 'Sin fecha';
+  if (days < 0) return 'Vencido';
+  if (days === 0) return 'Hoy';
+  if (days === 1) return 'Mañana';
+  return `En ${days} días`;
+}
+
 export function formatFrequency(days) {
-  if (days === 1) return 'Cada 1 día';
-  return `Cada ${days} días`;
+  const value = Number(days);
+  if (!Number.isFinite(value) || value < 1) return 'Sin frecuencia';
+  if (value === 1) return 'Cada 1 día';
+  return `Cada ${value} días`;
+}
+
+export function formatRepeat(schedule) {
+  const unit = schedule?.repeatUnit;
+  const every = Number(schedule?.repeatEvery || 0);
+  if (unit === 'week') return every <= 1 ? 'Cada semana' : `Cada ${every} semanas`;
+  if (unit === 'month') return every <= 1 ? 'Cada mes' : `Cada ${every} meses`;
+  if (unit === 'day') return formatFrequency(every || schedule?.frequencyDays);
+  return formatFrequency(schedule?.frequencyDays);
+}
+
+export function toDateInput(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60000);
+  return local.toISOString().slice(0, 10);
+}
+
+export function toTimeInput(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60000);
+  return local.toISOString().slice(11, 16);
 }
 
 export function getHealthLabel(status) {

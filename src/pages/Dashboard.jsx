@@ -9,8 +9,9 @@ import ParcelMap from '../components/ParcelMap';
 import ParcelSelector from '../components/ParcelSelector';
 import StatusBadge from '../components/StatusBadge';
 import {
-  formatDate,
-  formatFrequency,
+  formatDateTime,
+  formatDaysUntil,
+  formatRepeat,
   getCropTypeLabel,
   getHealthLabel,
   ui,
@@ -184,10 +185,11 @@ export default function Dashboard() {
           </div>
           {data.nextScheduledFlight ? (
             <>
-              <p className="dashboard-kpi-time">{formatDate(data.nextScheduledFlight.nextRunAt)}</p>
+              <p className="dashboard-kpi-time">{formatDateTime(data.nextScheduledFlight.nextRunAt)}</p>
               <p className="dashboard-kpi-note">
+                {formatDaysUntil(data.nextScheduledFlight.nextRunAt)} ·{' '}
                 {parcelNameById.get(data.nextScheduledFlight.parcelId) ?? 'Parcela'} ·{' '}
-                {formatFrequency(data.nextScheduledFlight.frequencyDays)}
+                {formatRepeat(data.nextScheduledFlight)}
               </p>
             </>
           ) : (

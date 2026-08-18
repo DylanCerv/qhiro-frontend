@@ -46,8 +46,8 @@ function ShellNavLink({ to, label, icon, end }) {
 function AppFooter() {
   return (
     <footer className="app-footer">
-      <QhiroLogo variant="full" theme="dark" size={22} wordmark="Qhiro Symbiotic" />
-      <p>© {new Date().getFullYear()} Qhiro Symbiotic. La tierra habla, el aire observa, la IA piensa.</p>
+      <QhiroLogo variant="full" theme="dark" size={18} wordmark="Qhiro Symbiotic" />
+      <p>© {new Date().getFullYear()} Qhiro Symbiotic.</p>
       <nav aria-label="Enlaces legales">
         <Link to="/privacy">Privacidad</Link>
         <Link to="/terms">Términos</Link>
