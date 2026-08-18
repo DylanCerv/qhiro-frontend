@@ -6,9 +6,9 @@ import { ui } from '../i18n/es';
 const clientLinks = [
   { to: '/app', label: ui.nav.dashboard, icon: 'dashboard', end: true },
   { to: '/app/parcels', label: ui.nav.parcels, icon: 'agriculture' },
+  { to: '/app/devices', label: ui.nav.devices, icon: 'sensors' },
   { to: '/app/schedule', label: 'Programación', icon: 'calendar_month' },
   { to: '/app/flights', label: ui.nav.activity, icon: 'history' },
-  { to: '/app/devices', label: ui.nav.devices, icon: 'sensors' },
 ];
 
 const adminLinks = [
