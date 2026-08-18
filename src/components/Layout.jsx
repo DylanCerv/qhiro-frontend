@@ -13,6 +13,7 @@ const clientLinks = [
 
 const adminLinks = [
   { to: '/app/admin/clients', label: ui.nav.admin, icon: 'groups', end: true },
+  { to: '/app/admin/clients/missions', label: ui.nav.missionSimulator, icon: 'flight_takeoff' },
   { to: '/app/admin/clients/mqtt', label: ui.nav.mqttDiagnostics, icon: 'terminal' },
 ];
 

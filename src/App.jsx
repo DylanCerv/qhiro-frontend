@@ -9,6 +9,7 @@ import Devices from './pages/Devices';
 import FlightHistory from './pages/FlightHistory';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
+import AdminMissionSimulator from './pages/AdminMissionSimulator';
 import MqttDiagnostics from './pages/MqttDiagnostics';
 import Parcels from './pages/Parcels';
 import Privacy from './pages/Privacy';
@@ -74,6 +75,7 @@ export default function App() {
               }
             >
               <Route index element={<AdminClients />} />
+              <Route path="missions" element={<AdminMissionSimulator />} />
               <Route path="mqtt" element={<MqttDiagnostics />} />
             </Route>
           </Route>

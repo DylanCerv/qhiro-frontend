@@ -3,6 +3,7 @@ import { MapContainer, Polygon, TileLayer, Tooltip, useMap } from 'react-leaflet
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { mapTiles } from '../utils/geo';
+import SentinelMapMarkers from './SentinelMapMarkers';
 
 const healthColors = {
   green: '#54e98a',
@@ -10,11 +11,14 @@ const healthColors = {
   red: '#ffaaa6',
 };
 
-function FitBounds({ parcels, center }) {
+function FitBounds({ parcels, center, sentinels = [] }) {
   const map = useMap();
 
   useEffect(() => {
-    const points = parcels.flatMap((p) => p.coordinates ?? []);
+    const points = [
+      ...parcels.flatMap((p) => p.coordinates ?? []),
+      ...sentinels.map((sentinel) => sentinel.coordinates).filter(Boolean),
+    ];
     if (points.length >= 3) {
       map.fitBounds(
         L.latLngBounds(points.map((c) => [c.lat, c.lng])),
@@ -25,7 +29,7 @@ function FitBounds({ parcels, center }) {
     if (center) {
       map.setView([center.lat, center.lng], 13);
     }
-  }, [map, parcels, center]);
+  }, [map, parcels, center, sentinels]);
 
   return null;
 }
@@ -35,6 +39,7 @@ export default function ParcelMap({
   center,
   selectedParcelId,
   onSelectParcel,
+  sentinels = [],
   interactive = false,
   tileStyle = 'satellite',
 }) {
@@ -45,7 +50,7 @@ export default function ParcelMap({
     <div className="map-wrap">
       <MapContainer center={[mapCenter.lat, mapCenter.lng]} zoom={13} scrollWheelZoom={interactive}>
         <TileLayer attribution={tiles.attribution} url={tiles.url} />
-        <FitBounds parcels={parcels} center={center ?? mapCenter} />
+        <FitBounds parcels={parcels} center={center ?? mapCenter} sentinels={sentinels} />
         {parcels.map((p) =>
           p.coordinates?.length ? (
             <Polygon
@@ -74,6 +79,7 @@ export default function ParcelMap({
             </Polygon>
           ) : null,
         )}
+        <SentinelMapMarkers sentinels={sentinels} />
       </MapContainer>
     </div>
   );

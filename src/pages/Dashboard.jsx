@@ -15,6 +15,7 @@ import {
   getHealthLabel,
   ui,
 } from '../i18n/es';
+import { filterSentinels } from '../utils/sentinel';
 
 export default function Dashboard() {
   const { profile, isAdmin } = useAuth();
@@ -107,6 +108,7 @@ export default function Dashboard() {
   const visibleActions = activeParcel
     ? actionLogs.filter((action) => action.parcelId === activeParcel.parcelId)
     : actionLogs;
+  const parcelSentinels = filterSentinels(data.devices ?? [], activeParcel?.parcelId);
   const getActionStatusLabel = (status) => {
     if (status === 'completed') return 'Solventado';
     if (status === 'failed') return 'Requiere atención';
@@ -220,12 +222,14 @@ export default function Dashboard() {
             center={mapCenter}
             selectedParcelId={selectedParcelId}
             onSelectParcel={setSelectedParcelId}
+            sentinels={parcelSentinels}
             interactive
             tileStyle="satellite"
           />
           <div className="dashboard-map-meta">
             <span>Parcela: {activeParcel?.name ?? 'N/A'}</span>
             <span>NDVI: {activeParcel?.ndvi?.toFixed(2) ?? 'N/A'}</span>
+            <span>Centinelas: {parcelSentinels.length}</span>
             <span>Actualización: tiempo real</span>
           </div>
         </section>

@@ -74,6 +74,7 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ status }),
     }),
+  deleteDevice: (deviceId) => request(`/devices/${deviceId}`, { method: 'DELETE' }),
   simulateTelemetry: (payload) =>
     request('/simulator/telemetry', { method: 'POST', body: JSON.stringify(payload) }),
   getReports: () => request('/reports'),
