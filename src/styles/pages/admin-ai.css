@@ -1,0 +1,147 @@
+.admin-ai-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-ai-page .admin-head-actions {
+  grid-template-columns: auto;
+  justify-content: end;
+}
+
+.admin-ai-model-value {
+  font-size: 16px !important;
+  word-break: break-all;
+}
+
+.admin-ai-status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-ai-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-ai-status-row a {
+  color: var(--st-green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-ai-note,
+.admin-ai-lead {
+  margin: 0;
+  color: var(--st-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.admin-ai-page > .card > h2 {
+  margin-bottom: 8px;
+}
+
+.admin-ai-models {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.admin-ai-model {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-bg-deep);
+}
+
+.admin-ai-model.is-active {
+  border-color: rgba(84, 233, 138, 0.45);
+  background: rgba(84, 233, 138, 0.06);
+}
+
+.admin-ai-model.is-pending {
+  border-color: rgba(243, 204, 84, 0.4);
+  background: rgba(243, 204, 84, 0.06);
+  opacity: 1;
+}
+
+.admin-ai-model-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-ai-model-head h3 {
+  margin: 0;
+  color: var(--st-text);
+  font-size: 16px;
+}
+
+.admin-ai-model-head p,
+.admin-ai-model p {
+  margin: 0;
+  color: var(--st-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.admin-ai-model-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-ai-model-meta span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--st-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-ai-switch,
+.admin-ai-model .admin-grant-btn {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-ai-switch {
+  border: 1px solid var(--st-line);
+  background: transparent;
+  color: var(--st-text);
+}
+
+.admin-ai-switch:hover:not(:disabled) {
+  border-color: var(--st-green);
+  color: var(--st-green);
+}
+
+.admin-ai-switch:disabled,
+.admin-ai-model .admin-grant-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 820px) {
+  .admin-ai-models {
+    grid-template-columns: 1fr;
+  }
+}

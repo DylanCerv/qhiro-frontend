@@ -1,3 +1,7 @@
+import { distanceMeters } from './geo';
+
+export const MAX_SENTINEL_SNAP_METERS = 250;
+
 export function getNextSentinelLabel(sentinels = []) {
   const used = new Set(
     sentinels
@@ -35,4 +39,17 @@ export function filterSentinels(devices = [], parcelId) {
 
 export function getSentinelDisplayLabel(sentinel) {
   return sentinel.sentinelLabel ?? sentinel.name ?? 'c?';
+}
+
+export function findNearestSentinel(point, sentinels = []) {
+  if (!point || !sentinels.length) return null;
+
+  return sentinels.reduce((nearest, sentinel) => {
+    if (!sentinel.coordinates) return nearest;
+    const distance = distanceMeters(point, sentinel.coordinates);
+    if (!nearest || distance < nearest.distance) {
+      return { sentinel, distance };
+    }
+    return nearest;
+  }, null);
 }

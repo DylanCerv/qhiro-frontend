@@ -91,9 +91,11 @@ export default function MissionParcelMap({
               key={parcel.parcelId}
               positions={parcel.coordinates.map((point) => [point.lat, point.lng])}
               pathOptions={{
-                color: parcel.parcelId === selectedParcelId ? '#ffffff' : healthColors[parcel.healthStatus] ?? '#54e98a',
-                fillColor: healthColors[parcel.healthStatus] ?? '#54e98a',
-                fillOpacity: parcel.parcelId === selectedParcelId ? 0.38 : 0.22,
+                color: parcel.parcelId === selectedParcelId ? '#54e98a' : healthColors[parcel.healthStatus] ?? '#54e98a',
+                fillColor: parcel.parcelId === selectedParcelId
+                  ? '#54e98a'
+                  : healthColors[parcel.healthStatus] ?? '#54e98a',
+                fillOpacity: parcel.parcelId === selectedParcelId ? 0.42 : 0.18,
                 weight: parcel.parcelId === selectedParcelId ? 3 : 2,
               }}
             >

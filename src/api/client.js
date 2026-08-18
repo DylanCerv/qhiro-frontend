@@ -100,10 +100,10 @@ export const api = {
   getClientParcels: (userId) => request(`/admin/clients/${userId}/parcels`),
   getClientTelemetryLogs: (userId) => request(`/admin/clients/${userId}/telemetry-logs`),
   getClientActionLogs: (userId) => request(`/admin/clients/${userId}/action-logs`),
-  updateClientStatus: (userId, accountStatus) =>
+  updateClientStatus: (userId, accountStatus, confirmEmail) =>
     request(`/admin/clients/${userId}/account-status`, {
       method: 'PATCH',
-      body: JSON.stringify({ accountStatus }),
+      body: JSON.stringify({ accountStatus, confirmEmail }),
     }),
   getMqttStatus: () => request('/admin/mqtt/status'),
   sendMqttDiagnostic: (payload) =>
@@ -116,4 +116,7 @@ export const api = {
     request('/admin/mqtt/test-flight', { method: 'POST', body: JSON.stringify(payload) }),
   runAdminTestDroneFlow: (payload) =>
     request('/admin/mqtt/test-drone-flow', { method: 'POST', body: JSON.stringify(payload) }),
+  getAiStatus: () => request('/admin/ai'),
+  setAiModel: (modelId) =>
+    request('/admin/ai/model', { method: 'PUT', body: JSON.stringify({ modelId }) }),
 };

@@ -92,6 +92,16 @@
   border-color: #fff;
 }
 
+.sentinel-map-marker--pending-action span {
+  background: #f3cc54;
+  box-shadow: 0 0 0 6px rgba(243, 204, 84, 0.28);
+}
+
+.sentinel-map-marker--executed span {
+  background: #54e98a;
+  box-shadow: 0 0 0 6px rgba(84, 233, 138, 0.32);
+}
+
 .sentinel-placement-map .leaflet-container {
   min-height: 280px;
 }

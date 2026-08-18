@@ -136,6 +136,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  min-width: 0;
 }
 
 .admin-icon-btn {
@@ -167,6 +168,176 @@
 
 .admin-icon-btn--disable {
   color: var(--st-red);
+}
+
+.admin-grant-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(84, 233, 138, 0.35);
+  border-radius: 999px;
+  background: rgba(84, 233, 138, 0.12);
+  color: var(--st-green);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-grant-btn:hover:not(:disabled) {
+  background: rgba(84, 233, 138, 0.22);
+}
+
+.admin-grant-btn:disabled,
+.admin-icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-clients-table tbody tr.is-pending {
+  background: rgba(243, 204, 84, 0.06);
+}
+
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(8, 10, 12, 0.78);
+}
+
+.admin-modal {
+  width: min(480px, 100%);
+  padding: 24px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-surface);
+}
+
+.admin-modal--danger {
+  border-color: rgba(255, 180, 171, 0.35);
+}
+
+.admin-modal-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 180, 171, 0.35);
+  border-radius: 4px;
+  background: rgba(255, 180, 171, 0.08);
+  color: var(--st-red);
+}
+
+.admin-modal h2 {
+  margin: 0;
+  color: var(--st-text);
+  font-size: 20px;
+}
+
+.admin-modal-lead {
+  margin: 10px 0 16px;
+  color: var(--st-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.admin-modal-target {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-bg-deep);
+}
+
+.admin-modal-target strong {
+  color: var(--st-text);
+  font-size: 14px;
+}
+
+.admin-modal-target span {
+  color: var(--st-red);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-modal-field span {
+  color: var(--st-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-modal-field input {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--st-line);
+  border-radius: 4px;
+  background: var(--st-bg);
+  color: var(--st-text);
+}
+
+.admin-modal-field input:focus {
+  outline: 2px solid rgba(255, 180, 171, 0.45);
+  outline-offset: 1px;
+  border-color: var(--st-red);
+}
+
+.admin-modal-field small {
+  color: var(--st-muted);
+  font-size: 12px;
+}
+
+.admin-modal-field code {
+  color: var(--st-text);
+  font-size: 12px;
+}
+
+.admin-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.admin-modal-cancel,
+.admin-modal-confirm {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-modal-cancel {
+  border: 1px solid var(--st-line);
+  background: transparent;
+  color: var(--st-text);
+}
+
+.admin-modal-confirm {
+  border: 1px solid transparent;
+  background: var(--st-red);
+  color: #1a0d0c;
+}
+
+.admin-modal-confirm:disabled,
+.admin-modal-cancel:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.admin-modal .form-error {
+  margin: 12px 0 0;
 }
 
 .admin-table-footer {

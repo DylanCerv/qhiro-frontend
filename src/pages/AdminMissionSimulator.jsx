@@ -4,7 +4,7 @@ import MissionParcelMap from '../components/MissionParcelMap';
 import StatusBadge from '../components/StatusBadge';
 import { ui } from '../i18n/es';
 import { findParcelAtPoint, formatCoordinates } from '../utils/geo';
-import { filterSentinels } from '../utils/sentinel';
+import { filterSentinels, findNearestSentinel, getSentinelDisplayLabel, MAX_SENTINEL_SNAP_METERS } from '../utils/sentinel';
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_TIMEOUT_MS = 90000;
@@ -63,65 +63,100 @@ function resolveActiveDrone(devices = []) {
   return drones.find((device) => device.status !== 'offline') ?? drones[0] ?? null;
 }
 
-function buildTimelineEvents(telemetryLog, actionLog, parcel, point) {
-  if (!telemetryLog) return [];
+function hasAiFailed(telemetryLog) {
+  if (!telemetryLog) return false;
+  return telemetryLog.status === 'failed'
+    || telemetryLog.actions?.includes('ai:failed')
+    || Boolean(telemetryLog.validationMessage && !telemetryLog.aiResponse);
+}
 
-  const events = [
-    {
-      id: `${telemetryLog.logId}-capture`,
-      type: 'capture',
-      time: telemetryLog.createdAt,
-      title: 'Imagen recibida del dron',
-      detail: parcel ? `Parcela ${parcel.name} · ${formatCoordinates(point)}` : formatCoordinates(point),
-      status: 'done',
-    },
-  ];
+function isActionLinkedToMission(actionLog, telemetryLog) {
+  if (!actionLog || !telemetryLog?.createdAt || hasAiFailed(telemetryLog)) return false;
+  return !actionLog.startedAt || actionLog.startedAt >= telemetryLog.createdAt;
+}
 
-  if (telemetryLog.aiResponse) {
-    events.push({
-      id: `${telemetryLog.logId}-ai`,
-      type: 'analysis',
-      time: telemetryLog.createdAt,
-      title: 'Problema detectado',
-      detail: telemetryLog.aiResponse.diagnosis,
-      meta: `Severidad ${(telemetryLog.aiResponse.severity * 100).toFixed(0)}% · ${ACTION_LABELS[telemetryLog.aiResponse.recommendedAction] ?? telemetryLog.aiResponse.recommendedAction}`,
-      status: 'done',
-    });
-  } else if (telemetryLog.status === 'failed') {
-    events.push({
-      id: `${telemetryLog.logId}-ai-fail`,
-      type: 'analysis',
-      time: telemetryLog.createdAt,
-      title: 'Análisis IA fallido',
-      detail: telemetryLog.validationMessage ?? 'No se pudo completar el análisis.',
-      status: 'error',
-    });
+function needsSentinelAction(telemetryLog) {
+  const ai = telemetryLog?.aiResponse;
+  if (!ai) return false;
+  return ai.severity >= 0.6
+    || ai.recommendedAction === 'injection'
+    || ai.recommendedAction === 'emergency';
+}
+
+function buildTimelineEvents({
+  telemetryLog,
+  actionLog,
+  parcel,
+  point,
+  sentinel,
+  running = false,
+} = {}) {
+  const linkedAction = isActionLinkedToMission(actionLog, telemetryLog) ? actionLog : null;
+  const aiFailed = hasAiFailed(telemetryLog);
+  const hasCapture = Boolean(telemetryLog);
+  const hasAnalysis = Boolean(telemetryLog?.aiResponse);
+  const sentinelLabel = sentinel ? getSentinelDisplayLabel(sentinel) : null;
+
+  const capture = {
+    id: 'capture',
+    title: 'Captura',
+    time: telemetryLog?.createdAt ?? null,
+    status: hasCapture ? 'done' : running ? 'active' : 'pending',
+    detail: hasCapture
+      ? (parcel ? `Parcela ${parcel.name} · ${formatCoordinates(point)}` : formatCoordinates(point))
+      : 'Esperando el punto de captura del dron.',
+  };
+
+  const analysis = {
+    id: 'analysis',
+    title: 'Análisis',
+    time: hasAnalysis || aiFailed ? telemetryLog.createdAt : null,
+    status: 'pending',
+    detail: 'Pendiente del análisis IA.',
+  };
+
+  if (aiFailed) {
+    analysis.status = 'error';
+    analysis.detail = telemetryLog.validationMessage ?? 'No se pudo completar el análisis.';
+  } else if (hasAnalysis) {
+    analysis.status = 'done';
+    analysis.detail = telemetryLog.aiResponse.diagnosis;
+    analysis.meta = `Severidad ${(telemetryLog.aiResponse.severity * 100).toFixed(0)}% · ${ACTION_LABELS[telemetryLog.aiResponse.recommendedAction] ?? telemetryLog.aiResponse.recommendedAction}`;
+  } else if (hasCapture) {
+    analysis.status = 'active';
+    analysis.detail = 'Analizando la captura...';
   }
 
-  if (telemetryLog.actions?.length) {
-    events.push({
-      id: `${telemetryLog.logId}-decision`,
-      type: 'decision',
-      time: telemetryLog.createdAt,
-      title: 'Motor de decisiones',
-      detail: telemetryLog.actions.join(' · '),
-      status: 'done',
-    });
+  const action = {
+    id: 'action',
+    title: 'Acción',
+    time: linkedAction ? (linkedAction.completedAt ?? linkedAction.startedAt) : null,
+    status: 'pending',
+    detail: 'Pendiente de la intervención del centinela.',
+  };
+
+  if (aiFailed || (!hasAnalysis && !running)) {
+    action.detail = aiFailed
+      ? 'Sin procesar por fallo en el análisis.'
+      : action.detail;
+  } else if (linkedAction) {
+    action.detail = sentinelLabel
+      ? `Centinela ${sentinelLabel}${parcel ? ` · ${parcel.name}` : ''}`
+      : linkedAction.queueReason ?? 'Comando enviado al centinela más cercano.';
+    action.meta = linkedAction.status;
+    action.status = linkedAction.status === 'completed'
+      ? 'done'
+      : linkedAction.status === 'failed'
+        ? 'error'
+        : 'active';
+  } else if (hasAnalysis && needsSentinelAction(telemetryLog)) {
+    action.status = running ? 'active' : 'pending';
+    action.detail = 'Esperando intervención del centinela.';
+  } else if (hasAnalysis) {
+    action.detail = 'Sin acción requerida.';
   }
 
-  if (actionLog) {
-    events.push({
-      id: actionLog.actionId,
-      type: 'action',
-      time: actionLog.completedAt ?? actionLog.startedAt,
-      title: actionLog.action === 'inject' ? 'Inyección en zona afectada' : `Acción: ${actionLog.action}`,
-      detail: actionLog.queueReason ?? 'Comando enviado al centinela de la parcela.',
-      meta: actionLog.status,
-      status: actionLog.status === 'completed' ? 'done' : actionLog.status === 'pending' ? 'active' : 'error',
-    });
-  }
-
-  return events;
+  return [capture, analysis, action];
 }
 
 function buildMissionRecord({
@@ -132,12 +167,13 @@ function buildMissionRecord({
   telemetryLog,
   actionLog,
   imagePreview,
+  sentinel,
 }) {
   const ai = telemetryLog?.aiResponse;
   return {
     id,
     flightId,
-    parcelId: parcel?.parcelId,
+    parcelId: parcel?.parcelId ?? sentinel?.parcelId,
     parcelName: parcel?.name ?? '—',
     point,
     imagePreview,
@@ -149,7 +185,15 @@ function buildMissionRecord({
     actionLabel: actionLog?.action ?? (ai?.recommendedAction === 'injection' ? 'inject' : ai?.recommendedAction),
     telemetryLog,
     actionLog,
-    events: buildTimelineEvents(telemetryLog, actionLog, parcel, point),
+    sentinelId: sentinel?.deviceId,
+    sentinelLabel: sentinel ? getSentinelDisplayLabel(sentinel) : '',
+    events: buildTimelineEvents({
+      telemetryLog,
+      actionLog,
+      parcel,
+      point,
+      sentinel,
+    }),
   };
 }
 
@@ -190,10 +234,17 @@ export default function AdminMissionSimulator() {
     [devices],
   );
 
-  const parcelSentinels = useMemo(
-    () => filterSentinels(devices, parcelId),
-    [devices, parcelId],
+  const allSentinels = useMemo(
+    () => filterSentinels(devices),
+    [devices],
   );
+
+  const nearestSentinelMatch = useMemo(
+    () => findNearestSentinel(selectedPoint, allSentinels),
+    [selectedPoint, allSentinels],
+  );
+
+  const nearestSentinel = nearestSentinelMatch?.sentinel ?? null;
 
   const missionRequirements = useMemo(() => [
     { id: 'point', label: 'Punto en el mapa', done: Boolean(selectedPoint && parcelId) },
@@ -211,9 +262,36 @@ export default function AdminMissionSimulator() {
   );
 
   const timelineEvents = useMemo(() => {
-    if (activeMission?.events?.length) return activeMission.events;
-    return buildTimelineEvents(telemetryLog, actionLog, selectedParcel, selectedPoint);
-  }, [activeMission, telemetryLog, actionLog, selectedParcel, selectedPoint]);
+    const telemetry = activeMission?.telemetryLog ?? telemetryLog;
+    const action = activeMission?.actionLog ?? actionLog;
+    const point = activeMission?.point ?? selectedPoint;
+    const parcel = parcels.find((item) => item.parcelId === (activeMission?.parcelId ?? parcelId))
+      ?? selectedParcel;
+    const sentinel = devices.find((device) =>
+      device.deviceId === (action?.deviceId ?? activeMission?.sentinelId),
+    ) ?? nearestSentinel;
+
+    return buildTimelineEvents({
+      telemetryLog: telemetry,
+      actionLog: action,
+      parcel,
+      point,
+      sentinel,
+      running: running && (!activeMission || activeMission.id === activeMissionId),
+    });
+  }, [
+    activeMission,
+    activeMissionId,
+    telemetryLog,
+    actionLog,
+    selectedParcel,
+    selectedPoint,
+    devices,
+    nearestSentinel,
+    parcels,
+    parcelId,
+    running,
+  ]);
 
   const missionMarkers = useMemo(
     () => missionHistory.map((mission) => ({
@@ -227,28 +305,53 @@ export default function AdminMissionSimulator() {
   );
 
   const actionZones = useMemo(() => {
-    const source = activeMission ?? { telemetryLog, actionLog };
-    const zones = [];
-    const aiCoords = source.telemetryLog?.aiResponse?.affectedCoordinates;
-    if (Array.isArray(aiCoords) && aiCoords.length) {
-      zones.push({
-        id: 'ai-zone',
-        label: 'Zona afectada',
-        status: source.actionLog?.status === 'completed' ? 'completed' : 'pending',
-        coordinates: aiCoords,
-        radius: 40,
-      });
-    } else if (source.actionLog?.commandPayload?.affectedCoordinates?.length) {
-      zones.push({
-        id: 'action-zone',
-        label: 'Zona de inyección',
-        status: source.actionLog.status === 'completed' ? 'completed' : 'pending',
-        coordinates: source.actionLog.commandPayload.affectedCoordinates,
-        radius: 40,
-      });
-    }
-    return zones;
-  }, [activeMission, telemetryLog, actionLog]);
+    const source = activeMission ?? { actionLog, sentinelId: nearestSentinel?.deviceId };
+    const action = isActionLinkedToMission(
+      source.actionLog,
+      source.telemetryLog ?? activeMission?.telemetryLog ?? telemetryLog,
+    ) ? source.actionLog : null;
+    if (!action) return [];
+
+    const targetSentinel = devices.find((device) =>
+      device.deviceId === (action.deviceId ?? source.sentinelId),
+    ) ?? nearestSentinel;
+
+    const coordinates = targetSentinel?.coordinates
+      ? [targetSentinel.coordinates]
+      : action.commandPayload?.targetCoordinates?.length
+        ? action.commandPayload.targetCoordinates
+        : selectedPoint
+          ? [selectedPoint]
+          : [];
+
+    if (!coordinates.length) return [];
+
+    return [{
+      id: 'sentinel-action',
+      label: targetSentinel
+        ? `Centinela ${getSentinelDisplayLabel(targetSentinel)}`
+        : 'Zona de inyección',
+      status: action.status === 'completed' ? 'completed' : 'pending',
+      coordinates,
+      radius: 28,
+    }];
+  }, [activeMission, actionLog, telemetryLog, devices, nearestSentinel, selectedPoint]);
+
+  const mapSentinels = useMemo(() => {
+    const telemetry = activeMission?.telemetryLog ?? telemetryLog;
+    const action = isActionLinkedToMission(activeMission?.actionLog ?? actionLog, telemetry)
+      ? (activeMission?.actionLog ?? actionLog)
+      : null;
+    const targetId = action?.deviceId;
+    const actionStatus = action?.status;
+
+    return allSentinels.map((sentinel) => ({
+      ...sentinel,
+      actionStatus: sentinel.deviceId === targetId && (actionStatus === 'pending' || actionStatus === 'completed')
+        ? actionStatus
+        : undefined,
+    }));
+  }, [allSentinels, activeMission, actionLog, telemetryLog]);
 
   const stopPolling = useCallback(() => {
     if (pollRef.current) {
@@ -268,9 +371,9 @@ export default function AdminMissionSimulator() {
     const logs = telemetryResponse.logs ?? [];
     const actions = actionResponse.logs ?? [];
     const latestTelemetry = logs.find((log) => log.flightId === activeFlightId) ?? null;
-    const latestAction = actions.find((log) => log.parcelId === targetParcelId && (
-      !latestTelemetry?.createdAt || log.startedAt >= latestTelemetry.createdAt
-    )) ?? actions.find((log) => log.parcelId === targetParcelId) ?? null;
+    const latestAction = latestTelemetry?.createdAt
+      ? actions.find((log) => log.startedAt >= latestTelemetry.createdAt)
+      : null;
 
     setTelemetryLog(latestTelemetry);
     setActionLog(latestAction);
@@ -282,15 +385,26 @@ export default function AdminMissionSimulator() {
     setMissionHistory((current) => current.map((mission) => {
       if (mission.id !== missionId) return mission;
       const next = { ...mission, ...patch };
-      next.events = buildTimelineEvents(
-        next.telemetryLog,
-        next.actionLog,
-        parcels.find((parcel) => parcel.parcelId === next.parcelId),
-        next.point,
-      );
+      next.events = buildTimelineEvents({
+        telemetryLog: next.telemetryLog,
+        actionLog: next.actionLog,
+        parcel: parcels.find((parcel) => parcel.parcelId === (next.actionLog?.parcelId ?? next.parcelId)),
+        point: next.point,
+        sentinel: devices.find((device) => device.deviceId === (next.actionLog?.deviceId ?? next.sentinelId)),
+        running: true,
+      });
+      if (next.actionLog?.deviceId) {
+        next.sentinelId = next.actionLog.deviceId;
+        const sentinel = devices.find((device) => device.deviceId === next.actionLog.deviceId);
+        if (sentinel) {
+          next.sentinelLabel = getSentinelDisplayLabel(sentinel);
+          next.parcelId = sentinel.parcelId ?? next.parcelId;
+          next.parcelName = parcels.find((parcel) => parcel.parcelId === next.parcelId)?.name ?? next.parcelName;
+        }
+      }
       return next;
     }));
-  }, [parcels]);
+  }, [parcels, devices]);
 
   const startPolling = useCallback((activeFlightId, targetParcelId, missionId, clientUserId) => {
     stopPolling();
@@ -368,6 +482,11 @@ export default function AdminMissionSimulator() {
   }, [userId]);
 
   useEffect(() => {
+    if (!running || !activeMission?.parcelId) return;
+    setParcelId(activeMission.parcelId);
+  }, [running, activeMission?.parcelId]);
+
+  useEffect(() => {
     if (activeDrone?.deviceId && activeDrone.deviceId !== deviceId) {
       setDeviceId(activeDrone.deviceId);
     }
@@ -375,8 +494,11 @@ export default function AdminMissionSimulator() {
 
   const handleMapClick = (point) => {
     setError('');
-    const parcel = findParcelAtPoint(point, parcels);
-    if (!parcel) {
+    const nearest = findNearestSentinel(point, allSentinels);
+    const containingParcel = findParcelAtPoint(point, parcels);
+    const canSnapToSentinel = Boolean(nearest && nearest.distance <= MAX_SENTINEL_SNAP_METERS);
+
+    if (!containingParcel && !canSnapToSentinel) {
       setSelectedPoint(point);
       setParcelId('');
       setError('El punto seleccionado no pertenece a ninguna parcela del cliente.');
@@ -384,7 +506,7 @@ export default function AdminMissionSimulator() {
     }
 
     setSelectedPoint(point);
-    setParcelId(parcel.parcelId);
+    setParcelId(nearest?.sentinel.parcelId ?? containingParcel?.parcelId ?? '');
   };
 
   const handleImageFile = async (file) => {
@@ -460,13 +582,16 @@ export default function AdminMissionSimulator() {
     try {
       if (!userId) throw new Error('Selecciona un cliente.');
       if (!selectedPoint) throw new Error('Haz clic en el mapa para seleccionar el punto de captura.');
-      if (!parcelId || !selectedParcel) throw new Error('El punto debe estar dentro de una parcela.');
+
+      const nearest = findNearestSentinel(selectedPoint, allSentinels);
+      const targetParcel = parcels.find((parcel) => parcel.parcelId === nearest?.sentinel.parcelId)
+        ?? selectedParcel;
+      const targetParcelId = targetParcel?.parcelId ?? parcelId;
+
+      if (!targetParcelId || !targetParcel) throw new Error('El punto debe estar dentro de una parcela.');
       if (!activeDrone?.deviceId) throw new Error('Este cliente no tiene un dron activo registrado.');
 
-      const parcelCoords = selectedParcel.coordinates ?? [];
-      const coordinates = [selectedPoint, ...parcelCoords.filter((point) =>
-        point.lat !== selectedPoint.lat || point.lng !== selectedPoint.lng,
-      )];
+      setParcelId(targetParcelId);
 
       const payload = {
         status: 'completed',
@@ -476,7 +601,7 @@ export default function AdminMissionSimulator() {
         phosphorus: 20,
         potassium: 32,
         batteryLevel: 78,
-        coordinates,
+        coordinates: [selectedPoint],
         timestamp: new Date().toISOString(),
       };
 
@@ -487,7 +612,7 @@ export default function AdminMissionSimulator() {
       const response = await api.runAdminTestDroneFlow({
         userId,
         deviceId: activeDrone.deviceId,
-        parcelId,
+        parcelId: targetParcelId,
         payload,
       });
 
@@ -496,18 +621,19 @@ export default function AdminMissionSimulator() {
       const missionRecord = buildMissionRecord({
         id: missionId,
         flightId: nextFlightId,
-        parcel: selectedParcel,
+        parcel: targetParcel,
         point: selectedPoint,
         telemetryLog: null,
         actionLog: null,
         imagePreview,
+        sentinel: nearest?.sentinel,
       });
 
       setFlightId(nextFlightId);
       setActiveMissionId(missionId);
       setMissionHistory((current) => [missionRecord, ...current]);
 
-      const result = await refreshMissionLogs(nextFlightId, parcelId, userId);
+      const result = await refreshMissionLogs(nextFlightId, targetParcelId, userId);
       if (result?.latestTelemetry || result?.latestAction) {
         upsertMissionHistory(missionId, {
           telemetryLog: result.latestTelemetry,
@@ -519,7 +645,7 @@ export default function AdminMissionSimulator() {
         });
       }
 
-      startPolling(nextFlightId, parcelId, missionId, userId);
+      startPolling(nextFlightId, targetParcelId, missionId, userId);
     } catch (err) {
       setError(err.message);
       setRunning(false);
@@ -619,6 +745,9 @@ export default function AdminMissionSimulator() {
               <div className="mission-point-badge">
                 <span>{formatCoordinates(selectedPoint)}</span>
                 {selectedParcel && <strong>{selectedParcel.name}</strong>}
+                {nearestSentinel && (
+                  <span>Centinela {getSentinelDisplayLabel(nearestSentinel)}</span>
+                )}
               </div>
             )}
           </div>
@@ -630,7 +759,7 @@ export default function AdminMissionSimulator() {
               selectedPoint={selectedPoint}
               missionMarkers={missionMarkers}
               actionZones={actionZones}
-              sentinels={parcelSentinels}
+              sentinels={mapSentinels}
               onMapClick={handleMapClick}
             />
           ) : (
@@ -648,7 +777,7 @@ export default function AdminMissionSimulator() {
                 <p className="mission-side-value">{formatCoordinates(selectedPoint)}</p>
                 <p className="map-meta">
                   {selectedParcel
-                    ? `Parcela: ${selectedParcel.name}`
+                    ? `Parcela: ${selectedParcel.name}${nearestSentinel ? ` · Centinela ${getSentinelDisplayLabel(nearestSentinel)}` : ''}`
                     : 'Fuera de parcela — selecciona un área dentro del polígono.'}
                 </p>
               </>
@@ -787,7 +916,10 @@ export default function AdminMissionSimulator() {
             {running ? 'Ejecutando misión...' : 'Ejecutar misión'}
           </button>
 
-          {(activeMission?.actionLog?.status === 'pending' || actionLog?.status === 'pending') && (
+          {isActionLinkedToMission(
+            activeMission?.actionLog ?? actionLog,
+            activeMission?.telemetryLog ?? telemetryLog,
+          ) && (activeMission?.actionLog ?? actionLog)?.status === 'pending' && (
             <button
               type="button"
               className="btn-secondary"
@@ -804,8 +936,11 @@ export default function AdminMissionSimulator() {
 
       <section className="card admin-missions-timeline-card">
         <div className="admin-missions-timeline-head">
-          <h2>Timeline de la misión</h2>
-          {activeMission && (
+          <div>
+            <h2>Timeline de la misión</h2>
+            <p className="map-meta">Captura → análisis → acción</p>
+          </div>
+          {activeMission?.telemetryLog?.aiResponse && (
             <div className="mission-timeline-summary">
               <StatusBadge
                 status={activeMission.severity >= 0.6 ? 'yellow' : 'green'}
@@ -831,28 +966,24 @@ export default function AdminMissionSimulator() {
           </div>
         )}
 
-        {timelineEvents.length ? (
-          <ol className="mission-timeline">
-            {timelineEvents.map((event, index) => (
-              <li key={event.id} className={`mission-timeline-item mission-timeline-item--${event.status}`}>
-                <div className="mission-timeline-track">
-                  <span className="mission-timeline-dot" />
-                  {index < timelineEvents.length - 1 && <span className="mission-timeline-line" />}
+        <ol className="mission-timeline">
+          {timelineEvents.map((event, index) => (
+            <li key={event.id} className={`mission-timeline-item mission-timeline-item--${event.status}`}>
+              <div className="mission-timeline-track">
+                <span className="mission-timeline-dot" />
+                {index < timelineEvents.length - 1 && <span className="mission-timeline-line" />}
+              </div>
+              <div className="mission-timeline-content">
+                <div className="mission-timeline-top">
+                  <strong>{event.title}</strong>
+                  <time>{event.time ? new Date(event.time).toLocaleTimeString() : '—'}</time>
                 </div>
-                <div className="mission-timeline-content">
-                  <div className="mission-timeline-top">
-                    <strong>{event.title}</strong>
-                    <time>{new Date(event.time).toLocaleTimeString()}</time>
-                  </div>
-                  <p>{event.detail}</p>
-                  {event.meta && <span className="mission-timeline-meta">{event.meta}</span>}
-                </div>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p className="map-meta">Ejecuta una misión para ver el flujo: captura → análisis → acción.</p>
-        )}
+                <p>{event.detail}</p>
+                {event.meta && <span className="mission-timeline-meta">{event.meta}</span>}
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
     </div>
   );

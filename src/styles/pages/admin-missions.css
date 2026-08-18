@@ -544,9 +544,38 @@
   letter-spacing: 0.04em;
 }
 
+.mission-timeline-item--pending {
+  border-color: var(--st-line-soft);
+  background: var(--st-surface-low);
+}
+
+.mission-timeline-item--pending .mission-timeline-content strong,
+.mission-timeline-item--pending .mission-timeline-content p,
+.mission-timeline-item--pending time {
+  color: var(--st-muted);
+}
+
+.mission-timeline-item--done {
+  border-color: rgba(84, 233, 138, 0.45);
+  background: rgba(84, 233, 138, 0.08);
+}
+
 .mission-timeline-item--done .mission-timeline-dot {
   border-color: var(--st-green);
   background: var(--st-green);
+}
+
+.mission-timeline-item--done .mission-timeline-line {
+  background: var(--st-green);
+}
+
+.mission-timeline-item--done .mission-timeline-content strong {
+  color: var(--st-green);
+}
+
+.mission-timeline-item--active {
+  border-color: rgba(243, 204, 84, 0.4);
+  background: rgba(243, 204, 84, 0.08);
 }
 
 .mission-timeline-item--active .mission-timeline-dot {
@@ -555,9 +584,18 @@
   box-shadow: 0 0 0 4px rgba(243, 204, 84, 0.15);
 }
 
+.mission-timeline-item--error {
+  border-color: rgba(255, 170, 166, 0.45);
+  background: rgba(255, 170, 166, 0.08);
+}
+
 .mission-timeline-item--error .mission-timeline-dot {
   border-color: #ffaaa6;
   background: #ffaaa6;
+}
+
+.mission-timeline-item--error .mission-timeline-content strong {
+  color: #ffaaa6;
 }
 
 @media (max-width: 1100px) {

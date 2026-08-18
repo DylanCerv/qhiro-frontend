@@ -20,10 +20,42 @@ function formatArea(areaHa) {
   return `${areaHa.toFixed(1)} ha`;
 }
 
+const STATUS_PRIORITY = { pending: 0, active: 1, suspended: 2, disabled: 3 };
+
+function getClientActions(status) {
+  if (status === 'pending') {
+    return [
+      { accountStatus: 'active', label: ui.admin.grantAccess, kind: 'grant' },
+      { kind: 'remove', label: ui.admin.removeAccess, icon: 'person_off' },
+    ];
+  }
+  if (status === 'active') {
+    return [
+      { accountStatus: 'suspended', label: ui.admin.suspend, kind: 'suspend', icon: 'pause_circle' },
+      { kind: 'remove', label: ui.admin.removeAccess, icon: 'person_off' },
+    ];
+  }
+  if (status === 'suspended') {
+    return [
+      { accountStatus: 'active', label: ui.admin.grantAccess, kind: 'grant' },
+      { kind: 'remove', label: ui.admin.removeAccess, icon: 'person_off' },
+    ];
+  }
+  return [{ accountStatus: 'active', label: ui.admin.grantAccess, kind: 'grant' }];
+}
+
+function emailsMatch(left, right) {
+  return left.trim().toLowerCase() === right.trim().toLowerCase();
+}
+
 export default function AdminClients() {
   const [clients, setClients] = useState([]);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(true);
+  const [updatingUserId, setUpdatingUserId] = useState('');
+  const [clientToRemove, setClientToRemove] = useState(null);
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [page, setPage] = useState(1);
@@ -43,18 +75,57 @@ export default function AdminClients() {
     setPage(1);
   }, [query, statusFilter]);
 
+  useEffect(() => {
+    if (!clientToRemove) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape' && !updatingUserId) {
+        setClientToRemove(null);
+        setConfirmEmail('');
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [clientToRemove, updatingUserId]);
+
+  const closeRemoveModal = () => {
+    if (updatingUserId) return;
+    setClientToRemove(null);
+    setConfirmEmail('');
+  };
+
+  const handleAccountStatus = async (userId, accountStatus, emailToConfirm) => {
+    setError('');
+    setSuccess('');
+    setUpdatingUserId(userId);
+    try {
+      const response = await api.updateClientStatus(userId, accountStatus, emailToConfirm);
+      setClients((current) =>
+        current.map((client) =>
+          client.userId === userId
+            ? { ...client, accountStatus: response.client?.accountStatus ?? accountStatus }
+            : client,
+        ),
+      );
+      setSuccess(accountStatus === 'disabled' ? ui.admin.removeSuccess : ui.admin.updated);
+      setClientToRemove(null);
+      setConfirmEmail('');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUpdatingUserId('');
+    }
+  };
+
   const metrics = useMemo(() => {
-    const activeClients = clients.filter((client) => client.accountStatus === 'active').length;
-    const totalParcels = clients.reduce((total, client) => total + (client.parcelCount ?? 0), 0);
-    const totalDevices = clients.reduce((total, client) => total + (client.deviceCount ?? 0), 0);
+    const pendingClients = clients.filter((client) => client.accountStatus === 'pending').length;
     const activeDevices = clients.reduce((total, client) => total + (client.activeDeviceCount ?? 0), 0);
     const totalAlerts = clients.reduce((total, client) => total + (client.alertCount ?? 0), 0);
     const monitoredArea = clients.reduce((total, client) => total + (client.areaHa ?? 0), 0);
 
     return {
-      activeClients,
-      totalParcels,
-      totalDevices,
+      pendingClients,
       activeDevices,
       totalAlerts,
       monitoredArea,
@@ -80,7 +151,12 @@ export default function AdminClients() {
           .filter(Boolean)
           .some((value) => value.toLowerCase().includes(normalizedQuery));
       })
-      .sort((a, b) => a.displayName.localeCompare(b.displayName));
+      .sort((a, b) => {
+        const statusDiff =
+          (STATUS_PRIORITY[a.accountStatus] ?? 9) - (STATUS_PRIORITY[b.accountStatus] ?? 9);
+        if (statusDiff !== 0) return statusDiff;
+        return a.displayName.localeCompare(b.displayName);
+      });
   }, [clients, query, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filteredClients.length / PAGE_SIZE));
@@ -94,7 +170,10 @@ export default function AdminClients() {
       <div className="page-head admin-clients-head">
         <div>
           <h1>Gestión de Clientes</h1>
-          <p>Vista de clientes y solicitudes de acceso.</p>
+          <p>
+            Vista de clientes y solicitudes de acceso
+            {metrics.pendingClients > 0 ? `. ${metrics.pendingClients} pendientes.` : '.'}
+          </p>
         </div>
         <div className="admin-head-actions">
           <input
@@ -163,11 +242,15 @@ export default function AdminClients() {
                     <th>Parcelas</th>
                     <th>Dispositivos</th>
                     <th>Estado</th>
+                    <th>{ui.admin.actions}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {visibleClients.map((client) => (
-                    <tr key={client.userId}>
+                    <tr
+                      key={client.userId}
+                      className={client.accountStatus === 'pending' ? 'is-pending' : undefined}
+                    >
                       <td>
                         <div className="admin-client-primary">
                           <strong>{client.displayName}</strong>
@@ -197,6 +280,64 @@ export default function AdminClients() {
                           }
                           label={getAccountStatusLabel(client.accountStatus)}
                         />
+                      </td>
+                      <td>
+                        <div className="admin-actions">
+                          {getClientActions(client.accountStatus).map((action) => {
+                            if (action.kind === 'grant') {
+                              return (
+                                <button
+                                  key={action.accountStatus}
+                                  type="button"
+                                  className="admin-grant-btn"
+                                  disabled={updatingUserId === client.userId}
+                                  onClick={() => handleAccountStatus(client.userId, action.accountStatus)}
+                                >
+                                  {action.label}
+                                </button>
+                              );
+                            }
+
+                            if (action.kind === 'remove') {
+                              return (
+                                <button
+                                  key="remove"
+                                  type="button"
+                                  className="admin-icon-btn admin-icon-btn--disable"
+                                  title={action.label}
+                                  aria-label={action.label}
+                                  disabled={updatingUserId === client.userId}
+                                  onClick={() => {
+                                    setError('');
+                                    setSuccess('');
+                                    setConfirmEmail('');
+                                    setClientToRemove(client);
+                                  }}
+                                >
+                                  <span className="material-symbols-outlined" aria-hidden="true">
+                                    {action.icon}
+                                  </span>
+                                </button>
+                              );
+                            }
+
+                            return (
+                              <button
+                                key={action.accountStatus}
+                                type="button"
+                                className={`admin-icon-btn admin-icon-btn--${action.kind}`}
+                                title={action.label}
+                                aria-label={action.label}
+                                disabled={updatingUserId === client.userId}
+                                onClick={() => handleAccountStatus(client.userId, action.accountStatus)}
+                              >
+                                <span className="material-symbols-outlined" aria-hidden="true">
+                                  {action.icon}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -246,8 +387,77 @@ export default function AdminClients() {
             </div>
           </div>
         )}
+        {success && <p className="form-success">{success}</p>}
         {error && <p className="form-error">{error}</p>}
       </section>
+
+      {clientToRemove && (
+        <div className="admin-modal-backdrop">
+          <div
+            className="admin-modal admin-modal--danger"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-remove-title"
+          >
+            <div className="admin-modal-icon" aria-hidden="true">
+              <span className="material-symbols-outlined">warning</span>
+            </div>
+            <h2 id="admin-remove-title">{ui.admin.removeTitle}</h2>
+            <p className="admin-modal-lead">{ui.admin.removeWarning}</p>
+            <div className="admin-modal-target">
+              <strong>{clientToRemove.displayName}</strong>
+              <span>{clientToRemove.email}</span>
+            </div>
+            <label className="admin-modal-field">
+              <span>{ui.admin.removeConfirmLabel}</span>
+              <input
+                type="email"
+                autoFocus
+                autoComplete="off"
+                spellCheck="false"
+                placeholder={clientToRemove.email}
+                value={confirmEmail}
+                disabled={Boolean(updatingUserId)}
+                onChange={(event) => setConfirmEmail(event.target.value)}
+                onKeyDown={(event) => {
+                  if (
+                    event.key === 'Enter'
+                    && !updatingUserId
+                    && emailsMatch(confirmEmail, clientToRemove.email)
+                  ) {
+                    event.preventDefault();
+                    handleAccountStatus(clientToRemove.userId, 'disabled', confirmEmail);
+                  }
+                }}
+              />
+              <small>
+                {ui.admin.removeConfirmHint} <code>{clientToRemove.email}</code>
+              </small>
+            </label>
+            {error && <p className="form-error">{error}</p>}
+            <div className="admin-modal-actions">
+              <button
+                type="button"
+                className="admin-modal-cancel"
+                disabled={Boolean(updatingUserId)}
+                onClick={closeRemoveModal}
+              >
+                {ui.common.cancel}
+              </button>
+              <button
+                type="button"
+                className="admin-modal-confirm"
+                disabled={
+                  Boolean(updatingUserId) || !emailsMatch(confirmEmail, clientToRemove.email)
+                }
+                onClick={() => handleAccountStatus(clientToRemove.userId, 'disabled', confirmEmail)}
+              >
+                {updatingUserId ? 'Desactivando…' : ui.admin.removeConfirmAction}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

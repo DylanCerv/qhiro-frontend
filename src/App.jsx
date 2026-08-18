@@ -11,6 +11,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import AdminMissionSimulator from './pages/AdminMissionSimulator';
 import MqttDiagnostics from './pages/MqttDiagnostics';
+import AdminAi from './pages/AdminAi';
 import Parcels from './pages/Parcels';
 import Privacy from './pages/Privacy';
 import Register from './pages/Register';
@@ -77,6 +78,7 @@ export default function App() {
               <Route index element={<AdminClients />} />
               <Route path="missions" element={<AdminMissionSimulator />} />
               <Route path="mqtt" element={<MqttDiagnostics />} />
+              <Route path="ai" element={<AdminAi />} />
             </Route>
           </Route>
 

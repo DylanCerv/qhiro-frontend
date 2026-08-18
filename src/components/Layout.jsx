@@ -15,6 +15,7 @@ const adminLinks = [
   { to: '/app/admin/clients', label: ui.nav.admin, icon: 'groups', end: true },
   { to: '/app/admin/clients/missions', label: ui.nav.missionSimulator, icon: 'flight_takeoff' },
   { to: '/app/admin/clients/mqtt', label: ui.nav.mqttDiagnostics, icon: 'terminal' },
+  { to: '/app/admin/clients/ai', label: ui.nav.aiSettings, icon: 'psychology' },
 ];
 
 function getInitials(name) {
